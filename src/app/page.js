@@ -6,6 +6,7 @@ const page = () => {
   
   return (
     <>
+      <h1>Hello Bhai!</h1>
       <Link href = "/Login">Login</Link>
       <Link href="/Register">Register</Link>
       <h1>Home Page~</h1>

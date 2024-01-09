@@ -5,6 +5,8 @@ import { auth, db } from '../firebase'
 import { collection, doc, getDoc, updateDoc } from 'firebase/firestore'
 import Link from 'next/link'
 
+import './update.css'
+
 const page = () => {
     const [DisplayCompanyName, setDisplayCompanyName] = useState("")
     const [DisplayPhoneNo, setDisplayPhoneNo] = useState("")
@@ -105,16 +107,27 @@ const page = () => {
       };
 
       const userRef = doc(collection(db, "UserInfo"), userID);
-      updateDoc(userRef, data)
-      .then(userRef => {
-          console.log("Value of an Existing Document Field has been updated");
-          setDisplayLink(data.Link)
-      })
-      .catch(error => {
-        console.log(error);
-      })
+        updateDoc(userRef, data)
+        .then(userRef => {
+            console.log("Value of an Existing Document Field has been updated");
+            setDisplayLink(data.Link)
+        })
+        .catch(error => {
+          console.log(error);
+        })
+      }
+
+    function clickMe() {
+      console.log("Hello");
+      var text = document.getElementById("popup");
+      text.classList.toggle("hide");
+      text.classList.toggle("show");
     }
 
+    
+    const AddNewData = () =>{
+      console.log("I was clicked");
+    }
     
   return (
     <>
@@ -132,7 +145,19 @@ const page = () => {
             {DisplayLink}
             <input type="text" placeholder='Update link'  value={updateLink} onChange={(e)=>{setUpdateLink(e.target.value)}}/>
             <button onClick={EditLink}>Update</button>
+
+
+            <h1>Want to Add some more data?</h1>
+
+            <button id="theButton" onClick={clickMe}>Add Data</button>
+
+            <form action="" id="popup" className="hide">
+              <input type="text" />
+              <input type="text" placeholder=''/>
+              <button onClick={AddNewData} >Add new Data!</button>
+            </form>
       
+            <br />
 
         <Link href="/DashBoard">Go to Dashboard</Link>
     </>
