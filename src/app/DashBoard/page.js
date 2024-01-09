@@ -1,13 +1,14 @@
 "use client"
 
 import React, { useEffect, useState } from 'react'
-import { auth, db } from '../firebase';
+import { auth, db, imageDb } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { signOut } from "firebase/auth";
 import { useRouter } from 'next/navigation'
 import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
 
 import Link from "next/link"
+import { ref, uploadBytes } from 'firebase/storage';
 
 
 
@@ -32,7 +33,9 @@ const page = () => {
   const[InputFacebook, setInputFacebook] = useState("");
   const[InputX, setInputX] =useState("");
 
-  const[userEmail, setUserEmail] = useState("")
+  const[userEmail, setUserEmail] = useState("");
+
+  const[uploadPhoto, setUploadPhoto] = useState("");
 
   useEffect(()=>{
       auth.onAuthStateChanged((user)=>{
@@ -106,6 +109,9 @@ const page = () => {
         console.log(error);
     })
 
+    const imgRef = ref(imageDb, `files/${userID}`)
+    uploadBytes(imgRef,uploadPhoto)
+
   }
   
 
@@ -126,6 +132,10 @@ const page = () => {
        <input type="text" placeholder='Enter X(Twitter) Link' value={InputX} onChange={(e)=>{setInputX(e.target.value)}}/>
 
        <input type="text" placeholder='Enter your Address' />
+
+       {/* input profile pic / Comapany logo  */}
+
+       <input type="file" placeholder='Upload Your Profile/Comapany Photo'  onChange={(e)=>{setUploadPhoto(e.target.files[0])}}/>
 
        <button onClick={submitInNewWay}>Submit In new Way!</button>
 
