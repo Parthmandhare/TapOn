@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
 
 import Link from "next/link"
-import { ref, uploadBytes } from 'firebase/storage';
+import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
 
 
 
@@ -24,6 +24,8 @@ const page = () => {
 
   const[displayUserName, setDisplayUserName] = useState("");
 
+  const[displayPhoto, setDisplayPhoto] = useState("");
+
   // variables for inputing the data
 
   const[InputCname , setInputCname] = useState("");
@@ -36,6 +38,8 @@ const page = () => {
   const[userEmail, setUserEmail] = useState("");
 
   const[uploadPhoto, setUploadPhoto] = useState("");
+
+  const[ImageURL, setImageURL] = useState("");
 
   useEffect(()=>{
       auth.onAuthStateChanged((user)=>{
@@ -66,7 +70,8 @@ const page = () => {
     setdisplayCname(docData.data().Company_Name);
     setdisplaylink1(docData.data().Link);
     setdisplayPhoneNo(docData.data().PhoneNumber);
-    setDisplayUserName(docData.data().User_Name)
+    setDisplayUserName(docData.data().User_Name);
+    setDisplayPhoto(docData.data().Profile_URl);
   }
 
   let isNullOrWhiteSpaces = value =>{
@@ -90,7 +95,8 @@ const page = () => {
       Link: Inputlink1,
       Instagram_Link: InputInsta,
       Facebook_Link: InputFacebook,
-      X_Link: InputX
+      X_Link: InputX,
+      Profile_URl: ImageURL
     }
 
     const userRef = doc(collection(db, "UserInfo"), userID);
@@ -109,10 +115,34 @@ const page = () => {
         console.log(error);
     })
 
-    const imgRef = ref(imageDb, `files/${userID}`)
-    uploadBytes(imgRef,uploadPhoto)
+    const imgRef = ref(imageDb, `files/${userID}`);
+    const uploadTask = uploadBytesResumable(imgRef, uploadPhoto);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        // Progress handling (e.g., update a progress bar)
+      },
+      (error) => {
+        // Error handling
+        console.error(error);
+        // Alert the user about the error
+      },
+      async () => {
+        const downloadURL = await getDownloadURL(imgRef);
+        setImageURL(downloadURL);
+
+        // Update Firestore with download URL
+        const userRef = doc(collection(db, "UserInfo"), userID);
+        await updateDoc(userRef, { Profile_URl: downloadURL });
+
+        console.log("Document updated with download URL:", downloadURL);
+        // Alert the user about successful upload and update
+      }
+    );
 
   }
+
   
 
   return (
@@ -153,6 +183,8 @@ const page = () => {
        <h1>Your Name</h1>
 
        {displayUserName}
+
+       <img src={displayPhoto}/>
 
        <Link href="/Update">Update The info!</Link>
 

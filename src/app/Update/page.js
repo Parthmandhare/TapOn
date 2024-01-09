@@ -1,11 +1,12 @@
 "use client"
 
 import React, { useEffect, useState } from 'react'
-import { auth, db } from '../firebase'
+import { auth, db, imageDb } from '../firebase'
 import { collection, doc, getDoc, updateDoc } from 'firebase/firestore'
 import Link from 'next/link'
 
 import './update.css'
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 
 const page = () => {
     const [DisplayCompanyName, setDisplayCompanyName] = useState("")
@@ -16,6 +17,10 @@ const page = () => {
     const[updateCompanyName, setUpdateCompanyName] = useState("");
     const[updatePhoneNO, setUpdatePhoneNO] = useState("");
     const[updateLink, setUpdateLink] = useState("");
+
+    const[DisplayProfile, setDisplayProfile] = useState("");
+
+    const[updateProfile, setUpdateProfile] = useState("")
 
     // useEffect(()=>{
     //     auth.onAuthStateChanged((user)=>{
@@ -52,6 +57,7 @@ const page = () => {
       setDisplayCompanyName(docData.data().Company_Name);
       setDisplayLink(docData.data().Link);
       setDisplayPhoneNo(docData.data().PhoneNumber);
+      setDisplayProfile(docData.data().Profile_URl);
 
     }
 
@@ -117,6 +123,38 @@ const page = () => {
         })
       }
 
+    const EditProfile = async(e) =>{
+      e.preventDefault();
+      
+      const imgRef = ref(imageDb, `files/${userID}`);
+      const uploadTask = uploadBytesResumable(imgRef, updateProfile);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        // Progress handling (e.g., update a progress bar)
+      },
+      (error) => {
+        // Error handling
+        console.error(error);
+        // Alert the user about the error
+      },
+      async () => {
+        const downloadURL = await getDownloadURL(imgRef);
+        // setImageURL(downloadURL);
+
+        // Update Firestore with download URL
+        const userRef = doc(collection(db, "UserInfo"), userID);
+        await updateDoc(userRef, { Profile_URl: downloadURL });
+
+        console.log("Document updated with download URL:", downloadURL);
+        // Alert the user about successful upload and update
+
+        setDisplayProfile(downloadURL)
+      }
+    );
+      }
+
     function clickMe() {
       console.log("Hello");
       var text = document.getElementById("popup");
@@ -145,6 +183,12 @@ const page = () => {
             {DisplayLink}
             <input type="text" placeholder='Update link'  value={updateLink} onChange={(e)=>{setUpdateLink(e.target.value)}}/>
             <button onClick={EditLink}>Update</button>
+
+            <img src={DisplayProfile} alt="not found" />
+            {/* <input type="text" placeholder='Update Profile Photo'  value={updateProfile} onChange={(e)=>{setUpdateProfile(e.target.value)}}/> */}
+
+            <input type="file"  placeholder='Update Profile Photo'  onChange={(e)=>{setUpdateProfile(e.target.files[0])}}/>
+            <button onClick={EditProfile}>Update</button>
 
 
             <h1>Want to Add some more data?</h1>
