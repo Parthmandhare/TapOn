@@ -22,6 +22,15 @@ const page = () => {
 
     const[updateProfile, setUpdateProfile] = useState("")
 
+    const[DisplayFacebookLink, setDisplayFacebookLink] = useState("");
+    const[updateFacebookLink, setUpdateFacebookLink] =useState("")
+
+    const[DisplayInstaLink, setDisplayInstaLink] = useState("");
+    const[updateInstaLink, setUpdateInstaLink] = useState("");
+
+    const[DisplayXLink, setDisplayXLink] = useState("");
+    const[updateXLink, setUpdateXLink] = useState("");
+
     // useEffect(()=>{
     //     auth.onAuthStateChanged((user)=>{
     //     // setDisplayUser(user.displayName);
@@ -58,6 +67,9 @@ const page = () => {
       setDisplayLink(docData.data().Link);
       setDisplayPhoneNo(docData.data().PhoneNumber);
       setDisplayProfile(docData.data().Profile_URl);
+      setDisplayFacebookLink(docData.data().Facebook_Link);
+      setDisplayInstaLink(docData.data().Instagram_Link);
+      setDisplayXLink(docData.data().X_Link);
 
     }
 
@@ -77,6 +89,7 @@ const page = () => {
       .then(userRef => {
           console.log("Value of an Existing Document Field has been updated");
           setDisplayCompanyName(data.Company_Name)
+          setUpdateCompanyName("");
       })
       .catch(error => {
         console.log(error);
@@ -97,6 +110,7 @@ const page = () => {
       .then(userRef => {
           console.log("Value of an Existing Document Field has been updated");
           setDisplayPhoneNo(data.PhoneNumber)
+          setUpdatePhoneNO("");
       })
       .catch(error => {
         console.log(error);
@@ -117,11 +131,75 @@ const page = () => {
         .then(userRef => {
             console.log("Value of an Existing Document Field has been updated");
             setDisplayLink(data.Link)
+            setUpdateLink("");
         })
         .catch(error => {
           console.log(error);
         })
-      }
+    }
+
+    const EditFacebookLink = async(e) =>{
+      e.preventDefault();
+      
+      console.log(updateFacebookLink);
+
+      const data = {
+        Facebook_Link: updateFacebookLink
+      };
+
+      const userRef = doc(collection(db, "UserInfo"), userID);
+        updateDoc(userRef, data)
+        .then(userRef => {
+            console.log("Value of an Existing Document Field has been updated");
+            setDisplayFacebookLink(data.Facebook_Link)
+            setUpdateFacebookLink("");
+        })
+        .catch(error => {
+          console.log(error);
+        })
+    }
+
+    const EditInstaLink = async(e) =>{
+      e.preventDefault();
+      
+      console.log(updateInstaLink);
+
+      const data = {
+        Instagram_Link: updateInstaLink
+      };
+
+      const userRef = doc(collection(db, "UserInfo"), userID);
+        updateDoc(userRef, data)
+        .then(userRef => {
+            console.log("Value of an Existing Document Field has been updated");
+            setDisplayInstaLink(data.Instagram_Link)
+            setUpdateInstaLink("");
+        })
+        .catch(error => {
+          console.log(error);
+        })
+    }
+
+    const EditXLink = async(e) =>{
+      e.preventDefault();
+      
+      console.log(updateXLink);
+
+      const data = {
+        X_Link: updateXLink
+      };
+
+      const userRef = doc(collection(db, "UserInfo"), userID);
+        updateDoc(userRef, data)
+        .then(userRef => {
+            console.log("Value of an Existing Document Field has been updated");
+            setDisplayXLink(data.X_Link)
+            setUpdateXLink("");
+        })
+        .catch(error => {
+          console.log(error);
+        })
+    }
 
     const EditProfile = async(e) =>{
       e.preventDefault();
@@ -190,6 +268,17 @@ const page = () => {
             <input type="file"  placeholder='Update Profile Photo'  onChange={(e)=>{setUpdateProfile(e.target.files[0])}}/>
             <button onClick={EditProfile}>Update</button>
 
+            {DisplayFacebookLink}
+            <input type="text" placeholder='Update Facebook link'  value={updateFacebookLink} onChange={(e)=>{setUpdateFacebookLink(e.target.value)}}/>
+            <button onClick={EditFacebookLink}>Update</button>
+
+            {DisplayInstaLink}
+            <input type="text" placeholder='Update Instagram link'  value={updateInstaLink} onChange={(e)=>{setUpdateInstaLink(e.target.value)}}/>
+            <button onClick={EditInstaLink}>Update</button>
+
+            {DisplayXLink}
+            <input type="text" placeholder='Update X link'  value={updateXLink} onChange={(e)=>{setUpdateXLink(e.target.value)}}/>
+            <button onClick={EditXLink}>Update</button>
 
             <h1>Want to Add some more data?</h1>
 

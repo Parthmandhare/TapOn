@@ -26,6 +26,8 @@ const page = () => {
 
   const[displayPhoto, setDisplayPhoto] = useState("");
 
+  const[displayAddress, setDisplayAddress] = useState("");
+
   // variables for inputing the data
 
   const[InputCname , setInputCname] = useState("");
@@ -34,9 +36,9 @@ const page = () => {
   const[InputInsta, setInputInsta] =useState("");
   const[InputFacebook, setInputFacebook] = useState("");
   const[InputX, setInputX] =useState("");
+  const[InputAddress, setInputAddress] = useState("");
 
   const[userEmail, setUserEmail] = useState("");
-
   const[uploadPhoto, setUploadPhoto] = useState("");
 
   const[ImageURL, setImageURL] = useState("");
@@ -72,6 +74,7 @@ const page = () => {
     setdisplayPhoneNo(docData.data().PhoneNumber);
     setDisplayUserName(docData.data().User_Name);
     setDisplayPhoto(docData.data().Profile_URl);
+    setDisplayAddress(docData.data().Address);
   }
 
   let isNullOrWhiteSpaces = value =>{
@@ -96,7 +99,8 @@ const page = () => {
       Instagram_Link: InputInsta,
       Facebook_Link: InputFacebook,
       X_Link: InputX,
-      Profile_URl: ImageURL
+      Profile_URl: ImageURL,
+      Address: InputAddress
     }
 
     const userRef = doc(collection(db, "UserInfo"), userID);
@@ -110,6 +114,8 @@ const page = () => {
         setInputFacebook("");
         setInputInsta("");
         setInputX("")
+        setImageURL("");
+        setInputAddress("");
     })
     .catch(error => {
         console.log(error);
@@ -161,7 +167,7 @@ const page = () => {
        <input type="text" placeholder='Enter Facebook Link' value={InputFacebook} onChange={(e)=>{setInputFacebook(e.target.value)}}/>
        <input type="text" placeholder='Enter X(Twitter) Link' value={InputX} onChange={(e)=>{setInputX(e.target.value)}}/>
 
-       <input type="text" placeholder='Enter your Address' />
+       <input type="text" placeholder='Enter your Address' value={InputAddress} onChange={(e)=>{setInputAddress(e.target.value)}}/>
 
        {/* input profile pic / Comapany logo  */}
 
@@ -179,7 +185,8 @@ const page = () => {
           {displaylink1}  
           
           {displayPhoneNo }
-       
+
+          {displayAddress}
        <h1>Your Name</h1>
 
        {displayUserName}
