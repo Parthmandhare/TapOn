@@ -1,11 +1,12 @@
 "use client"
 
 import React, { useEffect, useState } from 'react'
-import { auth, db } from '../firebase'
+import { auth, db, imageDb } from '../firebase'
 import { collection, doc, getDoc, updateDoc } from 'firebase/firestore'
 import Link from 'next/link'
 
 import './update.css'
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 
 const page = () => {
     const [DisplayCompanyName, setDisplayCompanyName] = useState("")
@@ -16,6 +17,19 @@ const page = () => {
     const[updateCompanyName, setUpdateCompanyName] = useState("");
     const[updatePhoneNO, setUpdatePhoneNO] = useState("");
     const[updateLink, setUpdateLink] = useState("");
+
+    const[DisplayProfile, setDisplayProfile] = useState("");
+
+    const[updateProfile, setUpdateProfile] = useState("")
+
+    const[DisplayFacebookLink, setDisplayFacebookLink] = useState("");
+    const[updateFacebookLink, setUpdateFacebookLink] =useState("")
+
+    const[DisplayInstaLink, setDisplayInstaLink] = useState("");
+    const[updateInstaLink, setUpdateInstaLink] = useState("");
+
+    const[DisplayXLink, setDisplayXLink] = useState("");
+    const[updateXLink, setUpdateXLink] = useState("");
 
     // useEffect(()=>{
     //     auth.onAuthStateChanged((user)=>{
@@ -52,6 +66,10 @@ const page = () => {
       setDisplayCompanyName(docData.data().Company_Name);
       setDisplayLink(docData.data().Link);
       setDisplayPhoneNo(docData.data().PhoneNumber);
+      setDisplayProfile(docData.data().Profile_URl);
+      setDisplayFacebookLink(docData.data().Facebook_Link);
+      setDisplayInstaLink(docData.data().Instagram_Link);
+      setDisplayXLink(docData.data().X_Link);
 
     }
 
@@ -71,6 +89,7 @@ const page = () => {
       .then(userRef => {
           console.log("Value of an Existing Document Field has been updated");
           setDisplayCompanyName(data.Company_Name)
+          setUpdateCompanyName("");
       })
       .catch(error => {
         console.log(error);
@@ -91,6 +110,7 @@ const page = () => {
       .then(userRef => {
           console.log("Value of an Existing Document Field has been updated");
           setDisplayPhoneNo(data.PhoneNumber)
+          setUpdatePhoneNO("");
       })
       .catch(error => {
         console.log(error);
@@ -111,10 +131,106 @@ const page = () => {
         .then(userRef => {
             console.log("Value of an Existing Document Field has been updated");
             setDisplayLink(data.Link)
+            setUpdateLink("");
         })
         .catch(error => {
           console.log(error);
         })
+    }
+
+    const EditFacebookLink = async(e) =>{
+      e.preventDefault();
+      
+      console.log(updateFacebookLink);
+
+      const data = {
+        Facebook_Link: updateFacebookLink
+      };
+
+      const userRef = doc(collection(db, "UserInfo"), userID);
+        updateDoc(userRef, data)
+        .then(userRef => {
+            console.log("Value of an Existing Document Field has been updated");
+            setDisplayFacebookLink(data.Facebook_Link)
+            setUpdateFacebookLink("");
+        })
+        .catch(error => {
+          console.log(error);
+        })
+    }
+
+    const EditInstaLink = async(e) =>{
+      e.preventDefault();
+      
+      console.log(updateInstaLink);
+
+      const data = {
+        Instagram_Link: updateInstaLink
+      };
+
+      const userRef = doc(collection(db, "UserInfo"), userID);
+        updateDoc(userRef, data)
+        .then(userRef => {
+            console.log("Value of an Existing Document Field has been updated");
+            setDisplayInstaLink(data.Instagram_Link)
+            setUpdateInstaLink("");
+        })
+        .catch(error => {
+          console.log(error);
+        })
+    }
+
+    const EditXLink = async(e) =>{
+      e.preventDefault();
+      
+      console.log(updateXLink);
+
+      const data = {
+        X_Link: updateXLink
+      };
+
+      const userRef = doc(collection(db, "UserInfo"), userID);
+        updateDoc(userRef, data)
+        .then(userRef => {
+            console.log("Value of an Existing Document Field has been updated");
+            setDisplayXLink(data.X_Link)
+            setUpdateXLink("");
+        })
+        .catch(error => {
+          console.log(error);
+        })
+    }
+
+    const EditProfile = async(e) =>{
+      e.preventDefault();
+      
+      const imgRef = ref(imageDb, `files/${userID}`);
+      const uploadTask = uploadBytesResumable(imgRef, updateProfile);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        // Progress handling (e.g., update a progress bar)
+      },
+      (error) => {
+        // Error handling
+        console.error(error);
+        // Alert the user about the error
+      },
+      async () => {
+        const downloadURL = await getDownloadURL(imgRef);
+        // setImageURL(downloadURL);
+
+        // Update Firestore with download URL
+        const userRef = doc(collection(db, "UserInfo"), userID);
+        await updateDoc(userRef, { Profile_URl: downloadURL });
+
+        console.log("Document updated with download URL:", downloadURL);
+        // Alert the user about successful upload and update
+
+        setDisplayProfile(downloadURL)
+      }
+    );
       }
 
     function clickMe() {
@@ -146,6 +262,23 @@ const page = () => {
             <input type="text" placeholder='Update link'  value={updateLink} onChange={(e)=>{setUpdateLink(e.target.value)}}/>
             <button onClick={EditLink}>Update</button>
 
+            <img src={DisplayProfile} alt="not found" />
+            {/* <input type="text" placeholder='Update Profile Photo'  value={updateProfile} onChange={(e)=>{setUpdateProfile(e.target.value)}}/> */}
+
+            <input type="file"  placeholder='Update Profile Photo'  onChange={(e)=>{setUpdateProfile(e.target.files[0])}}/>
+            <button onClick={EditProfile}>Update</button>
+
+            {DisplayFacebookLink}
+            <input type="text" placeholder='Update Facebook link'  value={updateFacebookLink} onChange={(e)=>{setUpdateFacebookLink(e.target.value)}}/>
+            <button onClick={EditFacebookLink}>Update</button>
+
+            {DisplayInstaLink}
+            <input type="text" placeholder='Update Instagram link'  value={updateInstaLink} onChange={(e)=>{setUpdateInstaLink(e.target.value)}}/>
+            <button onClick={EditInstaLink}>Update</button>
+
+            {DisplayXLink}
+            <input type="text" placeholder='Update X link'  value={updateXLink} onChange={(e)=>{setUpdateXLink(e.target.value)}}/>
+            <button onClick={EditXLink}>Update</button>
 
             <h1>Want to Add some more data?</h1>
 

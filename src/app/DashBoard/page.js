@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
 
 import Link from "next/link"
-import { ref, uploadBytes } from 'firebase/storage';
+import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
 
 
 
@@ -24,6 +24,10 @@ const page = () => {
 
   const[displayUserName, setDisplayUserName] = useState("");
 
+  const[displayPhoto, setDisplayPhoto] = useState("");
+
+  const[displayAddress, setDisplayAddress] = useState("");
+
   // variables for inputing the data
 
   const[InputCname , setInputCname] = useState("");
@@ -32,10 +36,12 @@ const page = () => {
   const[InputInsta, setInputInsta] =useState("");
   const[InputFacebook, setInputFacebook] = useState("");
   const[InputX, setInputX] =useState("");
+  const[InputAddress, setInputAddress] = useState("");
 
   const[userEmail, setUserEmail] = useState("");
-
   const[uploadPhoto, setUploadPhoto] = useState("");
+
+  const[ImageURL, setImageURL] = useState("");
 
   useEffect(()=>{
       auth.onAuthStateChanged((user)=>{
@@ -66,7 +72,9 @@ const page = () => {
     setdisplayCname(docData.data().Company_Name);
     setdisplaylink1(docData.data().Link);
     setdisplayPhoneNo(docData.data().PhoneNumber);
-    setDisplayUserName(docData.data().User_Name)
+    setDisplayUserName(docData.data().User_Name);
+    setDisplayPhoto(docData.data().Profile_URl);
+    setDisplayAddress(docData.data().Address);
   }
 
   let isNullOrWhiteSpaces = value =>{
@@ -90,7 +98,9 @@ const page = () => {
       Link: Inputlink1,
       Instagram_Link: InputInsta,
       Facebook_Link: InputFacebook,
-      X_Link: InputX
+      X_Link: InputX,
+      Profile_URl: ImageURL,
+      Address: InputAddress
     }
 
     const userRef = doc(collection(db, "UserInfo"), userID);
@@ -104,15 +114,41 @@ const page = () => {
         setInputFacebook("");
         setInputInsta("");
         setInputX("")
+        setImageURL("");
+        setInputAddress("");
     })
     .catch(error => {
         console.log(error);
     })
 
-    const imgRef = ref(imageDb, `files/${userID}`)
-    uploadBytes(imgRef,uploadPhoto)
+    const imgRef = ref(imageDb, `files/${userID}`);
+    const uploadTask = uploadBytesResumable(imgRef, uploadPhoto);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        // Progress handling (e.g., update a progress bar)
+      },
+      (error) => {
+        // Error handling
+        console.error(error);
+        // Alert the user about the error
+      },
+      async () => {
+        const downloadURL = await getDownloadURL(imgRef);
+        setImageURL(downloadURL);
+
+        // Update Firestore with download URL
+        const userRef = doc(collection(db, "UserInfo"), userID);
+        await updateDoc(userRef, { Profile_URl: downloadURL });
+
+        console.log("Document updated with download URL:", downloadURL);
+        // Alert the user about successful upload and update
+      }
+    );
 
   }
+
   
 
   return (
@@ -131,7 +167,7 @@ const page = () => {
        <input type="text" placeholder='Enter Facebook Link' value={InputFacebook} onChange={(e)=>{setInputFacebook(e.target.value)}}/>
        <input type="text" placeholder='Enter X(Twitter) Link' value={InputX} onChange={(e)=>{setInputX(e.target.value)}}/>
 
-       <input type="text" placeholder='Enter your Address' />
+       <input type="text" placeholder='Enter your Address' value={InputAddress} onChange={(e)=>{setInputAddress(e.target.value)}}/>
 
        {/* input profile pic / Comapany logo  */}
 
@@ -149,10 +185,13 @@ const page = () => {
           {displaylink1}  
           
           {displayPhoneNo }
-       
+
+          {displayAddress}
        <h1>Your Name</h1>
 
        {displayUserName}
+
+       <img src={displayPhoto}/>
 
        <Link href="/Update">Update The info!</Link>
 
