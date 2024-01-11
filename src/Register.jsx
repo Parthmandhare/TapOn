@@ -1,18 +1,18 @@
-// Import createUserWithEmailAndPassword from 'firebase/auth'
-
-"use client"
-
+import React from 'react'
 import { useState } from 'react';
 import { createUserWithEmailAndPassword , updateProfile} from "firebase/auth";
-import { auth, db } from '../firebase';
-import { useRouter } from 'next/navigation'
-import Link from "next/link";
+import { auth, db } from './firebase';
+// import { useRouter } from 'next/navigation'
+// import Link from "next/link";
 import { collection, doc, setDoc } from 'firebase/firestore';
+import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
-const Page = () => {
-    
-    // very imp for navigating the page
-    const router = useRouter()
+
+
+const Register = () => {
+
+    const navigate = useNavigate();
 
     const [userName, setUserName] = useState("");
     const [userEmail, setUserEmail] = useState("");
@@ -55,15 +55,17 @@ const Page = () => {
 
                 // after clicking the submit btn page will go to Login Page using router 
 
-                router.push('/Login');
+                navigate('/login');
+
+                // router.push('/Login');
             })
             .catch((err) => {
                 setErrorMsg(err.message)
             });
     };
 
-    return (
-        <>
+  return (
+<>
             {/* In this Form the user ask to fill the input and after submiting the the form handleSubmission will call! */}
 
             <form action="" onSubmit={handleSubmission}>
@@ -75,10 +77,10 @@ const Page = () => {
 
                 <p>{errorMsg}</p>
 
-                <p>Already have an account <span><Link href="/Login">Login Here!</Link></span></p>
+                <p>Already have an account <span><Link  to={"/login"}>Login Here!</Link></span></p>
             </form>
         </>
-    );
-};
+  )
+}
 
-export default Page;
+export default Register

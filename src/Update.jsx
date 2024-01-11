@@ -1,14 +1,13 @@
-"use client"
-
 import React, { useEffect, useState } from 'react'
-import { auth, db, imageDb } from '../firebase'
+import { auth, db, imageDb } from './firebase'
 import { collection, doc, getDoc, updateDoc } from 'firebase/firestore'
-import Link from 'next/link'
 
-import './update.css'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 
-const page = () => {
+import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+
+const Update = () => {
     const [DisplayCompanyName, setDisplayCompanyName] = useState("")
     const [DisplayPhoneNo, setDisplayPhoneNo] = useState("")
     const [DisplayLink, setDisplayLink] = useState("")
@@ -245,6 +244,7 @@ const page = () => {
       console.log("I was clicked");
     }
     
+
   return (
     <>
         {userID}
@@ -292,9 +292,9 @@ const page = () => {
       
             <br />
 
-        <Link href="/DashBoard">Go to Dashboard</Link>
+        <Link to={"/dashboard"}>Go to Dashboard</Link>
     </>
   )
 }
 
-export default page
+export default Update
