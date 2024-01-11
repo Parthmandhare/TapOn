@@ -1,19 +1,17 @@
-"use client"
-
 import React, { useEffect, useState } from 'react'
-import { auth, db, imageDb } from '../firebase';
+import { auth, db, imageDb } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { signOut } from "firebase/auth";
-import { useRouter } from 'next/navigation'
 import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
 
-import Link from "next/link"
 import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
 
+import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
+const Dashboard = () => {
 
-const page = () => {
-  const router = useRouter();
+    const navigate = useNavigate();
 
   const[displayUser, setDisplayUser] = useState("Please Login Bhai!");
   const[userID, setUserID] = useState("");
@@ -55,7 +53,7 @@ const page = () => {
   const handleSignOut = () =>{
     signOut(auth).then(() => {
       console.log("Loged Out");
-      router.push('/Login');
+      navigate('/login');
     }).catch((error) => {
       console.log(error.message);
     });
@@ -149,54 +147,57 @@ const page = () => {
 
   }
 
-  
-
   return (
     <>
-       <h1>Hello {displayUser}</h1>
+    <h1>Hello {displayUser}</h1>
 
-       <h2>User Email {userEmail}</h2>
+    <h2>User Email {userEmail}</h2>
 
-        <h3>Detail Form!</h3>
+     <h3>Detail Form!</h3>
 
-       <input type="text" placeholder='Enter Company name' value={InputCname} onChange={(e) => {setInputCname(e.target.value)}}/>
-       <input type="text" placeholder='Enter Phone No' value={InputPhoneNo} onChange={(e) => {setInputPhoneNo(e.target.value)}}/>
-       <input type="text" placeholder='Enter Comapany Link' value={Inputlink1} onChange={(e) => {setInputlink1(e.target.value)}}/>
+    <input type="text" placeholder='Enter Company name' value={InputCname} onChange={(e) => {setInputCname(e.target.value)}}/>
+    <input type="text" placeholder='Enter Phone No' value={InputPhoneNo} onChange={(e) => {setInputPhoneNo(e.target.value)}}/>
+    <input type="text" placeholder='Enter Comapany Link' value={Inputlink1} onChange={(e) => {setInputlink1(e.target.value)}}/>
 
-       <input type="text" placeholder='Enter Instagram Link' value={InputInsta} onChange={(e)=>{setInputInsta(e.target.value)}}/>
-       <input type="text" placeholder='Enter Facebook Link' value={InputFacebook} onChange={(e)=>{setInputFacebook(e.target.value)}}/>
-       <input type="text" placeholder='Enter X(Twitter) Link' value={InputX} onChange={(e)=>{setInputX(e.target.value)}}/>
+    <input type="text" placeholder='Enter Instagram Link' value={InputInsta} onChange={(e)=>{setInputInsta(e.target.value)}}/>
+    <input type="text" placeholder='Enter Facebook Link' value={InputFacebook} onChange={(e)=>{setInputFacebook(e.target.value)}}/>
+    <input type="text" placeholder='Enter X(Twitter) Link' value={InputX} onChange={(e)=>{setInputX(e.target.value)}}/>
 
-       <input type="text" placeholder='Enter your Address' value={InputAddress} onChange={(e)=>{setInputAddress(e.target.value)}}/>
+    <input type="text" placeholder='Enter your Address' value={InputAddress} onChange={(e)=>{setInputAddress(e.target.value)}}/>
 
-       {/* input profile pic / Comapany logo  */}
+    {/* input profile pic / Comapany logo  */}
 
-       <input type="file" placeholder='Upload Your Profile/Comapany Photo'  onChange={(e)=>{setUploadPhoto(e.target.files[0])}}/>
+    <input type="file" placeholder='Upload Your Profile/Comapany Photo'  onChange={(e)=>{setUploadPhoto(e.target.files[0])}}/>
 
-       <button onClick={submitInNewWay}>Submit In new Way!</button>
+    <button onClick={submitInNewWay}>Submit In new Way!</button>
 
-       {/* practice purpose */}
-       <button onClick={getData}>Get the data</button>
+    {/* practice purpose */}
+    <button onClick={getData}>Get the data</button>
 
-       <button onClick={handleSignOut} >SignOut!</button>
+    <button onClick={handleSignOut} >SignOut!</button>
 
-          {displayCname }
+       {displayCname }
 
-          {displaylink1}  
-          
-          {displayPhoneNo }
+       {displaylink1}  
+       
+       {displayPhoneNo }
 
-          {displayAddress}
-       <h1>Your Name</h1>
+       {displayAddress}
+    <h1>Your Name</h1>
 
-       {displayUserName}
+    {displayUserName}
 
-       <img src={displayPhoto}/>
+    <img  src={displayPhoto}/>\
 
-       <Link href="/Update">Update The info!</Link>
+    <Link to={"/update"}>Update The info!</Link>
 
-    </>
+    <br />
+    <br />
+
+    {/* <a href={`/${userID}`}>View Mini Website!</a> */}
+
+ </>
   )
 }
 
-export default page
+export default Dashboard
