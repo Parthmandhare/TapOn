@@ -194,7 +194,7 @@ const Dashboard = () => {
     <br />
     <br />
 
-    {/* <a href={`/${userID}`}>View Mini Website!</a> */}
+    <a href={`/profile/${userID}`}>View Mini Website!</a>
 
  </>
   )

@@ -5,6 +5,7 @@ import Register from './Register';
 import Dashboard from './Dashboard';
 import Update from './Update';
 import Landing from './Landing';
+import Profile from './Profile';
 
 function App() {
   return (
@@ -18,6 +19,8 @@ function App() {
             <Route path='/dashboard' element={<Dashboard/>} />
 
             <Route path='/update' element={<Update/>} />
+            
+            <Route path='/profile/:id' element={<Profile/>} />
 
         </Routes>
        </BrowserRouter>
