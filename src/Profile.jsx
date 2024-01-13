@@ -5,18 +5,18 @@ import { auth, db } from './firebase';
 
 const Profile = () => {
     const { id } = useParams();
-    const [userID, setUserID] = useState("");
+    // const [userID, setUserID] = useState("");
     const [userData, setUserData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
   
-    useEffect(() => {
-      auth.onAuthStateChanged((user) => {
-        console.log("Auth State Changed:", user); // Log user details
-        setUserID(user.uid);
-        console.log("userID:", userID); // Log userID value
-      });
-    }, []);
+    // useEffect(() => {
+    //   auth.onAuthStateChanged((user) => {
+    //     console.log("Auth State Changed:", user); // Log user details
+    //     setUserID(user.uid);
+    //     console.log("userID:", userID); // Log userID value
+    //   });
+    // }, []);
   
     useEffect(() => {
       const fetchData = async () => {
@@ -24,8 +24,8 @@ const Profile = () => {
         setError(null);
   
         try {
-          console.log("Fetching data for userID:", userID); // Log userID before fetching
-          const docRef = doc(db, "UserInfo", userID);
+          console.log("Fetching data for userID:", id); // Log userID before fetching
+          const docRef = doc(db, "UserInfo", id);
           const docSnap = await getDoc(docRef);
   
           if (docSnap.exists()) {
@@ -42,7 +42,9 @@ const Profile = () => {
       };
   
       fetchData();
-    }, [id, userID]);
+    }, [id]);
+
+    
   
   return (
     <div>
@@ -52,7 +54,15 @@ const Profile = () => {
         <div>
           {/* Display user information here */}
           <h2>{userData.Company_Name}</h2>
-          <p>{userData.User_Name}</p>
+          <h5>{userData.User_Name}</h5>
+          <h5>{userData.PhoneNumber}</h5>
+          <h5>{userData.Link}</h5>
+          <h5>{userData.Facebook_Link}</h5>
+          <h5>{userData.Instagram_Link}</h5>
+          <h5>{userData.X_Link}</h5>
+          <h5>{userData.Address}</h5>
+          
+          {/* <img src={userData.Profile_URl} alt="not found" /> */}
           {/* ...other fields... */}
         </div>
       )}
