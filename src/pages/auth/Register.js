@@ -4,19 +4,23 @@ import Uname from "../Uname";
 import { useParams } from "react-router-dom";
 
 import { useState } from 'react';
-import { createUserWithEmailAndPassword , updateProfile} from "firebase/auth";
+import { createUserWithEmailAndPassword , getAdditionalUserInfo, signInWithPopup, updateProfile} from "firebase/auth";
 import { auth, db } from './firebase';
 // import { useRouter } from 'next/navigation'
 // import Link from "next/link";
 import { collection, doc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
+import { GoogleAuthProvider } from "firebase/auth";
+
+const provider = new GoogleAuthProvider();
+
 export default function Register() {
   const {id} = useParams();
 
   const navigate = useNavigate();
 
-    const [userName, setUserName] = useState("");
+    const [FullName, setFullName] = useState("");
     const [userEmail, setUserEmail] = useState("");
     const [userPass, setUserPass] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
@@ -28,7 +32,7 @@ export default function Register() {
     const handleSubmission = (e) => {
         e.preventDefault();
 
-        if (userName === "" || userEmail === "" || userPass === "") {
+        if (FullName === "" || userEmail === "" || userPass === "") {
             setErrorMsg("You haven't entered all fields");
             return;
         }
@@ -42,16 +46,30 @@ export default function Register() {
                 const user = res.user;
                 const userUID = user.uid
 
-                const CollectionRef = doc(db, "UserInfo", userUID);
+                // const CollectionRef = doc(db, "UserInfo", userUID);
+                const userRef = doc(collection(db, "UserInfo"), userUID);
 
-                const docRef = await setDoc(CollectionRef, {userName}).then((re)=>{
-                    
-                }).catch((e)=>{
-                    console.log("FireStore error is",e.message);
-                })
+                const data = {
+                  Full_Name : FullName
+                }
+
+                // const docRef = await setDoc(CollectionRef, data).then((re)=>{
+                //     console.log("Full name is added!");
+                // }).catch((e)=>{
+                //     console.log("FireStore error is",e.message);
+                // })
+
+                setDoc(userRef, data)
+    .then(() => {
+        console.log("Document has been added successfully");
+
+    })
+    .catch(error => {
+        console.log(error);
+    })
 
                 await updateProfile(user, {
-                    displayName: userName
+                    displayName: FullName
                 })
                 setDisableBtn(true);
 
@@ -65,6 +83,54 @@ export default function Register() {
                 setErrorMsg(err.message)
             });
     };
+
+    const SignupWithGoogle = () => {
+      signInWithPopup(auth, provider)
+  .then((result) => {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    // The signed-in user info.
+    const user = result.user;
+    // IdP data available using getAdditionalUserInfo(result)
+    console.log(user.uid);
+
+    const user_uid = user.uid;
+    const userRef = doc(collection(db, "UserInfo"), user_uid);
+
+    const data = {
+      Full_Name : user.displayName
+    }
+
+    // const docRef = await setDoc(CollectionRef, data).then((re)=>{
+    //     console.log("Full name is added!");
+    // }).catch((e)=>{
+    //     console.log("FireStore error is",e.message);
+    // })
+
+    setDoc(userRef, data)
+.then(() => {
+console.log("Document has been added successfully");
+navigate('/uname');
+})
+.catch(error => {
+console.log(error);
+})
+
+
+
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+  });
+    }
 
   return (
     <>
@@ -82,7 +148,7 @@ export default function Register() {
                  
                   <button
                     className="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
-                    type="button"
+                    type="button" onClick={SignupWithGoogle}
                   >
                     <img
                       alt="..."
@@ -110,7 +176,7 @@ export default function Register() {
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Name"
-                      value={userName} onChange={(e) => { setUserName(e.target.value) }}
+                      value={FullName} onChange={(e) => { setFullName(e.target.value) }}
                     />
                   </div>
 
