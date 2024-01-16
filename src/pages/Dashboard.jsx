@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { auth, db, imageDb } from './firebase';
+import { auth, db, imageDb } from '../pages/auth/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { signOut } from "firebase/auth";
 import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
@@ -11,7 +11,8 @@ import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
 
-    const navigate = useNavigate();
+  
+  const navigate = useNavigate();
 
   const[displayUser, setDisplayUser] = useState("Please Login Bhai!");
   const[userID, setUserID] = useState("");
@@ -40,6 +41,8 @@ const Dashboard = () => {
   const[uploadPhoto, setUploadPhoto] = useState("");
 
   const[ImageURL, setImageURL] = useState("");
+
+  const[InputDesc, setInputDesc] = useState("");
 
   useEffect(()=>{
       auth.onAuthStateChanged((user)=>{
@@ -98,7 +101,8 @@ const Dashboard = () => {
       Facebook_Link: InputFacebook,
       X_Link: InputX,
       Profile_URl: ImageURL,
-      Address: InputAddress
+      Address: InputAddress,
+      Desc: InputDesc
     }
 
     const userRef = doc(collection(db, "UserInfo"), userID);
@@ -147,56 +151,58 @@ const Dashboard = () => {
 
   }
 
+
   return (
     <>
-    <h1>Hello {displayUser}</h1>
+       <h1>Hello {displayUser}</h1>
 
-    <h2>User Email {userEmail}</h2>
+<h2>User Email {userEmail}</h2>
 
-     <h3>Detail Form!</h3>
+ <h3>Detail Form!</h3>
 
-    <input type="text" placeholder='Enter Company name' value={InputCname} onChange={(e) => {setInputCname(e.target.value)}}/>
-    <input type="text" placeholder='Enter Phone No' value={InputPhoneNo} onChange={(e) => {setInputPhoneNo(e.target.value)}}/>
-    <input type="text" placeholder='Enter Comapany Link' value={Inputlink1} onChange={(e) => {setInputlink1(e.target.value)}}/>
+<input type="text" placeholder='Enter Company name' value={InputCname} onChange={(e) => {setInputCname(e.target.value)}}/>
+<input type="text" placeholder='Enter Phone No' value={InputPhoneNo} onChange={(e) => {setInputPhoneNo(e.target.value)}}/>
+<input type="text" placeholder='Enter Comapany Link' value={Inputlink1} onChange={(e) => {setInputlink1(e.target.value)}}/>
 
-    <input type="text" placeholder='Enter Instagram Link' value={InputInsta} onChange={(e)=>{setInputInsta(e.target.value)}}/>
-    <input type="text" placeholder='Enter Facebook Link' value={InputFacebook} onChange={(e)=>{setInputFacebook(e.target.value)}}/>
-    <input type="text" placeholder='Enter X(Twitter) Link' value={InputX} onChange={(e)=>{setInputX(e.target.value)}}/>
+<input type="text" placeholder='Enter Instagram Link' value={InputInsta} onChange={(e)=>{setInputInsta(e.target.value)}}/>
+<input type="text" placeholder='Enter Facebook Link' value={InputFacebook} onChange={(e)=>{setInputFacebook(e.target.value)}}/>
+<input type="text" placeholder='Enter X(Twitter) Link' value={InputX} onChange={(e)=>{setInputX(e.target.value)}}/>
 
-    <input type="text" placeholder='Enter your Address' value={InputAddress} onChange={(e)=>{setInputAddress(e.target.value)}}/>
+<input type="text" placeholder='Enter your Address' value={InputAddress} onChange={(e)=>{setInputAddress(e.target.value)}}/>
 
-    {/* input profile pic / Comapany logo  */}
+<input type="text" placeholder='Enter your Desc' value={InputDesc} onChange={(e)=>{setInputDesc(e.target.value)}}/>
 
-    <input type="file" placeholder='Upload Your Profile/Comapany Photo'  onChange={(e)=>{setUploadPhoto(e.target.files[0])}}/>
+{/* input profile pic / Comapany logo  */}
 
-    <button onClick={submitInNewWay}>Submit In new Way!</button>
+<input type="file" placeholder='Upload Your Profile/Comapany Photo'  onChange={(e)=>{setUploadPhoto(e.target.files[0])}}/>
 
-    {/* practice purpose */}
-    <button onClick={getData}>Get the data</button>
+<button onClick={submitInNewWay}>Submit In new Way!</button>
 
-    <button onClick={handleSignOut} >SignOut!</button>
+{/* practice purpose */}
+<button onClick={getData}>Get the data</button>
 
-       {displayCname }
+<button onClick={handleSignOut} >SignOut!</button>
 
-       {displaylink1}  
-       
-       {displayPhoneNo }
+   {displayCname }
 
-       {displayAddress}
-    <h1>Your Name</h1>
+   {displaylink1}  
+   
+   {displayPhoneNo }
 
-    {displayUserName}
+   {displayAddress}
+<h1>Your Name</h1>
 
-    <img  src={displayPhoto}/>\
+{displayUserName}
 
-    <Link to={"/update"}>Update The info!</Link>
+<img  src={displayPhoto}/>\
 
-    <br />
-    <br />
+<Link to={"/update"}>Update The info!</Link>
 
-    <a href={`/profile/${userID}`}>View Mini Website!</a>
+<br />
+<br />
 
- </>
+<a href={`/profile/${userID}`}>View Mini Website!</a>
+    </>
   )
 }
 
