@@ -1,11 +1,16 @@
 import  {Link}  from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react'
-import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { auth } from './firebase';
+import {signInWithRedirect, GoogleAuthProvider } from "firebase/auth";
+
 
 
 function Login() {
+
+  
+
   const navigate = useNavigate();
 
   const [userEmail, setUserEmail] = useState("");
@@ -30,6 +35,32 @@ function Login() {
         setErrorMsg(error.message);
       });
       }
+
+      const LoginWithGoogle = () => {
+        const provider = new GoogleAuthProvider();
+
+        signInWithPopup(auth, provider)
+  .then((result) => {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    // The signed-in user info.
+    const user = result.user;
+    // IdP data available using getAdditionalUserInfo(result)
+    navigate('/dashboard');
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+  });
+
+      }
   return (
     <>
       <div className="container mx-auto px-4 h-full">
@@ -52,6 +83,7 @@ function Login() {
                       alt="..."
                       className="w-5 mr-1"
                       src={require("../../assets/img/google.svg").default}
+                      onClick={LoginWithGoogle}
                     />
                     Google
                   </button>
