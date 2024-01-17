@@ -10,11 +10,13 @@ import Register from "./Register";
 
 import Nav from "../../components/Navbars/Nav"
 import Smallf from "../../components/Footers/Smallf"
+import ForgotPass from "./ForgotPass";
 
 const components = {
   Login : Login,
   uname : Uname,
-  register: Register
+  register: Register,
+  ForgotPass : ForgotPass
 }
 
 export default function Authen() {

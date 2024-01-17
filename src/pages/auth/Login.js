@@ -13,6 +13,8 @@ function Login() {
 
   const navigate = useNavigate();
 
+  const provider = new GoogleAuthProvider();
+
   const [userEmail, setUserEmail] = useState("");
   const [userPass, setUserPass] = useState("");
   const[errorMsg, setErrorMsg] = useState("");
@@ -37,7 +39,7 @@ function Login() {
       }
 
       const LoginWithGoogle = () => {
-        const provider = new GoogleAuthProvider();
+        
 
         signInWithPopup(auth, provider)
   .then((result) => {
@@ -77,13 +79,13 @@ function Login() {
                   
                   <button
                     className="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
-                    type="button"
+                    type="button" onClick={LoginWithGoogle}
                   >
                     <img
                       alt="..."
                       className="w-5 mr-1"
                       src={require("../../assets/img/google.svg").default}
-                      onClick={LoginWithGoogle}
+                      
                     />
                     Google
                   </button>
@@ -152,13 +154,11 @@ function Login() {
             </div>
             <div className="flex flex-wrap mt-6 relative">
               <div className="w-1/2">
-                <a
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
+                <Link to= "/auth/ForgotPass"
                   className="text-blueGray-200"
                 >
                   <small>Forgot password?</small>
-                </a>
+                </Link>
               </div>
               <div className="w-1/2 text-right">
               <Link to="/auth/register" className="text-blueGray-200" >

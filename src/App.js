@@ -8,9 +8,7 @@ import Landin from "./pages/Landin"
 import Profile from './pages/Profile';
 import Update from './pages/Update';
 import Dashboard from './pages/Dashboard';
-
-
-
+import Admin from './pages/Admin';
 
 
 function App() {
@@ -29,6 +27,8 @@ function App() {
             <Route path="/:id" element={<Authen/>}/>
 
             <Route path='/dashboard' element={<Dashboard/>} />
+
+            <Route path='/Admin' element={<Admin/>}/>
 
 <Route path='/update' element={<Update/>} />
 
