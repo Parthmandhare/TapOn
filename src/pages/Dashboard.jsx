@@ -1,67 +1,89 @@
-import React, { useEffect, useState } from 'react'
-import { auth, db, imageDb } from '../pages/auth/firebase';
-import { onAuthStateChanged } from 'firebase/auth';
+import React, { useEffect, useState } from "react";
+import { auth, db, imageDb } from "../pages/auth/firebase";
+import { onAuthStateChanged } from "firebase/auth";
 import { signOut } from "firebase/auth";
-import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
+import { MdModeEdit } from "react-icons/md";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 
-import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
+import {
+  getDownloadURL,
+  ref,
+  uploadBytes,
+  uploadBytesResumable,
+} from "firebase/storage";
 
-import { Link } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import DashNav from "../components/Navbars/DashNav";
 
 const Dashboard = () => {
-
-  
   const navigate = useNavigate();
 
-  const[displayUser, setDisplayUser] = useState("Please Login Bhai!");
-  const[userID, setUserID] = useState("");
+  const [displayUser, setDisplayUser] = useState("Please Login Bhai!");
+  const [userID, setUserID] = useState("");
 
-  const[displayCname , setdisplayCname] = useState("");
-  const[displaylink1 , setdisplaylink1] = useState("");
-  const[displayPhoneNo , setdisplayPhoneNo] = useState("");
+  const [displayCname, setdisplayCname] = useState("");
+  const [displaylink1, setdisplaylink1] = useState("");
+  const [displayPhoneNo, setdisplayPhoneNo] = useState("");
 
-  const[displayUserName, setDisplayUserName] = useState("");
+  const [displayUserName, setDisplayUserName] = useState("");
 
-  const[displayPhoto, setDisplayPhoto] = useState("");
+  const [displayPhoto, setDisplayPhoto] = useState("");
+  const [displayAddress, setDisplayAddress] = useState("");
 
-  const[displayAddress, setDisplayAddress] = useState("");
+  const [displayFacebook_Link, setDisplayFacebook_Link] = useState("Please Enter Your Facebook Link");
+  const [displayInsta_Link, setDisplayInsta_Link] = useState("Please Enter Your Instagram Link");
+  const [displayX_Link, setdisplayX_Link] = useState("Please Enter Your Twitter Link");
+  const [displayDesc, setDisplayDesc] = useState("Enter Your Desc");
 
   // variables for inputing the data
 
-  const[InputCname , setInputCname] = useState("");
-  const[Inputlink1 , setInputlink1] = useState("");
-  const[InputPhoneNo , setInputPhoneNo] = useState("");
-  const[InputInsta, setInputInsta] =useState("");
-  const[InputFacebook, setInputFacebook] = useState("");
-  const[InputX, setInputX] =useState("");
-  const[InputAddress, setInputAddress] = useState("");
+  const [InputCname, setInputCname] = useState("");
+  const [Inputlink1, setInputlink1] = useState("");
+  const [InputPhoneNo, setInputPhoneNo] = useState("");
+  const [InputInsta, setInputInsta] = useState("");
+  const [InputFacebook, setInputFacebook] = useState("");
+  const [InputX, setInputX] = useState("");
+  const [InputAddress, setInputAddress] = useState("");
 
-  const[userEmail, setUserEmail] = useState("");
-  const[uploadPhoto, setUploadPhoto] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [uploadPhoto, setUploadPhoto] = useState("");
 
-  const[ImageURL, setImageURL] = useState("");
+  const [ImageURL, setImageURL] = useState("");
 
-  const[InputDesc, setInputDesc] = useState("");
+  const [InputDesc, setInputDesc] = useState("");
 
-  useEffect(()=>{
-      auth.onAuthStateChanged((user)=>{
+  const [showModal, setShowModal] = useState(false);
+  const [UN,setUN] = useState("");
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
       setDisplayUser(user.displayName);
       // console.log(user.email);
       setUserID(user.uid);
-      setUserEmail(user.email)
-    })
-  })
-
-  const handleSignOut = () =>{
-    signOut(auth).then(() => {
-      console.log("Loged Out");
-      navigate('/login');
-    }).catch((error) => {
-      console.log(error.message);
+      setUserEmail(user.email);
     });
-  }
+    getData();
+  });
 
+  const handleSignOut = () => {
+    signOut(auth)
+      .then(() => {
+        console.log("Loged Out");
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
 
   const getData = async () => {
     const docRef = doc(db, "UserInfo", userID);
@@ -76,52 +98,66 @@ const Dashboard = () => {
     setDisplayUserName(docData.data().User_Name);
     setDisplayPhoto(docData.data().Profile_URl);
     setDisplayAddress(docData.data().Address);
-  }
+    setDisplayFacebook_Link(docData.data().Facebook_Link);
+    setDisplayInsta_Link(docData.data().Instagram_Link);
+    setdisplayX_Link(docData.data().X_Link);
+    setDisplayDesc(docData.data().Desc);
 
-  let isNullOrWhiteSpaces = value =>{
+    setUN(docData.data().username)
+  };
+
+  let isNullOrWhiteSpaces = (value) => {
     value = value.toString();
-    return (value == null || value.replaceAll(' ', '').length < 1);
-  }
+    return value == null || value.replaceAll(" ", "").length < 1;
+  };
 
-  const submitInNewWay = (e) =>{
-
+  const submitInNewWay = (e) => {
     e.preventDefault();
 
-    if(isNullOrWhiteSpaces (InputCname) || isNullOrWhiteSpaces(InputPhoneNo) || isNullOrWhiteSpaces(Inputlink1) || isNullOrWhiteSpaces(InputFacebook)|| isNullOrWhiteSpaces(InputInsta)|| isNullOrWhiteSpaces(InputX)){
-      alert("Fill all the field Bro! If you dont have any social media link then just enter random!");
+    if (
+      isNullOrWhiteSpaces(InputCname) ||
+      isNullOrWhiteSpaces(InputPhoneNo) ||
+      isNullOrWhiteSpaces(Inputlink1) ||
+      isNullOrWhiteSpaces(InputFacebook) ||
+      isNullOrWhiteSpaces(InputInsta) ||
+      isNullOrWhiteSpaces(InputX)
+    ) {
+      alert(
+        "Fill all the field Bro! If you dont have any social media link then just enter random!"
+      );
       return;
     }
 
     const data = {
       User_Name: displayUser,
-      Company_Name : InputCname,
-      PhoneNumber : InputPhoneNo,
+      Company_Name: InputCname,
+      PhoneNumber: InputPhoneNo,
       Link: Inputlink1,
       Instagram_Link: InputInsta,
       Facebook_Link: InputFacebook,
       X_Link: InputX,
       Profile_URl: ImageURL,
       Address: InputAddress,
-      Desc: InputDesc
-    }
+      Desc: InputDesc,
+    };
 
     const userRef = doc(collection(db, "UserInfo"), userID);
 
-    setDoc(userRef, data)
-    .then(() => {
+    updateDoc(userRef, data)
+      .then(() => {
         console.log("Document has been added successfully");
         setInputCname("");
         setInputPhoneNo("");
         setInputlink1("");
         setInputFacebook("");
         setInputInsta("");
-        setInputX("")
+        setInputX("");
         setImageURL("");
         setInputAddress("");
-    })
-    .catch(error => {
+      })
+      .catch((error) => {
         console.log(error);
-    })
+      });
 
     const imgRef = ref(imageDb, `files/${userID}`);
     const uploadTask = uploadBytesResumable(imgRef, uploadPhoto);
@@ -148,62 +184,169 @@ const Dashboard = () => {
         // Alert the user about successful upload and update
       }
     );
-
-  }
-
+  };
 
   return (
-    <>
-       <h1>Hello {displayUser}</h1>
+        <>
+           <h1>Hello {displayUser}</h1>
 
-<h2>User Email {userEmail}</h2>
+    <h2>User Email {userEmail}</h2>
 
- <h3>Detail Form!</h3>
+     <h3>Detail Form!</h3>
 
-<input type="text" placeholder='Enter Company name' value={InputCname} onChange={(e) => {setInputCname(e.target.value)}}/>
-<input type="text" placeholder='Enter Phone No' value={InputPhoneNo} onChange={(e) => {setInputPhoneNo(e.target.value)}}/>
-<input type="text" placeholder='Enter Comapany Link' value={Inputlink1} onChange={(e) => {setInputlink1(e.target.value)}}/>
+    <input type="text" placeholder='Enter Company name' value={InputCname} onChange={(e) => {setInputCname(e.target.value)}}/>
+    <input type="text" placeholder='Enter Phone No' value={InputPhoneNo} onChange={(e) => {setInputPhoneNo(e.target.value)}}/>
+    <input type="text" placeholder='Enter Comapany Link' value={Inputlink1} onChange={(e) => {setInputlink1(e.target.value)}}/>
 
-<input type="text" placeholder='Enter Instagram Link' value={InputInsta} onChange={(e)=>{setInputInsta(e.target.value)}}/>
-<input type="text" placeholder='Enter Facebook Link' value={InputFacebook} onChange={(e)=>{setInputFacebook(e.target.value)}}/>
-<input type="text" placeholder='Enter X(Twitter) Link' value={InputX} onChange={(e)=>{setInputX(e.target.value)}}/>
+    <input type="text" placeholder='Enter Instagram Link' value={InputInsta} onChange={(e)=>{setInputInsta(e.target.value)}}/>
+    <input type="text" placeholder='Enter Facebook Link' value={InputFacebook} onChange={(e)=>{setInputFacebook(e.target.value)}}/>
+    <input type="text" placeholder='Enter X(Twitter) Link' value={InputX} onChange={(e)=>{setInputX(e.target.value)}}/>
 
-<input type="text" placeholder='Enter your Address' value={InputAddress} onChange={(e)=>{setInputAddress(e.target.value)}}/>
+    <input type="text" placeholder='Enter your Address' value={InputAddress} onChange={(e)=>{setInputAddress(e.target.value)}}/>
 
-<input type="text" placeholder='Enter your Desc' value={InputDesc} onChange={(e)=>{setInputDesc(e.target.value)}}/>
+    <input type="text" placeholder='Enter your Desc' value={InputDesc} onChange={(e)=>{setInputDesc(e.target.value)}}/>
 
-{/* input profile pic / Comapany logo  */}
+    {/* input profile pic / Comapany logo  */}
 
-<input type="file" placeholder='Upload Your Profile/Comapany Photo'  onChange={(e)=>{setUploadPhoto(e.target.files[0])}}/>
+    <input type="file" placeholder='Upload Your Profile/Comapany Photo'  onChange={(e)=>{setUploadPhoto(e.target.files[0])}}/>
 
-<button onClick={submitInNewWay}>Submit In new Way!</button>
+    <button onClick={submitInNewWay}>Submit In new Way!</button>
 
-{/* practice purpose */}
-<button onClick={getData}>Get the data</button>
+    {/* practice purpose */}
+    <button onClick={getData}>Get the data</button>
 
-<button onClick={handleSignOut} >SignOut!</button>
+    <button onClick={handleSignOut} >SignOut!</button>
 
-   {displayCname }
+       {displayCname }
 
-   {displaylink1}  
-   
-   {displayPhoneNo }
+       {displaylink1}
 
-   {displayAddress}
-<h1>Your Name</h1>
+       {displayPhoneNo }
 
-{displayUserName}
+       {displayAddress}
+    <h1>Your Name</h1>
 
-<img  src={displayPhoto}/>\
+    {displayUserName}
 
-<Link to={"/update"}>Update The info!</Link>
+    <img  src={displayPhoto}/>\
 
-<br />
-<br />
+    <Link to={"/update"}>Update The info!</Link>
 
-<a href={`/profile/${userID}`}>View Mini Website!</a>
-    </>
-  )
-}
+    <br />
+    <br />
 
-export default Dashboard
+    <Link to={"/Appreance"}>Appreance</Link>
+
+    <a href={`/${UN}/${userID}`}>View Mini Website!</a>
+        </>
+
+
+    // <>
+    //   <div className="flex flex-row gap-5">
+    //     <div>
+    //       <div>
+    //         <p>
+    //           Your Live Miniwebsite: <span>www.google.com</span>
+    //         </p>
+    //         <div>
+    
+    //           <h3>User Details Is here!</h3>
+    //           {/* company name */}
+    //           <div className="max-w-sm rounded overflow-hidden shadow-lg" id="box">
+    //             <div className="px-6 py-4">
+    //               <div className="font-bold text-xl mb-2 flex flex-row gap-5">Company Name <MdModeEdit /> </div>
+    //               <p className="text-gray-700 text-base">
+    //                 {displayCname}
+    //               </p>
+    //             </div>
+    //           </div>
+
+    //           {/* Phone Number */}
+    //           <div className="max-w-sm rounded overflow-hidden shadow-lg">
+    //             <div className="px-6 py-4">
+    //               <div className="font-bold text-xl mb-2 flex flex-row gap-5">Phone Number <MdModeEdit /> </div>
+    //               <p className="text-gray-700 text-base">
+    //                 {displayPhoneNo}
+    //               </p>
+    //             </div>
+    //           </div>
+
+    //           {/* Address */}
+    //           <div className="max-w-sm rounded overflow-hidden shadow-lg">
+    //             <div className="px-6 py-4">
+    //               <div className="font-bold text-xl mb-2 flex flex-row gap-5">Address<MdModeEdit /> </div>
+    //               <p className="text-gray-700 text-base">
+    //                 {displayAddress}
+    //               </p>
+    //             </div>
+    //           </div>
+
+
+    //         {/* Link */}
+
+    //           <div className="max-w-sm rounded overflow-hidden shadow-lg">
+    //             <div className="px-6 py-4">
+    //               <div className="font-bold text-xl mb-2 flex flex-row gap-5">Link<MdModeEdit /> </div>
+    //               <p className="text-gray-700 text-base">
+    //                 {displaylink1}
+    //               </p>
+    //             </div>
+    //           </div>
+
+    //           {/* Instagram Link */}
+    //           <div className="max-w-sm rounded overflow-hidden shadow-lg">
+    //             <div className="px-6 py-4">
+    //               <div className="font-bold text-xl mb-2 flex flex-row gap-5">Instagram Link<MdModeEdit /> </div>
+    //               <p className="text-gray-700 text-base">
+    //                 {displayInsta_Link}
+    //               </p>
+    //             </div>
+    //           </div>
+
+    //           {/* FaceBook Link */}
+    //           <div className="max-w-sm rounded overflow-hidden shadow-lg">
+    //             <div className="px-6 py-4">
+    //               <div className="font-bold text-xl mb-2 flex flex-row gap-5">Facebook Link <MdModeEdit /> </div>
+    //               <p className="text-gray-700 text-base">
+    //                 {displayFacebook_Link}
+    //               </p>
+    //             </div>
+    //           </div>
+
+    //           {/* X Link */}
+    //           <div className="max-w-sm rounded overflow-hidden shadow-lg">
+    //             <div className="px-6 py-4">
+    //               <div className="font-bold text-xl mb-2 flex flex-row gap-5">X Link<MdModeEdit /> </div>
+    //               <p className="text-gray-700 text-base">
+    //                 {displayX_Link}
+    //               </p>
+    //             </div>
+    //           </div>
+
+    //           {/* Desc */}
+    //           <div className="max-w-sm rounded overflow-hidden shadow-lg">
+    //             <div className="px-6 py-4">
+    //               <div className="font-bold text-xl mb-2 flex flex-row gap-5">Description<MdModeEdit /> </div>
+    //               <p className="text-gray-700 text-base">
+    //                 {displayDesc}
+    //               </p>
+    //             </div>
+    //           </div>
+              
+    //         </div>
+    //       </div>
+    //     </div>
+    //     <div>
+    //       <div>Phone</div>
+    //     </div>
+    //   </div>
+
+    //   <div>
+
+
+    // </div>
+    // </>
+  );
+};
+
+export default Dashboard;
