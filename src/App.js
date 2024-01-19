@@ -10,6 +10,7 @@ import Update from './pages/Update';
 import Dashboard from './pages/Dashboard';
 import Admin from './pages/Admin';
 import Remix from './pages/Remix';
+import Appreance from './pages/Appreance';
 
 
 
@@ -32,6 +33,8 @@ function App() {
             <Route path='/remix' element={<Remix/>} />
 
             <Route path='/Admin' element={<Admin/>}/>
+
+            <Route path='/Appreance' element={<Appreance/>}/>
 
 
 <Route path='/update' element={<Update/>} />

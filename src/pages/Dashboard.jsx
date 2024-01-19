@@ -235,6 +235,8 @@ const Dashboard = () => {
     <br />
     <br />
 
+    <Link to={"/Appreance"}>Appreance</Link>
+
     <a href={`/${UN}/${userID}`}>View Mini Website!</a>
         </>
 
