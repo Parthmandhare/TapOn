@@ -6,6 +6,16 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import img1 from "../assets/img/Theme1.jpg"
 import img2 from "../assets/img/Theme2.jpg"
 
+import template1 from "../assets/img/template_1.png"
+import template2 from "../assets/img/template_2.png"
+import template3 from "../assets/img/template_3.png"
+import template4 from "../assets/img/template_4.png"
+import template5 from "../assets/img/template_5.png"
+
+import "./Appreance.css"
+
+import DashNav from "../components/Navbars/Navprof";
+
 const Appreance = () => {
   const [Theme_Selected, setTheme_Selected] = useState("Theme1");
   const [UserID, setUserID] = useState("");
@@ -33,7 +43,7 @@ const Appreance = () => {
   const changeTheme = async (customTheme) => {
 
 
-    const imgRef = ref(imageDb, `Themes/${customTheme}.jpg`);
+    const imgRef = ref(imageDb, `Themes/${customTheme}.png`);
 
     const url = await getDownloadURL(imgRef);
     
@@ -62,63 +72,80 @@ const Appreance = () => {
 
   };
 
+//   const ThemeContainer= styled.div`
+    
+
+
+//   `
+
 
   return (
     <>
-      <div className="flex flex-row gap-5">
-        <div className="flex flex-col gap-5 justify-start">
-          <h1>Select Themes!</h1>
-
+    <DashNav/>
+    <div className="m-15 border-1 p-10  ">
+    <h1 className="text-3xl font-semibold mb-10">Select Themes!</h1>
+      <div className="grid grid-cols-3 gap-4 ">
+        <div className="grid grid-cols-2 text-center shadow-xl p-10 bg-gray-100 rounded-xl ">
           <div
             onClick={() => {
-              changeTheme("Theme1");
+              changeTheme("template_1");
             }}
+            className="w-1/2 text-center mb-10"
           >
-            <img src={img1} alt="" />
+            <img src={template1} alt="" id="template_img"/>
+            <h5>Template 1</h5>
           </div>
           <div
             onClick={() => {
-              changeTheme("Theme2");
+              changeTheme("template_2");
             }}
+            className="w-1/2 mb-10"
           >
-            <img src={img2} alt="" />
+            <img src={template2} alt="" id="template_img"/>
+            <h5>Template 2</h5>
           </div>
           <div
             onClick={() => {
-              changeTheme("Theme3");
+              changeTheme("template_3");
             }}
+            className="w-1/2 mb-10"
           >
-            theme3
+            <img src={template3} alt="" id="template_img"/>
+            <h5>Template 3</h5>
           </div>
           <div
             onClick={() => {
-              changeTheme("Theme4");
+              changeTheme("template_4");
             }}
+            className="w-1/2 mb-10" 
           >
-            theme4
+            <img src={template4} alt="" id="template_img"/>
+            <h5>Template 4</h5>
           </div>
           <div
             onClick={() => {
-              changeTheme("Theme5");
+              changeTheme("template_5");
             }}
+            className="w-1/2 mb-10"
           >
-            theme5
+            <img src={template5} alt=""  id="template_img"/>
+            <h5>Template 5</h5>
           </div>
-          <div
+          {/* <div
             onClick={() => {
-              changeTheme("Theme6");
+              changeTheme("template_6");
             }}
           >
             theme6
-          </div>
+          </div> */}
         </div>
-
+        <div class="border-2 w-0 h-ful"></div>
         <div className="flex flex-col">
-          <div>Phone</div>
-          <div>
-            <img src={theme_url} />
+          <div className="border-8 border-black  rounded-xl h-lvh fixed" id="phone_display">
+            <img src={theme_url} id="phone_display_img"/>
           </div>
         </div>
+      </div>
       </div>
     </>
   );
