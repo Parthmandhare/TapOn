@@ -22,7 +22,10 @@ import {
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-import DashNav from "../components/Navbars/DashNav";
+import DashNav from "../components/Navbars/Navprof";
+
+
+
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -64,6 +67,10 @@ const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
   const [UN,setUN] = useState("");
 
+  const [theme_url, setTheme_url] = useState("");
+  const [Theme_Selected, setTheme_Selected] = useState("Theme1");
+
+
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       setDisplayUser(user.displayName);
@@ -72,7 +79,17 @@ const Dashboard = () => {
       setUserEmail(user.email);
     });
     getData();
+    setThemes();
   });
+
+  const setThemes = async () => {
+    const docRef = doc(db, "UserInfo", userID);
+
+    const docData = await getDoc(docRef);
+
+    setTheme_Selected(docData.data().Theme);
+    setTheme_url(docData.data().Theme_url);
+  };
 
   const handleSignOut = () => {
     signOut(auth)
@@ -187,59 +204,85 @@ const Dashboard = () => {
   };
 
   return (
-        <>
-           <h1>Hello {displayUser}</h1>
+    //     <>
+    //        <h1>Hello {displayUser}</h1>
 
-    <h2>User Email {userEmail}</h2>
+    // <h2>User Email {userEmail}</h2>
 
-     <h3>Detail Form!</h3>
+    //  <h3>Detail Form!</h3>
 
-    <input type="text" placeholder='Enter Company name' value={InputCname} onChange={(e) => {setInputCname(e.target.value)}}/>
-    <input type="text" placeholder='Enter Phone No' value={InputPhoneNo} onChange={(e) => {setInputPhoneNo(e.target.value)}}/>
-    <input type="text" placeholder='Enter Comapany Link' value={Inputlink1} onChange={(e) => {setInputlink1(e.target.value)}}/>
+    // <input type="text" placeholder='Enter Company name' value={InputCname} onChange={(e) => {setInputCname(e.target.value)}}/>
+    // <input type="text" placeholder='Enter Phone No' value={InputPhoneNo} onChange={(e) => {setInputPhoneNo(e.target.value)}}/>
+    // <input type="text" placeholder='Enter Comapany Link' value={Inputlink1} onChange={(e) => {setInputlink1(e.target.value)}}/>
 
-    <input type="text" placeholder='Enter Instagram Link' value={InputInsta} onChange={(e)=>{setInputInsta(e.target.value)}}/>
-    <input type="text" placeholder='Enter Facebook Link' value={InputFacebook} onChange={(e)=>{setInputFacebook(e.target.value)}}/>
-    <input type="text" placeholder='Enter X(Twitter) Link' value={InputX} onChange={(e)=>{setInputX(e.target.value)}}/>
+    // <input type="text" placeholder='Enter Instagram Link' value={InputInsta} onChange={(e)=>{setInputInsta(e.target.value)}}/>
+    // <input type="text" placeholder='Enter Facebook Link' value={InputFacebook} onChange={(e)=>{setInputFacebook(e.target.value)}}/>
+    // <input type="text" placeholder='Enter X(Twitter) Link' value={InputX} onChange={(e)=>{setInputX(e.target.value)}}/>
 
-    <input type="text" placeholder='Enter your Address' value={InputAddress} onChange={(e)=>{setInputAddress(e.target.value)}}/>
+    // <input type="text" placeholder='Enter your Address' value={InputAddress} onChange={(e)=>{setInputAddress(e.target.value)}}/>
 
-    <input type="text" placeholder='Enter your Desc' value={InputDesc} onChange={(e)=>{setInputDesc(e.target.value)}}/>
+    // <input type="text" placeholder='Enter your Desc' value={InputDesc} onChange={(e)=>{setInputDesc(e.target.value)}}/>
 
-    {/* input profile pic / Comapany logo  */}
+    // {/* input profile pic / Comapany logo  */}
 
-    <input type="file" placeholder='Upload Your Profile/Comapany Photo'  onChange={(e)=>{setUploadPhoto(e.target.files[0])}}/>
+    // <input type="file" placeholder='Upload Your Profile/Comapany Photo'  onChange={(e)=>{setUploadPhoto(e.target.files[0])}}/>
 
-    <button onClick={submitInNewWay}>Submit In new Way!</button>
+    // <button onClick={submitInNewWay}>Submit In new Way!</button>
 
-    {/* practice purpose */}
-    <button onClick={getData}>Get the data</button>
+    // {/* practice purpose */}
+    // <button onClick={getData}>Get the data</button>
 
-    <button onClick={handleSignOut} >SignOut!</button>
+    // <button onClick={handleSignOut} >SignOut!</button>
 
-       {displayCname }
+    //    {displayCname }
 
-       {displaylink1}
+    //    {displaylink1}
 
-       {displayPhoneNo }
+    //    {displayPhoneNo }
 
-       {displayAddress}
-    <h1>Your Name</h1>
+    //    {displayAddress}
+    // <h1>Your Name</h1>
 
-    {displayUserName}
+    // {displayUserName}
 
-    <img  src={displayPhoto}/>\
+    // <img  src={displayPhoto}/>\
 
-    <Link to={"/update"}>Update The info!</Link>
+    // <Link to={"/update"}>Update The info!</Link>
 
-    <br />
-    <br />
+    // <br />
+    // <br />
 
-    <Link to={"/Appreance"}>Appreance</Link>
+    // <Link to={"/Appreance"}>Appreance</Link>
 
-    <a href={`/${UN}/${userID}`}>View Mini Website!</a>
-        </>
+    // <a href={`/${UN}/${userID}`}>View Mini Website!</a>
+    //     </>
 
+    <>
+      <DashNav/>
+
+      <div className="grid grid-cols-2 gap-1 m-5">
+        <div className="grid grid-row-3 col-start-1 col-end-3"> 
+            <div className=" bg-blue-200 h-14 rounded-lg grid grid-cols-3 items-center px-5">
+              <p className="col-start-1 col-end-5 ">Your Live Mini-Website: <span className="underline decoration-solid font-semibold">{`tapon/${UN}/${userID}`}</span></p>
+              <div className="grid grid-cols-2 col-end-7 col-span-2 gap-4 items-center">
+                <p className="">Share Your Link to Anyone</p> 
+                <button className=" bg-white rounded-xl h-10 font-semibold w-25">Copy Link</button>
+              </div>
+            </div>
+            <div>
+              
+            </div>
+        </div>
+
+        <div className="grid grid-cols-2 col-end-6 col-span-3">
+          <div class="border-2 w-0 h-screen"></div>
+          <div className="border-8 border-black rounded-xl h-lvh sticky" id="phone_display">
+                <img src={theme_url} id="phone_display_img"/>
+
+            </div>
+        </div>
+      </div>
+    </>
 
     // <>
     //   <div className="flex flex-row gap-5">
@@ -346,6 +389,8 @@ const Dashboard = () => {
 
     // </div>
     // </>
+
+    
   );
 };
 
