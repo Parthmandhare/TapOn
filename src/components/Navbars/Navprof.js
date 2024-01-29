@@ -284,8 +284,6 @@ const Navigation = () => {
           <MenuItems >&nbsp;</MenuItems>
           
           <MenuItems>
-        
-
         <div className="mobile">
             {/* <Link to="/auth/Login">
 
