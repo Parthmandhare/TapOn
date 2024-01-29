@@ -3,6 +3,21 @@ import { auth, db, imageDb } from "../pages/auth/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { signOut } from "firebase/auth";
 import { MdModeEdit } from "react-icons/md";
+
+import phoneImg from "../assets/img/phone-call.png"
+import AddressImg from "../assets/img/location.png"
+import linkImg from "../assets/img/link.png"
+import mailImg from "../assets/img/mail.png"
+
+import twitterImg from "../assets/img/twitter (1).png"
+import instaImg from "../assets/img/instagram.png"
+import youtubeImg from "../assets/img/youtube.png"
+import fbImg from "../assets/img/facebook.png"
+
+import saveCardImg from "../assets/img/download.png"
+import addContactImg from "../assets/img/bookmark.png"
+
+
 import {
   collection,
   doc,
@@ -23,12 +38,17 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import DashNav from "../components/Navbars/Navprof";
+import styled from "styled-components";
 
+
+import styles from "./Dashboard.css";
 
 
 
 const Dashboard = () => {
   const navigate = useNavigate();
+
+
 
   const [displayUser, setDisplayUser] = useState("Please Login Bhai!");
   const [userID, setUserID] = useState("");
@@ -46,6 +66,8 @@ const Dashboard = () => {
   const [displayInsta_Link, setDisplayInsta_Link] = useState("Please Enter Your Instagram Link");
   const [displayX_Link, setdisplayX_Link] = useState("Please Enter Your Twitter Link");
   const [displayDesc, setDisplayDesc] = useState("Enter Your Desc");
+
+  const [displayFullName, setDisplayFullName] = useState("Enter Your Desc");
 
   // variables for inputing the data
 
@@ -121,6 +143,8 @@ const Dashboard = () => {
     setDisplayDesc(docData.data().Desc);
 
     setUN(docData.data().username)
+
+    setDisplayFullName(docData.data().Full_Name)
   };
 
   let isNullOrWhiteSpaces = (value) => {
@@ -171,6 +195,7 @@ const Dashboard = () => {
         setInputX("");
         setImageURL("");
         setInputAddress("");
+        setInputDesc("");
       })
       .catch((error) => {
         console.log(error);
@@ -201,6 +226,23 @@ const Dashboard = () => {
         // Alert the user about successful upload and update
       }
     );
+  };
+
+  const GoToMiniSite = () => {
+    navigate(`/${UN}/${userID}`)
+  }
+
+  const copyToClipboard = () => {
+    const textToCopy = `tapon/${UN}/${userID}`;
+
+    // Using navigator.clipboard.writeText() for modern browsers
+    navigator.clipboard.writeText(textToCopy)
+      .then(() => {
+        console.log('Text successfully copied to clipboard');
+      })
+      .catch((err) => {
+        console.error('Unable to copy text to clipboard', err);
+      });
   };
 
   return (
@@ -263,29 +305,148 @@ const Dashboard = () => {
       <div className="grid grid-cols-2 gap-1 m-5">
         <div className="grid grid-row-3 col-start-1 col-end-3"> 
             <div className=" bg-blue-200 h-14 rounded-lg grid grid-cols-3 items-center px-5">
-              <p className="col-start-1 col-end-5 ">Your Live Mini-Website: <span className="underline decoration-solid font-semibold">{`tapon/${UN}/${userID}`}</span></p>
+              <p className="col-start-1 col-end-5 ">Your Live Mini-Website: <span className="underline decoration-solid font-semibold" onClick={GoToMiniSite}>{`tapon/${UN}/${userID}`}</span></p>
               <div className="grid grid-cols-2 col-end-7 col-span-2 gap-4 items-center">
                 <p className="">Share Your Link to Anyone</p> 
-                <button className=" bg-white rounded-xl h-10 font-semibold w-25">Copy Link</button>
+                <button className=" bg-white rounded-xl h-10 font-semibold w-25" onClick={copyToClipboard}>Copy Link</button>
               </div>
             </div>
+
             <div>
               
+
+<form className=" w-5/6 mx-auto">
+  <div className="relative z-0 w-full mb-5 group">
+      <input type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value={InputCname} onChange={(e) => {setInputCname(e.target.value)}}/>
+      <label for="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Company Name</label>
+  </div>
+  <div className="relative z-0 w-full mb-5 group">
+      <input type="text" name="floating_password" id="floating_password" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value={InputPhoneNo} onChange={(e) => {setInputPhoneNo(e.target.value)}} />
+      <label for="floating_password" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" >Phone Number</label>
+  </div>
+  <div className="relative z-0 w-full mb-5 group">
+      <input type="text" name="repeat_password" id="floating_repeat_password" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value={InputAddress} onChange={(e)=>{setInputAddress(e.target.value)}} />
+      <label for="floating_repeat_password" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" >Address</label>
+  </div>
+  <div className="relative z-0 w-full mb-5 group">
+      <input type="text" name="repeat_password" id="floating_repeat_password" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value={InputDesc} onChange={(e)=>{setInputDesc(e.target.value)}} />
+      <label for="floating_repeat_password" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" >Description</label>
+  </div>
+  <div className="grid md:grid-cols-2 md:gap-6">
+    <div className="relative z-0 w-full mb-5 group">
+        <input type="text" name="floating_first_name" id="floating_first_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value={Inputlink1} onChange={(e) => {setInputlink1(e.target.value)}} />
+        <label for="floating_first_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" >Link</label>
+    </div>
+    <div className="relative z-0 w-full mb-5 group">
+        <input type="text" name="floating_company" id="floating_company" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value={InputX} onChange={(e)=>{setInputX(e.target.value)}} />
+        <label for="floating_company" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" >Twitter Link</label>
+    </div>
+  </div>
+  <div className="grid md:grid-cols-2 md:gap-6">
+    <div className="relative z-0 w-full mb-5 group">
+        <input type="text" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value={InputInsta} onChange={(e)=>{setInputInsta(e.target.value)}} />
+        <label for="floating_phone" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" >Instagram Link</label>
+    </div>
+    <div className="relative z-0 w-full mb-5 group">
+        <input type="text" name="floating_company" id="floating_company" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value={InputFacebook} onChange={(e)=>{setInputFacebook(e.target.value)}} />
+        <label for="floating_company" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" >Facebook Link</label>
+    </div>
+
+  </div>
+  <button type="submit" className="text-white bg-blue-200 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " onClick={submitInNewWay}>Submit</button>
+</form>
+
             </div>
         </div>
 
         <div className="grid grid-cols-2 col-end-6 col-span-3">
-          <div class="border-2 w-0 h-screen"></div>
-          <div className="border-8 border-black rounded-xl h-lvh sticky" id="phone_display">
-                <img src={theme_url} id="phone_display_img"/>
+          <div className="border-2 w-0 h-screen "></div>
+          <div className="border-8 border-black rounded-xl h-lvh sticky" id="phone_display" >
+                <img src={theme_url} id="" className="absolute inset-0 w-full h-full object-cover"/>
 
+                {/* data which will be display on the theme */}
+
+                {/* <h1 className="absolute inset-0 text-white font-bold text-center">{displayCname}</h1>
+
+                <h2 className="absolute  text-white font-bold text-center">{displayFullName}</h2> */}
+
+                <div className="absolute inset-0  text-center items-center text-white font-bold">
+                <div className='grid grid-rows-7 gap-0'>
+
+                <div className="rounded-full bg-black w-24 h-24 ">
+                  <img src={displayPhoto} alt="not found" />
+              </div>
+
+            <h1>{displayCname}</h1>
+            <h2>{displayFullName}</h2>
+
+            <div className='grid grid-rows-4'>
+
+                <div className="grid grid-cols-2 gap-0">
+                    <div>
+                        <img src={phoneImg} className="InfoImg" alt="" />
+                    </div>
+                    <div>
+                        {displayPhoneNo}
+                    </div>
+                </div>
+                <div className="grid grid-cols-2">
+                    <div>
+                    <img src={AddressImg} className="InfoImg" alt="" />
+                    </div>
+                    <div>
+                        {displayAddress}
+                    </div>
+                </div>
+                <div className="grid grid-cols-2 ">
+                    <div>
+                    <img src={linkImg} className="InfoImg" alt="" />
+                    </div>
+                    <div>
+                        {displaylink1}
+                    </div>
+                </div>
+                <div className="grid grid-cols-2 ">
+                    <div>
+                    <img src={mailImg} className="InfoImg" alt="" />
+                    </div>
+                    <div>
+                        {displayDesc}
+                    </div>
+                </div>
+            </div>
+
+            <div className='grid grid-cols-4'>
+                <img src={twitterImg} className="links" alt="" />
+                <img src={instaImg} alt="" className="links" />
+                <img src={youtubeImg} alt="" className="links" />
+                <img src={fbImg} alt="" className="links" />
+            </div>
+
+            <div className='grid grid-cols-2 gap-4'>
+                <div className="grid grid-cols-2 rounded-lg  h-12" id="services">
+                  <img src={saveCardImg} alt="" className="servicesImg"/>
+                  <div>Save Card</div>
+                </div>
+
+                <div className="grid grid-cols-2 rounded-lg h-12" id="services">
+                  <img src={addContactImg} alt="" className="servicesImg"/>
+                  <div>Add Contact</div>
+                </div>
+            </div>
+
+            <div>
+                tapON
+            </div>
+        </div>
+                </div>
             </div>
         </div>
       </div>
     </>
 
     // <>
-    //   <div className="flex flex-row gap-5">
+    //   <div classNameName="flex flex-row gap-5">
     //     <div>
     //       <div>
     //         <p>
@@ -295,30 +456,30 @@ const Dashboard = () => {
     
     //           <h3>User Details Is here!</h3>
     //           {/* company name */}
-    //           <div className="max-w-sm rounded overflow-hidden shadow-lg" id="box">
-    //             <div className="px-6 py-4">
-    //               <div className="font-bold text-xl mb-2 flex flex-row gap-5">Company Name <MdModeEdit /> </div>
-    //               <p className="text-gray-700 text-base">
+    //           <div classNameName="max-w-sm rounded overflow-hidden shadow-lg" id="box">
+    //             <div classNameName="px-6 py-4">
+    //               <div classNameName="font-bold text-xl mb-2 flex flex-row gap-5">Company Name <MdModeEdit /> </div>
+    //               <p classNameName="text-gray-700 text-base">
     //                 {displayCname}
     //               </p>
     //             </div>
     //           </div>
 
     //           {/* Phone Number */}
-    //           <div className="max-w-sm rounded overflow-hidden shadow-lg">
-    //             <div className="px-6 py-4">
-    //               <div className="font-bold text-xl mb-2 flex flex-row gap-5">Phone Number <MdModeEdit /> </div>
-    //               <p className="text-gray-700 text-base">
+    //           <div classNameName="max-w-sm rounded overflow-hidden shadow-lg">
+    //             <div classNameName="px-6 py-4">
+    //               <div classNameName="font-bold text-xl mb-2 flex flex-row gap-5">Phone Number <MdModeEdit /> </div>
+    //               <p classNameName="text-gray-700 text-base">
     //                 {displayPhoneNo}
     //               </p>
     //             </div>
     //           </div>
 
     //           {/* Address */}
-    //           <div className="max-w-sm rounded overflow-hidden shadow-lg">
-    //             <div className="px-6 py-4">
-    //               <div className="font-bold text-xl mb-2 flex flex-row gap-5">Address<MdModeEdit /> </div>
-    //               <p className="text-gray-700 text-base">
+    //           <div classNameName="max-w-sm rounded overflow-hidden shadow-lg">
+    //             <div classNameName="px-6 py-4">
+    //               <div classNameName="font-bold text-xl mb-2 flex flex-row gap-5">Address<MdModeEdit /> </div>
+    //               <p classNameName="text-gray-700 text-base">
     //                 {displayAddress}
     //               </p>
     //             </div>
@@ -327,50 +488,50 @@ const Dashboard = () => {
 
     //         {/* Link */}
 
-    //           <div className="max-w-sm rounded overflow-hidden shadow-lg">
-    //             <div className="px-6 py-4">
-    //               <div className="font-bold text-xl mb-2 flex flex-row gap-5">Link<MdModeEdit /> </div>
-    //               <p className="text-gray-700 text-base">
+    //           <div classNameName="max-w-sm rounded overflow-hidden shadow-lg">
+    //             <div classNameName="px-6 py-4">
+    //               <div classNameName="font-bold text-xl mb-2 flex flex-row gap-5">Link<MdModeEdit /> </div>
+    //               <p classNameName="text-gray-700 text-base">
     //                 {displaylink1}
     //               </p>
     //             </div>
     //           </div>
 
     //           {/* Instagram Link */}
-    //           <div className="max-w-sm rounded overflow-hidden shadow-lg">
-    //             <div className="px-6 py-4">
-    //               <div className="font-bold text-xl mb-2 flex flex-row gap-5">Instagram Link<MdModeEdit /> </div>
-    //               <p className="text-gray-700 text-base">
+    //           <div classNameName="max-w-sm rounded overflow-hidden shadow-lg">
+    //             <div classNameName="px-6 py-4">
+    //               <div classNameName="font-bold text-xl mb-2 flex flex-row gap-5">Instagram Link<MdModeEdit /> </div>
+    //               <p classNameName="text-gray-700 text-base">
     //                 {displayInsta_Link}
     //               </p>
     //             </div>
     //           </div>
 
     //           {/* FaceBook Link */}
-    //           <div className="max-w-sm rounded overflow-hidden shadow-lg">
-    //             <div className="px-6 py-4">
-    //               <div className="font-bold text-xl mb-2 flex flex-row gap-5">Facebook Link <MdModeEdit /> </div>
-    //               <p className="text-gray-700 text-base">
+    //           <div classNameName="max-w-sm rounded overflow-hidden shadow-lg">
+    //             <div classNameName="px-6 py-4">
+    //               <div classNameName="font-bold text-xl mb-2 flex flex-row gap-5">Facebook Link <MdModeEdit /> </div>
+    //               <p classNameName="text-gray-700 text-base">
     //                 {displayFacebook_Link}
     //               </p>
     //             </div>
     //           </div>
 
     //           {/* X Link */}
-    //           <div className="max-w-sm rounded overflow-hidden shadow-lg">
-    //             <div className="px-6 py-4">
-    //               <div className="font-bold text-xl mb-2 flex flex-row gap-5">X Link<MdModeEdit /> </div>
-    //               <p className="text-gray-700 text-base">
+    //           <div classNameName="max-w-sm rounded overflow-hidden shadow-lg">
+    //             <div classNameName="px-6 py-4">
+    //               <div classNameName="font-bold text-xl mb-2 flex flex-row gap-5">X Link<MdModeEdit /> </div>
+    //               <p classNameName="text-gray-700 text-base">
     //                 {displayX_Link}
     //               </p>
     //             </div>
     //           </div>
 
     //           {/* Desc */}
-    //           <div className="max-w-sm rounded overflow-hidden shadow-lg">
-    //             <div className="px-6 py-4">
-    //               <div className="font-bold text-xl mb-2 flex flex-row gap-5">Description<MdModeEdit /> </div>
-    //               <p className="text-gray-700 text-base">
+    //           <div classNameName="max-w-sm rounded overflow-hidden shadow-lg">
+    //             <div classNameName="px-6 py-4">
+    //               <div classNameName="font-bold text-xl mb-2 flex flex-row gap-5">Description<MdModeEdit /> </div>
+    //               <p classNameName="text-gray-700 text-base">
     //                 {displayDesc}
     //               </p>
     //             </div>

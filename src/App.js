@@ -4,13 +4,14 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Authen from "./pages/auth/Authen"
 
 // import Nav from "../src/components/Nav"
-import Landin from "./pages/Landin"
+// import Landin from "./pages/Landin"
 import Profile from './pages/Profile';
 import Update from './pages/Update';
 import Dashboard from './pages/Dashboard';
 import Admin from './pages/Admin';
 import Remix from './pages/Remix';
 import Appreance from './pages/Appreance';
+import Landingup from './pages/Landing/Landingup'
 
 
 
@@ -23,7 +24,7 @@ function App() {
   <>
           <BrowserRouter>
           <Routes>
-          <Route path="/" element={<Landin/>}/>
+          <Route path="/" element={<Landingup/>}/>
             
             <Route path="/auth/:id" element={<Authen/>}/>
             <Route path="/auth/:id" element={<Authen/>}/>
