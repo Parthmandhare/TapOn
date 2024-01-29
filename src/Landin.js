@@ -8,16 +8,21 @@ import React from "react";
 
 // components
 
-import Lnav from "../components/Navbars/Lnav";
-import Bigf from "../components/Footers/Bigf";
+import Lnav from "./components/Navbars/Lnav";
+import Bigf from "./components/Footers/Bigf";
+import Navigation from "./components/Navbars/Navigation";
+
+import Navprof from "./components/Navbars/Navprof";
 
 export default function Landin() {
   return (
     <>
      
 
+        <Navigation />
+        {/* <Navprof/> */}
 
-      <Lnav transparent />
+      {/* <Lnav transparent /> */}
       <main>
         <div className="relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75">
           <div

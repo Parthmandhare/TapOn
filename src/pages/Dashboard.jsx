@@ -203,6 +203,31 @@ const Dashboard = () => {
     );
   };
 
+
+
+
+
+
+
+  const copyToClipboard = () => {
+    const textToCopy = `tapon/${UN}/${userID}`;
+
+    // Using navigator.clipboard.writeText() for modern browsers
+    navigator.clipboard.writeText(textToCopy)
+      .then(() => {
+        console.log('Text successfully copied to clipboard');
+      })
+      .catch((err) => {
+        console.error('Unable to copy text to clipboard', err);
+      });
+  };
+
+
+
+
+
+  
+
   return (
     //     <>
     //        <h1>Hello {displayUser}</h1>
@@ -266,7 +291,7 @@ const Dashboard = () => {
               <p className="col-start-1 col-end-5 ">Your Live Mini-Website: <span className="underline decoration-solid font-semibold">{`tapon/${UN}/${userID}`}</span></p>
               <div className="grid grid-cols-2 col-end-7 col-span-2 gap-4 items-center">
                 <p className="">Share Your Link to Anyone</p> 
-                <button className=" bg-white rounded-xl h-10 font-semibold w-25">Copy Link</button>
+                <button className=" bg-white rounded-xl h-10 font-semibold w-25"  onClick={copyToClipboard} >Copy Link</button>
               </div>
             </div>
             <div>
@@ -274,9 +299,9 @@ const Dashboard = () => {
             </div>
         </div>
 
-        <div className="grid grid-cols-2 col-end-6 col-span-3">
-          <div class="border-2 w-0 h-screen"></div>
-          <div className="border-8 border-black rounded-xl h-lvh sticky" id="phone_display">
+        <div className="grid grid-cols-2 col-end-6 col-span-3  ">
+          <div class="border-2 w-0 h-screen "></div>
+          <div className=" flex border-8 border-black rounded-xl h-lvh sticky mr-32  mt-12 " id="phone_display">
                 <img src={theme_url} id="phone_display_img"/>
 
             </div>
