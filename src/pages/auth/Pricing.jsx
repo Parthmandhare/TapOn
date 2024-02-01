@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, db } from "./firebase";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
+import Smallf from "../../components/Footers/Smallf";
 
 export default function Pricing() {
 
@@ -261,6 +262,7 @@ export default function Pricing() {
             </div>
           ))}
         </container> */}
+
       </>
     );
   }
