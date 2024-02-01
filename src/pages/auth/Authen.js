@@ -4,19 +4,23 @@ import Login from "./Login";
 import Uname from "../Uname";
 import Register from "./Register";
 // import Register from "./Register";
-
-
+import { SelectTheme } from "./SelectTheme";
+import Pricing from './Pricing';
 
 
 import Nav from "../../components/Navbars/Nav"
 import Smallf from "../../components/Footers/Smallf"
 import ForgotPass from "./ForgotPass";
 
+import Navlogsign from "../../components/Navbars/Navlogsign"
+
 const components = {
   Login : Login,
   uname : Uname,
   register: Register,
-  ForgotPass : ForgotPass
+  ForgotPass : ForgotPass,
+  plans:Pricing,
+  selectTheme: SelectTheme
 }
 
 export default function Authen() {
@@ -25,12 +29,17 @@ export default function Authen() {
   const ComponentToRender = components[id];
   return (
     <>
+    
       
       <main>
+      <Navlogsign/>
       
         <section className="relative w-full h-full py-40 min-h-screen">
           
-        <Nav transparent />
+        {/* <Nav transparent /> */}
+
+
+        
           
           <div
             className="absolute top-0 w-full h-full bg-blueGray-800 bg-no-repeat bg-full "
@@ -57,10 +66,11 @@ export default function Authen() {
   
         
             
-          
-          <Smallf  absolute/>
+          <Smallf absolute/>
+         
           
         </section>
+        
       </main>
     </>
   );

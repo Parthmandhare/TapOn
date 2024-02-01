@@ -10,7 +10,7 @@ const Section =styled.section`
 
 height: auto;
 min-height: 100vh;
-width: 100vw;
+width: 100%;
 background-color: rgb(30 41 59 );
 position: relative;
 color: white;

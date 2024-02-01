@@ -107,7 +107,7 @@ display: flex;
 justify-content: space-between;
 align-items: center;
 width: 90%;
-height: 5rem;
+height: 3rem;
 margin: 0 auto;
 
 .mobile{
@@ -273,15 +273,15 @@ const Navigation = () => {
         &nbsp;
         </HamburgerMenu>
         <Menu click={click}>
-          <MenuItems onClick={()=> scrollTo('')}>&nbsp;</MenuItems>
-          <MenuItems onClick={()=> scrollTo('')}>&nbsp;</MenuItems>
-          <MenuItems onClick={()=> scrollTo('')}>&nbsp;</MenuItems>
-          <MenuItems onClick={()=> scrollTo('')}>&nbsp;</MenuItems>
+          <MenuItems >&nbsp;</MenuItems>
+          <MenuItems >&nbsp;</MenuItems>
+          <MenuItems >&nbsp;</MenuItems>
+          <MenuItems >&nbsp;</MenuItems>
           <Link to="/dashboard" ><MenuItems>Dashboard</MenuItems></Link>
           <Link to="/Appreance" ><MenuItems> Appearance</MenuItems></Link>
-          <MenuItems onClick={()=> scrollTo('')}>Plan</MenuItems>
-          <MenuItems onClick={()=> scrollTo('')}>Settings</MenuItems>
-          <MenuItems onClick={()=> scrollTo('')}>&nbsp;</MenuItems>
+          <MenuItems ><Link to="/auth/plans">Plan</Link></MenuItems>
+          <Link to="/Settings/ProfileSetting" ><MenuItems >Settings</MenuItems></Link>
+          <MenuItems >&nbsp;</MenuItems>
           
           <MenuItems>
         

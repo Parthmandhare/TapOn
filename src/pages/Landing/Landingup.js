@@ -12,6 +12,7 @@ import Footer from './Footer'
 import Bigf from '../../components/Footers/Bigf'
 import Navprof from '../../components/Navbars/Navprof'
 import Error from '../Error/Error'
+import Smain from '../Setting/Smain'
 
 
 
@@ -19,20 +20,18 @@ function Landingup() {
   return (
     <>
     
+    
 
 
-    {/* <Navprof/> */}
 
    <Navigation/>
-    <Home/>
 
-
-    <About/>
-    <Roadmap/>
-
-
-    <Showcase/>
-    <Team/>
+    <div id="Home"><Home/></div>
+    <div id="About" ><About/></div>
+    <div id="Roadmap"><Roadmap/></div>
+    <div id="Showcase"><Showcase/></div>
+    <div id="Team"><Team/></div>
+    <div id="Faq"><Faq/></div>
     <Faq/>
     <Bigf/> 
 
