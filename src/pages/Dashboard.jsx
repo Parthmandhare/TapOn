@@ -287,24 +287,37 @@ const Dashboard = () => {
   // const [textColor5, setTextColor5] = useState("");
 
   const [textColor, setTextColor] = useState('');
- 
-  
-
-  
-
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      setDisplayUser(user.displayName);
-      
-      setUserID(user.uid);
-      setUserEmail(user.email);
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+       if (user) {
+         console.log('User object:', user);
+         setUserID(user.uid);
+         // Call getData with the user ID directly
+         setUserEmail(user.email);
+         getData(user.uid);
+         setThemes(user.uid);
+       } else {
+         console.log('No user is signed in.');
+       }
     });
-    getData();
-    setThemes();
-  });
+   
+    // Clean up subscription on unmount
+    return () => unsubscribe();
+   }, []);
 
-  const setThemes = async () => {
+  // useEffect(() => {
+  //   auth.onAuthStateChanged((user) => {
+  //     setDisplayUser(user.displayName);
+      
+  //     setUserID(user.uid);
+  //     setUserEmail(user.email);
+  //   });
+  //   getData();
+  //   setThemes();
+  // });
+
+  const setThemes = async (userID) => {
     const docRef = doc(db, "UserInfo", userID);
 
     const docData = await getDoc(docRef);
@@ -341,13 +354,15 @@ const Dashboard = () => {
       });
   };
 
-  const getData = async () => {
-    const docRef = doc(db, "UserInfo", userID);
-
+  const getData = async (userId) => {
+    if (!userId) {
+       console.log('User ID is not set.');
+       return;
+    }
+   
+    const docRef = doc(db, "UserInfo", userId);
     const docData = await getDoc(docRef);
-
-    console.log(docData.data());
-
+   
     setdisplayCname(docData.data().Company_Name);
     setdisplaylink1(docData.data().Link);
     setdisplayPhoneNo(docData.data().PhoneNumber);
@@ -362,7 +377,30 @@ const Dashboard = () => {
     setUN(docData.data().username)
 
     setDisplayFullName(docData.data().Full_Name)
-  };
+   };
+
+  // const getData = async () => {
+  //   const docRef = doc(db, "UserInfo", userID);
+
+  //   const docData = await getDoc(docRef);
+
+  //   console.log(docData.data());
+
+  //   setdisplayCname(docData.data().Company_Name);
+  //   setdisplaylink1(docData.data().Link);
+  //   setdisplayPhoneNo(docData.data().PhoneNumber);
+  //   setDisplayUserName(docData.data().User_Name);
+  //   setDisplayPhoto(docData.data().Profile_URl);
+  //   setDisplayAddress(docData.data().Address);
+  //   setDisplayFacebook_Link(docData.data().Facebook_Link);
+  //   setDisplayInsta_Link(docData.data().Instagram_Link);
+  //   setdisplayX_Link(docData.data().X_Link);
+  //   setDisplayDesc(docData.data().Desc);
+
+  //   setUN(docData.data().username)
+
+  //   setDisplayFullName(docData.data().Full_Name)
+  // };
 
   let isNullOrWhiteSpaces = (value) => {
     value = value.toString();

@@ -46,21 +46,35 @@ function ProfilePanel() {
   const[userID, setUserID] = useState("");
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      // setUpdateFullName(user.displayName);
-      setUserID(user.uid);
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+       if (user) {
+         console.log('User object:', user);
+         setUserID(user.uid);
+         // Call getData with the user ID directly
+         getData(user.uid);
+       } else {
+         console.log('No user is signed in.');
+       }
     });
-    getData();
-  });
+   
+    // Clean up subscription on unmount
+    return () => unsubscribe();
+   }, []);
 
-  const getData = async () => {
-    const docRef = doc(db, "UserInfo", userID);
+  
 
+   const getData = async (userId) => {
+    if (!userId) {
+       console.log('User ID is not set.');
+       return;
+    }
+   
+    const docRef = doc(db, "UserInfo", userId);
     const docData = await getDoc(docRef);
-
+   
     setDisplayFullName(docData.data().Full_Name);
     setDisplayUserName(docData.data().User_Name);
-  };
+   };
 
 
   const updateInfo = (e)=> {

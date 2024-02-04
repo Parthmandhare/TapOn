@@ -48,15 +48,28 @@ const BillingPanel = () => {
   const [plan, setPlan] = useState("Parth");
   const[userID,setUserID] = useState("");
 
-  useEffect(()=>{
-    auth.onAuthStateChanged((user) => {      
-      setUserID(user.uid);
-    })  
-    setData();
-  })
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+       if (user) {
+         console.log('User object:', user);
+         setUserID(user.uid);
+         // Call getData with the user ID directly
+         setData(user.uid);
+       } else {
+         console.log('No user is signed in.');
+       }
+    });
+   
+    // Clean up subscription on unmount
+    return () => unsubscribe();
+   }, []);
 
-  const setData = async() =>{
-    const docRef = doc(db, "UserInfo", userID);
+  const setData = async(userId) =>{
+    if (!userId) {
+      console.log('User ID is not set.');
+      return;
+   }
+    const docRef = doc(db, "UserInfo", userId);
 
     const docData = await getDoc(docRef);
 

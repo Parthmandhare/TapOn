@@ -133,19 +133,39 @@ const Appreance = () => {
   const [displayPhoto, setDisplayPhoto] = useState("");
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      setUserID(user.uid);
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+       if (user) {
+         console.log('User object:', user);
+         setUserID(user.uid);
+         // Call getData with the user ID directly
+         getData(user.uid);
+         setThemes(user.uid);
+       } else {
+         console.log('No user is signed in.');
+       }
     });
-    getData();
-    setThemes();
-  });
-  
-  const getData = async () => {
-    const docRef = doc(db, "UserInfo", UserID);
+   
+    // Clean up subscription on unmount
+    return () => unsubscribe();
+   }, []);
 
+  // useEffect(() => {
+  //   auth.onAuthStateChanged((user) => {
+  //     setUserID(user.uid);
+  //   });
+  //   getData();
+  //   setThemes();
+  // });
+
+  const getData = async (userId) => {
+    if (!userId) {
+       console.log('User ID is not set.');
+       return;
+    }
+   
+    const docRef = doc(db, "UserInfo", userId);
     const docData = await getDoc(docRef);
-
-
+   
     setdisplayCname(docData.data().Company_Name);
     setdisplaylink1(docData.data().Link);
     setdisplayPhoneNo(docData.data().PhoneNumber);
@@ -160,9 +180,31 @@ const Appreance = () => {
     setUN(docData.data().username)
 
     setDisplayFullName(docData.data().Full_Name)
-  };
+   };
+  
+  // const getData = async () => {
+  //   const docRef = doc(db, "UserInfo", UserID);
 
-  const setThemes = async () => {
+  //   const docData = await getDoc(docRef);
+
+
+  //   setdisplayCname(docData.data().Company_Name);
+  //   setdisplaylink1(docData.data().Link);
+  //   setdisplayPhoneNo(docData.data().PhoneNumber);
+  //   setDisplayUserName(docData.data().User_Name);
+  //   setDisplayPhoto(docData.data().Profile_URl);
+  //   setDisplayAddress(docData.data().Address);
+  //   setDisplayFacebook_Link(docData.data().Facebook_Link);
+  //   setDisplayInsta_Link(docData.data().Instagram_Link);
+  //   setdisplayX_Link(docData.data().X_Link);
+  //   setDisplayDesc(docData.data().Desc);
+
+  //   setUN(docData.data().username)
+
+  //   setDisplayFullName(docData.data().Full_Name)
+  // };
+
+  const setThemes = async (UserID) => {
     const docRef = doc(db, "UserInfo", UserID);
 
     const docData = await getDoc(docRef);
