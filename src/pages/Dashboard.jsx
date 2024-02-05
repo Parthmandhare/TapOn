@@ -742,6 +742,18 @@ const Dashboard = () => {
 
   const [textColor, setTextColor] = useState("");
 
+  const[service1, setService1] = useState("");
+  const[service2, setService2] = useState("");
+  const[service3, setService3] = useState("");
+  const[service4, setService4] = useState("");
+
+  const[displayService1, setDisplayService1] = useState("Service1");
+  const[displayService2, setDisplayService2] = useState("Service2");
+  const[displayService3, setDisplayService3] = useState("Service3");
+  const[displayService4, setDisplayService4] = useState("Service4");
+
+
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -1053,6 +1065,33 @@ const Dashboard = () => {
   //   setServiceCards([...serviceCards, newServiceCard]);
   // };
 
+
+  const addServices = async(e) =>{
+    e.preventDefault();
+
+    const data = {
+      Service1: service1,
+      Service2: service2,
+      Service3: service3,
+      Service4: service4
+    };
+
+    const userRef = doc(collection(db, "UserInfo"), userID);
+    updateDoc(userRef, data)
+      .then((userRef) => {
+        console.log("Value of an Existing Document Field has been updated");
+        setDisplayService1(service1);
+        setDisplayService2(service2);
+        setDisplayService3(service3);
+        setDisplayService4(service4);
+
+        setShowModal(false)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   return (
     <ThemeProvider theme={getThemeColors(Theme_Selected)}>
       <>
@@ -1288,7 +1327,7 @@ const Dashboard = () => {
                   }}
                 >
                   <Servicecards onClick={() => setShowServiceModal(true)}>
-                    <Cardcontent>Salon</Cardcontent>
+                    <Cardcontent>{displayService1}</Cardcontent>
                   </Servicecards>
                 </Tilt>
 
@@ -1302,7 +1341,7 @@ const Dashboard = () => {
                   }}
                 >
                   <Servicecards onClick={() => setShowServiceModal(true)}>
-                    <Cardcontent>Salon</Cardcontent>
+                    <Cardcontent>{displayService2}</Cardcontent>
                   </Servicecards>
                 </Tilt>
 
@@ -1316,7 +1355,7 @@ const Dashboard = () => {
                   }}
                 >
                   <Servicecards onClick={() => setShowServiceModal(true)}>
-                    <Cardcontent>Salon</Cardcontent>
+                    <Cardcontent>{displayService3}</Cardcontent>
                   </Servicecards>
                 </Tilt>
 
@@ -1330,7 +1369,7 @@ const Dashboard = () => {
                   }}
                 >
                   <Servicecards onClick={() => setShowServiceModal(true)}>
-                    <Cardcontent>Salon</Cardcontent>
+                    <Cardcontent>{displayService4}</Cardcontent>
                   </Servicecards>
                 </Tilt>
               </ServiceCardsContainer>
@@ -1382,13 +1421,13 @@ const Dashboard = () => {
                               name="repeat_password"
                               id="floating_repeat_password"
                               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                              placeholder=" " 
+                              placeholder=" " value={service1} onChange={(e)=>{setService1(e.target.value)}}
                             />
                             <label
                               for="floating_repeat_password"
                               className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                             >
-                              Service 1 <Edittext className="ml-1 mt-0.5" />
+                              Service 1 - {displayService1}
                             </label>
                           </div>
 
@@ -1398,13 +1437,13 @@ const Dashboard = () => {
                               name="repeat_password"
                               id="floating_repeat_password"
                               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                              placeholder=" " 
+                              placeholder=" "  value={service2} onChange={(e)=>{setService2(e.target.value)}}
                             />
                             <label
                               for="floating_repeat_password"
-                              className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                              className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" 
                             >
-                              Service 2 <Edittext className="ml-1 mt-0.5" />
+                              Service 2 - {displayService2}<Edittext className="ml-1 mt-0.5" />
                             </label>
                           </div>
 
@@ -1414,14 +1453,14 @@ const Dashboard = () => {
                               name="repeat_password"
                               id="floating_repeat_password"
                               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                              placeholder=" "
+                              placeholder=" " value={service3} onChange={(e)=>{setService3(e.target.value)}}
                              
                             />
                             <label
                               for="floating_repeat_password"
-                              className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                              className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" 
                             >
-                              Service 3 <Edittext className="ml-1 mt-0.5" />
+                              Service 3 - {displayService3} <Edittext className="ml-1 mt-0.5" />
                             </label>
                           </div>
 
@@ -1431,13 +1470,13 @@ const Dashboard = () => {
                               name="repeat_password"
                               id="floating_repeat_password"
                               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                              placeholder=" "
+                              placeholder=" " value={service4} onChange={(e)=>{setService4(e.target.value)}}
                             />
                             <label
                               for="floating_repeat_password"
                               className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                             >
-                              Service 4 <Edittext className="ml-1 mt-0.5" />
+                              Service 4 - {displayService4} <Edittext className="ml-1 mt-0.5" />
                             </label>
                           </div>
                         </div>
@@ -1454,7 +1493,7 @@ const Dashboard = () => {
                           <button
                             className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
-                            onClick={() => setShowModal(false)}
+                            onClick={addServices}
                           >
                             Save Changes
                           </button>
