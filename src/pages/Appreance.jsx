@@ -3,7 +3,7 @@ import { auth, db, imageDb } from "./auth/firebase";
 import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
-import img1 from "../assets/img/Theme1.jpg"
+import img1 from "../assets/img/gamer.png"
 import img2 from "../assets/img/Theme2.jpg"
 
 import template1 from "../assets/img/template_1.png"
@@ -15,37 +15,264 @@ import template5 from "../assets/img/template_5.png"
 import "./Appreance.css"
 
 import DashNav from "../components/Navbars/Navprof";
+import styled, {ThemeProvider} from "styled-components";
+import { Tilt } from "react-tilt";
+import Button from '../components/Navbars/Button'
 
-import phoneImg from "../assets/img/phone-call.png"
-import AddressImg from "../assets/img/location.png"
-import linkImg from "../assets/img/link.png"
-import mailImg from "../assets/img/mail.png"
 
-import twitterImg from "../assets/img/twitter (1).png"
-import instaImg from "../assets/img/instagram.png"
-import youtubeImg from "../assets/img/youtube.png"
-import fbImg from "../assets/img/facebook.png"
 
-import saveCardImg from "../assets/img/download.png"
-import addContactImg from "../assets/img/bookmark.png"
 
-import styled from "styled-components";
+const Section = styled.div`
+display: flex;
+margin-top: 20px;
+/* background-color: #e4e48f; */
+height:200vh;
 
-import default_img from "../assets/img/gamer.png"
+width: 100%;
+@media (max-width: 64em){
+     width: 100%;
+     height: 100%;
+     
+  
+
+
+}
+`
+const LeftContainer = styled.div`
+display: flex;
+flex-direction: column;
+/* margin-left: 16px ; */
+width: 55%;
+/* background-color: #4e9b81; */
+/* height: 100%; */
+align-items: center;
+& h2{
+  align-self: flex-start;
+  font-weight: bold;
+  display: flex;
+  float: inline-start;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  font-size: 25px;
+  font-style: italic;
+  margin-left: 10%;
+
+}
+& div#Previewcontainer{
+      display: none;
+     }
+     & div#previewbutton{
+   display: none;
+  
+     }
+
+@media (max-width: 64em){
+     width: 100%;
+     height: 100%;
+     padding: 1%;
+
+
+     & div#Previewcontainer{
+      display: block;
+     }
+     & div#previewbutton{
+      display: block;
+      align-items: baseline;
+      position: fixed;
+      bottom: 1%;
+
+
+     }
+     
+     
+  
+
+
+}
+
+
+`
+
+
+const ServiceCardsContainer = styled.div`
+display: flex;
+flex-direction: column;
+margin-top: 2%;
+/* background-color: aquamarine; */
+width:75%;
+height: 40%;
+padding: 10px;
+margin-bottom: 2%;
+`
+
+
+const ServiceCard = styled.div`
+margin-top: 1%;
+background-color: #80bea9;
+border-radius: 10px;
+
+height: 30%;
+`
+const LinkCard = styled.div`
+overflow: hidden;
+@media (max-width: 64em){
+     
+
+
+}
+
+
+`
+
+
+const RightContainer = styled.div`
+  
+  display: flex;
+  justify-content: center;
+  width: 45%;
+
+  /* background-color: blanchedalmond; */
+ 
+
+  @media (max-width: 64em){
+     display: none;
+  
+
+
+}
+
+`
+
+const MiddleMargin = styled.div`
+@media (max-width: 64em){
+     display: none;
+  
+
+
+}
+  
+
+  
+`
+
+
+
+const Phoneborder = styled.div`
+  display: flex;
+  border-width: 8px;
+  border-style: solid;
+  border-color: black;
+  border-radius: 12px; 
+  width: 290px;
+  height: 550px;
+  margin-top:3em;
+  box-shadow: 0 0 10px black;
+  overflow: hidden;
+  overflow-y: scroll;
+  
+  
+
+
+
+   /* Customizing the scrollbar */
+   &::-webkit-scrollbar {
+    width: 0.5px; /* Adjust the width of the scrollbar */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #484848; /* Color of the thumb */
+    border-radius: 6px; /* Radius of the thumb */
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent; /* Color of the track */
+  }
+  
+`;
+
+
+
+const PhoneborderPreview = styled.div`
+  display: flex;
+  border-width: 8px;
+  border-style: solid;
+  border-color: black;
+  border-radius: 12px; 
+  width: 290px;
+  height: 550px;
+  margin-top:3em;
+  
+  overflow: hidden;
+  overflow-y: scroll;
+
+
+
+  @media (max-width: 64em){
+     width: 250px;
+     height: 450px;
+     margin-bottom: 50%;
+     margin-left: 15%;
+     
+     
+  
+
+
+}
+  
+  
+
+
+
+   /* Customizing the scrollbar */
+   &::-webkit-scrollbar {
+    width: 0.5px; /* Adjust the width of the scrollbar */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #484848; /* Color of the thumb */
+    border-radius: 6px; /* Radius of the thumb */
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent; /* Color of the track */
+  }
+  
+`;
 
 const Phonecontainer = styled.div`
+margin-top: 20px;
+/* background-color: black; */
+height: fit-content;
+position: fixed;
+ 
+`;
+
+
+
+
+const PhoneContentcontainer = styled.div`
   display: flex;
   flex-direction: column;
+  height:100%;
   align-items: center;
-  margin-top: 20px;
+  color: ${props => props.theme.textTemp};
+  width: 100%;
+  
+
+  
+
+
+  
 
   & > .rounded-full {
+    margin-top: 10px;
     margin-bottom: 20px;
   }
 
   & > h1,
   & > h2 {
-    margin-top: 20px;
+    margin-top: 10px;
+    
   }
 `;
 
@@ -54,15 +281,26 @@ const Infocontainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   margin-top: 20px;
+  /* background-color: beige; */
+  font-style: italic;
+  font-weight: bold;
+  
+  
+  
+  
+  
 
   & > div {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
+    
+    font-size: small;
 
     & img {
       margin-right: 10px;
       height: 1.3em;
+      
     }
   }
 `;
@@ -73,14 +311,14 @@ const Linkcontainer = styled.div`
   margin-bottom: 20px;
 
   & a {
-    margin-right: 25px;
+    margin-right: 15px;
     /* border-radius: 50%; */
     overflow: hidden;
   }
 
   & a img {
-    width: 30px; 
-    height: 30px;
+    width: 25px; 
+    height: 25px;
     object-fit: cover; 
   }
 
@@ -93,15 +331,18 @@ const Cardbottoncontainer = styled.div`
   display: flex;
   cursor: pointer;
   margin-top: 20px;
+ 
 
   & > div#services {
     display: flex;
     align-items: center;
     margin-right: 5px;
     margin-left: 5px;
-    padding: 10px;
+    width: 8em;
+    height: 2em;
     background-color: #efefef;
     border-radius: 10px;
+    
     
 
     & img {
@@ -117,20 +358,125 @@ const BottomText = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  height: 15vh; 
+  height: 8vh; 
   margin-top: auto; 
 `;
 
 
+const Servicescontainer = styled.div`
+font-size: small;
+margin-top: 20px;
+margin-bottom: 2px;
+
+
+  
+
+`
+const Card = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: aliceblue;
+  `
+
+  const ThemeCard = styled.div`
+  display: flex;
+  
+  width: 35%;
+  text-align: center;
+  margin-left: 4%;
+  margin-right: 4%;
+  margin-bottom: 4%;
+  justify-content: space-between;
+  
+   @media (max-width: 64em){
+   width: 60%;
+  display: flex;
+  margin-bottom: 6%;
+  
+  
+  
+     
+
+}
+  
+  
+  `
+  const ThemeContainer = styled.div`
+  width: 80%;
+   @media (max-width: 64em){
+   width: 80%;
+  
+  
+}
+
+ 
+
+
+
+
+
+  `
+
+const PhonecontainerPreview = styled.div`
+@media (max-width: 64em){
+   /* background-color: aqua; */
+   height: fit-content;
+   
+  
+  
+}
+  
+
+
+
+`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const Appreance = () => {
-  
   const [Theme_Selected, setTheme_Selected] = useState("Theme1");
-  
   const [UserID, setUserID] = useState("");
   const [uploadTheme, setuploadTheme] = useState("");
   const [theme_url, setTheme_url] = useState("");
-  const [UN,setUN] = useState("");
+  const [showPreview, setShowPreview] = React.useState(false);
+
   const [displayPhoto, setDisplayPhoto] = useState("");
+
+
+
+  const[updateProfile, setUpdateProfile] = useState("")
+
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+
+  const [forceUpdate, setForceUpdate] = useState(false);
+
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -149,15 +495,7 @@ const Appreance = () => {
     return () => unsubscribe();
    }, []);
 
-  // useEffect(() => {
-  //   auth.onAuthStateChanged((user) => {
-  //     setUserID(user.uid);
-  //   });
-  //   getData();
-  //   setThemes();
-  // });
-
-  const getData = async (userId) => {
+   const getData = async (userId) => {
     if (!userId) {
        console.log('User ID is not set.');
        return;
@@ -165,46 +503,11 @@ const Appreance = () => {
    
     const docRef = doc(db, "UserInfo", userId);
     const docData = await getDoc(docRef);
-   
-    setdisplayCname(docData.data().Company_Name);
-    setdisplaylink1(docData.data().Link);
-    setdisplayPhoneNo(docData.data().PhoneNumber);
-    setDisplayUserName(docData.data().User_Name);
     setDisplayPhoto(docData.data().Profile_URl);
-    setDisplayAddress(docData.data().Address);
-    setDisplayFacebook_Link(docData.data().Facebook_Link);
-    setDisplayInsta_Link(docData.data().Instagram_Link);
-    setdisplayX_Link(docData.data().X_Link);
-    setDisplayDesc(docData.data().Desc);
-
-    setUN(docData.data().username)
-
-    setDisplayFullName(docData.data().Full_Name)
    };
   
-  // const getData = async () => {
-  //   const docRef = doc(db, "UserInfo", UserID);
 
-  //   const docData = await getDoc(docRef);
-
-
-  //   setdisplayCname(docData.data().Company_Name);
-  //   setdisplaylink1(docData.data().Link);
-  //   setdisplayPhoneNo(docData.data().PhoneNumber);
-  //   setDisplayUserName(docData.data().User_Name);
-  //   setDisplayPhoto(docData.data().Profile_URl);
-  //   setDisplayAddress(docData.data().Address);
-  //   setDisplayFacebook_Link(docData.data().Facebook_Link);
-  //   setDisplayInsta_Link(docData.data().Instagram_Link);
-  //   setdisplayX_Link(docData.data().X_Link);
-  //   setDisplayDesc(docData.data().Desc);
-
-  //   setUN(docData.data().username)
-
-  //   setDisplayFullName(docData.data().Full_Name)
-  // };
-
-  const setThemes = async (UserID) => {
+   const setThemes = async (UserID) => {
     const docRef = doc(db, "UserInfo", UserID);
 
     const docData = await getDoc(docRef);
@@ -246,32 +549,10 @@ const Appreance = () => {
 
   };
 
-//   const ThemeContainer= styled.div`
-    
+  const togglePreview = () => {
+    setShowPreview(!showPreview);
+  };
 
-
-//   `
-const [displayCname, setdisplayCname] = useState("");
-  const [displaylink1, setdisplaylink1] = useState("");
-  const [displayPhoneNo, setdisplayPhoneNo] = useState("");
-
-  const [displayUserName, setDisplayUserName] = useState("");
-
-  // const [displayPhoto, setDisplayPhoto] = useState("");
-  const [displayAddress, setDisplayAddress] = useState("");
-
-  const [displayFacebook_Link, setDisplayFacebook_Link] = useState("Please Enter Your Facebook Link");
-  const [displayInsta_Link, setDisplayInsta_Link] = useState("Please Enter Your Instagram Link");
-  const [displayX_Link, setdisplayX_Link] = useState("Please Enter Your Twitter Link");
-  const [displayDesc, setDisplayDesc] = useState("Enter Your Desc");
-
-  const [displayFullName, setDisplayFullName] = useState("Enter Your Desc");
-
-  const[updateProfile, setUpdateProfile] = useState("")
-
-  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
-
-  const [forceUpdate, setForceUpdate] = useState(false);
 
 
   const deleteProfile = async() =>{
@@ -331,10 +612,24 @@ const [displayCname, setdisplayCname] = useState("");
     setIsUploadModalOpen(false); 
   }
 
+
+
   return (
+    // <ThemeProvider>
+
     <>
     <DashNav/>
-      {isUploadModalOpen && (
+
+
+
+    {/* section */}
+     
+
+    <Section> 
+
+    <LeftContainer>
+
+    {isUploadModalOpen && (
           <div className="fixed top-0 left-0 w-full h-screen flex items-center justify-center bg-black opacity-75">
             <div className="bg-white p-4 rounded-lg shadow-lg py-14 px-10">
               <div className="grid grid-rows-2 gap-10">
@@ -350,10 +645,8 @@ const [displayCname, setdisplayCname] = useState("");
             </div>
           </div>
       )}
-      
-    <div className="m-15 border-1 p-10">
-      <div className="grid grid-cols-2 gap-80">
-        <div className="grid grid-rows-2">
+
+<div className="grid grid-rows-1">
           <div className=" h-96 ">
             <p className="text-3xl font-semibold">Profile</p>
             <div className="grid grid-cols-2 bg-gray-400 h-60 rounded-lg p-10 m-5">
@@ -370,155 +663,297 @@ const [displayCname, setdisplayCname] = useState("");
               </div>
             </div>
           </div>
+        </div>
 
-          <div className="grid grid-rows-2 h-64">
-            <h1 className="text-3xl font-semibold">Select Themes!</h1>
-            <div className="grid grid-cols-2 text-center p-10 rounded-xl">
-                          <div
-                            onClick={() => {
-                              changeTheme("template_1");
-                            }}
-                            className="w-1/2 text-center mb-10"
-                          >
-                            <img src={template1} alt="" id="template_img"/>
-                            <h5>Template 1</h5>
-                          </div>
-                          <div
-                            onClick={() => {
-                              changeTheme("template_2");
-                            }}
-                            className="w-1/2 mb-10"
-                          >
-                            <img src={template2} alt="" id="template_img"/>
-                            <h5>Template 2</h5>
-                          </div>
-                          <div
-                            onClick={() => {
-                              changeTheme("template_3");
-                            }}
-                            className="w-1/2 mb-10"
-                          >
-                            <img src={template3} alt="" id="template_img"/>
-                            <h5>Template 3</h5>
-                          </div>
-                          <div
-                            onClick={() => {
-                              changeTheme("template_4");
-                            }}
-                            className="w-1/2 mb-10" 
-                          >
-                            <img src={template4} alt="" id="template_img"/>
-                            <h5>Template 4</h5>
-                          </div>
-                          <div
-                            onClick={() => {
-                              changeTheme("template_5");
-                            }}
-                            className="w-1/2 mb-10"
-                          >
-                            <img src={template5} alt=""  id="template_img"/>
-                            <h5>Template 5</h5>
-                          </div>
-                          {/* <div
-                            onClick={() => {
-                              changeTheme("template_6");
-                            }}
-                          >
-                            theme6
-                          </div> */}
-            </div>
+
+
+    <h2 >Select Themes!</h2>
+
+    <ThemeContainer className="flex flex-wrap justify-center shadow-xl p-10 bg-gray-300 rounded-xl  ">
+ 
+          <ThemeCard>
+          <div
+            onClick={() => {
+              changeTheme("template_1");
+            }}
+            
+          >
+            <img src={template1} alt="" id="template_img"/>
+            <h5>Template 1</h5>
           </div>
-        </div>
+          </ThemeCard>
+
+
+          <ThemeCard>
+          <div
+            onClick={() => {
+              changeTheme("template_2");
+            }}
+            
+          >
+            <img src={template2} alt="" id="template_img"/>
+            <h5>Template 2</h5>
+          </div>
+          </ThemeCard>
+
+
+          <ThemeCard>
+          <div
+            onClick={() => {
+              changeTheme("template_3");
+            }}
+            
+          >
+            <img src={template3} alt="" id="template_img"/>
+            <h5>Template 3</h5>
+          </div>
+          </ThemeCard>
+
+
+          <ThemeCard>
+          <div
+            onClick={() => {
+              changeTheme("template_4");
+            }}
+            
+          >
+            <img src={template4} alt="" id="template_img"/>
+            <h5>Template 4</h5>
+          </div>
+
+          </ThemeCard>
+
+          <ThemeCard>
+          <div
+            onClick={() => {
+              changeTheme("template_5");
+            }}
+            
+          >
+            <img src={template5} alt=""  id="template_img"/>
+            <h5>Template 5</h5>
+          </div>
+          </ThemeCard>
+
+
+          </ThemeContainer>
+          <div id="previewbutton"className="mt-5 z-50 "  onClick={togglePreview} >
+
+            
+
+              <Button text ="* Preview" /></div>
+
+              {showPreview ? (
+        <>
+          <div id="Previewcontainer"
+            className="justify-center items-center flex overflow-x-hidden fixed inset-0  outline-none focus:outline-none  "
+          >
+            
+              
+
+
+
+
+              <PhonecontainerPreview>
+
+
+
+                
+                  
+                <PhoneborderPreview>
+
+                <PhoneContentcontainer  style={{ background: `url(${theme_url}) center/cover no-repeat` }}>
+
+                </PhoneContentcontainer>
+
+
+                </PhoneborderPreview>
+                
+                </PhonecontainerPreview>
+
+              
+            
+          </div>
+          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+        </>
+      ) : null}
+
+
+
+
+
+
         
-        {/* <div class="border-2 w-0 h-ful"></div> */}
-        <div className="flex flex-col ml-52">
-        <div className="border-8 border-black rounded-xl h-lvh sticky" id="phone_display" >
-                <img src={theme_url} id="" className="absolute inset-0 w-full h-full object-cover"/>
-
-                {/* data which will be display on the theme */}
-
-                {/* <h1 className="absolute inset-0 text-white font-bold text-center">{displayCname}</h1>
-
-                <h2 className="absolute  text-white font-bold text-center">{displayFullName}</h2> */}
-
-                <div className="absolute inset-0  text-center items-center text-white font-bold">
-                <Phonecontainer>
-
-                    <div className="rounded-full bg-black  w-32 h-32 ">
-                      <img src={displayPhoto} key={displayPhoto} className="rounded-full w-32 h-32" alt="not found" />
-                    </div>
-
-                    <h1>{displayCname}</h1>
-                    <h2>{displayFullName}</h2>
+       
 
 
-                    <Infocontainer>                   
-                        <div>
-                        <img src={phoneImg}  alt="" />
-                            {displayPhoneNo}
-                        </div>
-
-                        <div>
-                        <img src={AddressImg}  alt="" />
-                            {displayAddress}
-                        </div>
-                        
-                        <div>
-                        <img src={linkImg}  alt="" />
-                            {displaylink1}
-                        </div>           
-                      
-                        <div>
-                        <img src={mailImg}  alt="" />
-                            {displayDesc}
-                        </div>       
-
-                    </Infocontainer>
+        
 
 
-                    <Linkcontainer>
+
+        </LeftContainer>
 
 
-                      <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                        <img src={twitterImg} alt="" />
-                      </a>
-                      <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                        <img src={instaImg} alt="" />
-                      </a>
-                      <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
-                        <img src={youtubeImg} alt="" />
-                      </a>
-                      <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                        <img src={fbImg} alt="" />
-                      </a>
-
-                    </Linkcontainer>
 
 
-                    <Cardbottoncontainer>
-                    <div id="services">
-                    <img src={saveCardImg} alt="" />
-                    <div>Save Card</div>
-                    </div>
 
-                    <div id="services">
-                    <img src={addContactImg} alt="" />
-                    <div>Add Contact</div>
-                    </div>
-                    </Cardbottoncontainer>
+        <MiddleMargin className="border-2 w-0 h-100vh "></MiddleMargin> 
 
-                    <BottomText>
 
-                    tapON
+       
 
-                    </BottomText>
-                    </Phonecontainer>
-                </div>
-            </div>
+
+
+         
+
+
+
+
+
+
+
+        
+        
+
+
+
+
+
+
+
+
+       
+
+
+
+
+
+
+
+
+
+
+
+        <RightContainer> 
+
+
+        <Phonecontainer>
+
+
+
+        <Tilt className="Tilt"  options={{ max: 40, perspective: 1000, easing: 'cubic-bezier(.03,.98,.52,.99)', scale: 1.05}}>
+          
+        <Phoneborder>
+       
+  
+
+  
+    <PhoneContentcontainer  style={{ background: `url(${theme_url}) center/cover no-repeat` }}>
+
+      {/* <div className="rounded-full bg-black w-24 h-24">
+        <img src={img1} alt="not found" />
+      </div> */}
+
+      {/* <h1>{displayCname}</h1> */}
+      {/* <h2>{displayFullName}</h2> */}
+
+      {/* <Infocontainer>
+        <div>
+          <img src={phoneImg} alt="" />
+          {displayPhoneNo}
         </div>
-      </div>
-      </div>
+
+        <div>
+          <img src={AddressImg} alt="" />
+          {displayAddress}
+        </div>
+
+        <div>
+          <img src={linkImg} alt="" />
+          {displaylink1}
+        </div>
+
+        <div>
+          <img src={mailImg} alt="" />
+          {displayDesc}
+        </div>
+      </Infocontainer> */}
+
+      {/* <Linkcontainer>
+        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+          <img src={twitterImg} alt="" />
+        </a>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+          <img src={instaImg} alt="" />
+        </a>
+        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
+          <img src={youtubeImg} alt="" />
+        </a>
+        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+          <img src={fbImg} alt="" />
+        </a>
+      </Linkcontainer> */}
+
+
+      {/* <Servicescontainer>
+        <Card>
+
+        </Card>
+        <Card>
+          
+        </Card>
+      </Servicescontainer> */}
+
+
+
+      {/* <Cardbottoncontainer>
+        <div id="services">
+          <img src={saveCardImg} alt="" />
+          <div>Save Card</div>
+        </div>
+
+        <div id="services">
+          <img src={addContactImg} alt="" />
+          <div>Add Contact</div>
+        </div>
+      </Cardbottoncontainer> */}
+
+
+      
+
+      {/* <BottomText>
+        tapON
+      </BottomText> */}
+
+    </PhoneContentcontainer>
+    
+
+</Phoneborder>
+</Tilt>
+</Phonecontainer>
+
+
+
+</RightContainer>
+
+
+
+
+
+
+
+
+
+
+
+      
+
+      
+      </Section>
+      
+      
     </>
+    // </ThemeProvider>
   );
 };
 

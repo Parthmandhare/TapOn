@@ -231,6 +231,27 @@ console.log(error);
                     </label>
                   </div>
 
+                  <div className=" text-xs">
+
+                    <label className="inline-flex items-center cursor-pointer">
+                      <span className="ml-2 text-sm font-semibold text-blueGray-600">
+                        Already have an account?{" "}
+                        
+                        <span
+                          href="#pablo"
+                          className="text-lightBlue-500"
+                          onClick={(e) => e.preventDefault()}
+                        >
+                          <Link to={"/auth/Login"}>
+                          Login
+                          </Link>
+                        </span>
+                        
+                      </span>
+                    </label>
+                  
+                  </div>
+
                   <div className="text-center mt-6">
                   
                     <button 
