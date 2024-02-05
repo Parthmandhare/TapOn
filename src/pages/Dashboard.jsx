@@ -4,19 +4,19 @@ import { onAuthStateChanged } from "firebase/auth";
 import { signOut } from "firebase/auth";
 import { MdModeEdit } from "react-icons/md";
 
-import phoneImg from "../assets/img/phone-call.png"
-import AddressImg from "../assets/img/location.png"
-import linkImg from "../assets/img/link.png"
-import mailImg from "../assets/img/mail.png"
+import phoneImg from "../assets/img/phone-call.png";
+import AddressImg from "../assets/img/location.png";
+import linkImg from "../assets/img/link.png";
+import mailImg from "../assets/img/mail.png";
 
-import twitterImg from "../assets/img/twitter (1).png"
-import instaImg from "../assets/img/instagram.png"
-import youtubeImg from "../assets/img/youtube.png"
-import fbImg from "../assets/img/facebook.png"
+import twitterImg from "../assets/img/twitter (1).png";
+import instaImg from "../assets/img/instagram.png";
+import youtubeImg from "../assets/img/youtube.png";
+import fbImg from "../assets/img/facebook.png";
 
-import saveCardImg from "../assets/img/download.png"
-import addContactImg from "../assets/img/bookmark.png"
-import img1 from '../assets/img/gamer.png'
+import saveCardImg from "../assets/img/download.png";
+import addContactImg from "../assets/img/bookmark.png";
+import img1 from "../assets/img/gamer.png";
 
 import {
   collection,
@@ -38,49 +38,32 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import DashNav from "../components/Navbars/Navprof";
-import styled, {ThemeProvider} from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 
-
-import { getThemeColors } from '../components/Textthemes';
+import { getThemeColors } from "../components/Textthemes";
 import { Tilt } from "react-tilt";
 import Edittext from "../components/Edittext";
-import Button from '../components/Navbars/Button'
-
-
+import Button from "../components/Navbars/Button";
 
 const Section = styled.div`
-margin-top: 20px;
-  
-
-
-
-
-
-
-
-`
-
-
+  margin-top: 20px;
+`;
 
 const Phoneborder = styled.div`
   display: flex;
   border-width: 8px;
   border-style: solid;
   border-color: black;
-  border-radius: 12px; 
+  border-radius: 12px;
   width: 290px;
   height: 550px;
-  margin-top:3em;
+  margin-top: 3em;
   box-shadow: 0 0 10px black;
   overflow: hidden;
   overflow-y: scroll;
-  
-  
 
-
-
-   /* Customizing the scrollbar */
-   &::-webkit-scrollbar {
+  /* Customizing the scrollbar */
+  &::-webkit-scrollbar {
     width: 0.5px; /* Adjust the width of the scrollbar */
   }
 
@@ -92,24 +75,14 @@ const Phoneborder = styled.div`
   &::-webkit-scrollbar-track {
     background-color: transparent; /* Color of the track */
   }
-  
 `;
-
-
-
 
 const Phonecontainer = styled.div`
   display: flex;
   flex-direction: column;
   height: fit-content;
   align-items: center;
-  color: ${props => props.theme.textTemp};
-  
-
-  
-
-
-  
+  color: ${(props) => props.theme.textTemp};
 
   & > .rounded-full {
     margin-top: 10px;
@@ -119,7 +92,6 @@ const Phonecontainer = styled.div`
   & > h1,
   & > h2 {
     margin-top: 10px;
-    
   }
 `;
 
@@ -131,23 +103,17 @@ const Infocontainer = styled.div`
   /* background-color: beige; */
   font-style: italic;
   font-weight: bold;
-  
-  
-  
-  
-  
 
   & > div {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
-    
+
     font-size: small;
 
     & img {
       margin-right: 10px;
       height: 1.3em;
-      
     }
   }
 `;
@@ -164,9 +130,9 @@ const Linkcontainer = styled.div`
   }
 
   & a img {
-    width: 25px; 
+    width: 25px;
     height: 25px;
-    object-fit: cover; 
+    object-fit: cover;
   }
 
   & a:last-child {
@@ -178,7 +144,6 @@ const Cardbottoncontainer = styled.div`
   display: flex;
   cursor: pointer;
   margin-top: 20px;
- 
 
   & > div#services {
     display: flex;
@@ -189,8 +154,6 @@ const Cardbottoncontainer = styled.div`
     height: 2em;
     background-color: #efefef;
     border-radius: 10px;
-    
-    
 
     & img {
       width: 20px;
@@ -205,18 +168,15 @@ const BottomText = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  height: 8vh; 
-  margin-top: auto; 
+  height: 8vh;
+  margin-top: auto;
 `;
 
-
 const Servicescontainer = styled.div`
-font-size: small;
-margin-top: 20px;
-margin-bottom: 2px;
-  
-
-`
+  font-size: small;
+  margin-top: 20px;
+  margin-bottom: 2px;
+`;
 const Card = styled.div`
   display: flex;
   flex-direction: column;
@@ -233,8 +193,6 @@ const Card = styled.div`
 const Dashboard = () => {
   const navigate = useNavigate();
 
-
-
   const [displayUser, setDisplayUser] = useState("Please Login Bhai!");
   const [userID, setUserID] = useState("");
 
@@ -247,21 +205,26 @@ const Dashboard = () => {
   const [displayPhoto, setDisplayPhoto] = useState("");
   const [displayAddress, setDisplayAddress] = useState("");
 
-  const [displayFacebook_Link, setDisplayFacebook_Link] = useState("Please Enter Your Facebook Link");
-  const [displayInsta_Link, setDisplayInsta_Link] = useState("Please Enter Your Instagram Link");
-  const [displayX_Link, setdisplayX_Link] = useState("Please Enter Your Twitter Link");
-  const [displayDesc, setDisplayDesc] = useState("Enter Your Desc");
+  const [displayFacebook_Link, setDisplayFacebook_Link] = useState(
+    ""
+  );
+  const [displayInsta_Link, setDisplayInsta_Link] = useState(
+    ""
+  );
+  const [displayX_Link, setdisplayX_Link] = useState(
+    ""
+  );
+  const [displayDesc, setDisplayDesc] = useState("");
 
-  const [displayFullName, setDisplayFullName] = useState("Enter Your Desc");
+  const [displayFullName, setDisplayFullName] = useState("");
 
   // variables for inputing the data
-
-  const [InputCname, setInputCname] = useState("");
-  const [Inputlink1, setInputlink1] = useState("");
-  const [InputPhoneNo, setInputPhoneNo] = useState("");
-  const [InputInsta, setInputInsta] = useState("");
-  const [InputFacebook, setInputFacebook] = useState("");
-  const [InputX, setInputX] = useState("");
+  const [InputCname, setInputCname] = useState(displayCname);
+  const [Inputlink1, setInputlink1] = useState(displaylink1);
+  const [InputPhoneNo, setInputPhoneNo] = useState(displayPhoneNo);
+  const [InputInsta, setInputInsta] = useState(displayInsta_Link);
+  const [InputFacebook, setInputFacebook] = useState(displayFacebook_Link);
+  const [InputX, setInputX] = useState(displayX_Link);
   const [InputAddress, setInputAddress] = useState("");
 
   const [userEmail, setUserEmail] = useState("");
@@ -269,16 +232,13 @@ const Dashboard = () => {
 
   const [ImageURL, setImageURL] = useState("");
 
-  const [InputDesc, setInputDesc] = useState("");
+  const [InputDesc, setInputDesc] = useState(displayDesc);
 
   const [showModal, setShowModal] = React.useState(false);
-  const [UN,setUN] = useState("");
+  const [UN, setUN] = useState("");
 
   const [theme_url, setTheme_url] = useState("");
   const [Theme_Selected, setTheme_Selected] = useState("Theme1");
-
-
-
 
   // const [textColor1, setTextColor1] = useState("");
   // const [textColor2, setTextColor2] = useState("");
@@ -286,36 +246,26 @@ const Dashboard = () => {
   // const [textColor4, setTextColor4] = useState("");
   // const [textColor5, setTextColor5] = useState("");
 
-  const [textColor, setTextColor] = useState('');
+  const [textColor, setTextColor] = useState("");
+
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-       if (user) {
-         console.log('User object:', user);
-         setUserID(user.uid);
-         // Call getData with the user ID directly
-         setUserEmail(user.email);
-         getData(user.uid);
-         setThemes(user.uid);
-       } else {
-         console.log('No user is signed in.');
-       }
+      if (user) {
+        console.log("User object:", user);
+        setUserID(user.uid);
+        // Call getData with the user ID directly
+        setUserEmail(user.email);
+        getData(user.uid);
+        setThemes(user.uid);
+      } else {
+        console.log("No user is signed in.");
+      }
     });
-   
+
     // Clean up subscription on unmount
     return () => unsubscribe();
-   }, []);
-
-  // useEffect(() => {
-  //   auth.onAuthStateChanged((user) => {
-  //     setDisplayUser(user.displayName);
-      
-  //     setUserID(user.uid);
-  //     setUserEmail(user.email);
-  //   });
-  //   getData();
-  //   setThemes();
-  // });
+  }, []);
 
   const setThemes = async (userID) => {
     const docRef = doc(db, "UserInfo", userID);
@@ -330,19 +280,6 @@ const Dashboard = () => {
     // setThemeColors(themeColors);
   };
 
-
-
-  // const setThemeColors = (colors) => {
-  //   setTextColor1(colors.textTemp1);
-  //   setTextColor2(colors.textTemp2);
-  //   setTextColor3(colors.textTemp3);
-  //   setTextColor4(colors.textTemp4);
-  //   setTextColor5(colors.textTemp5);
-    
-  // };
-
-
-
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -356,13 +293,13 @@ const Dashboard = () => {
 
   const getData = async (userId) => {
     if (!userId) {
-       console.log('User ID is not set.');
-       return;
+      console.log("User ID is not set.");
+      return;
     }
-   
+
     const docRef = doc(db, "UserInfo", userId);
     const docData = await getDoc(docRef);
-   
+
     setdisplayCname(docData.data().Company_Name);
     setdisplaylink1(docData.data().Link);
     setdisplayPhoneNo(docData.data().PhoneNumber);
@@ -374,12 +311,10 @@ const Dashboard = () => {
     setdisplayX_Link(docData.data().X_Link);
     setDisplayDesc(docData.data().Desc);
 
-    setUN(docData.data().username)
+    setUN(docData.data().username);
 
-    setDisplayFullName(docData.data().Full_Name)
-   };
-
-  // const getData = async () => {
+    setDisplayFullName(docData.data().Full_Name);
+  };
   //   const docRef = doc(db, "UserInfo", userID);
 
   //   const docData = await getDoc(docRef);
@@ -406,6 +341,121 @@ const Dashboard = () => {
     value = value.toString();
     return value == null || value.replaceAll(" ", "").length < 1;
   };
+
+  // const submitInNewWay = async(e) => {
+  //   e.preventDefault();
+
+  //   // if (
+  //   //   isNullOrWhiteSpaces(InputCname) ||
+  //   //   isNullOrWhiteSpaces(InputPhoneNo) ||
+  //   //   isNullOrWhiteSpaces(Inputlink1) ||
+  //   //   isNullOrWhiteSpaces(InputFacebook) ||
+  //   //   isNullOrWhiteSpaces(InputInsta) ||
+  //   //   isNullOrWhiteSpaces(InputX)
+  //   // ) {
+  //   //   alert(
+  //   //     "Fill all the field Bro! If you dont have any social media link then just enter random!"
+  //   //   );
+  //   //   return;
+  //   // }
+
+  //   // const data = {
+  //   //   User_Name: displayUser,
+  //   //   Company_Name: InputCname,
+  //   //   PhoneNumber: InputPhoneNo,
+  //   //   Link: Inputlink1,
+  //   //   Instagram_Link: InputInsta,
+  //   //   Facebook_Link: InputFacebook,
+  //   //   X_Link: InputX,
+  //   //   Profile_URl: ImageURL,
+  //   //   Address: InputAddress,
+  //   //   Desc: InputDesc,
+  //   // };
+
+  //   const data = {};
+
+  //   // Check if Company Name has changed
+  //   if (InputCname !== displayCname || InputCname !== "") {
+  //      data.Company_Name = InputCname;
+  //      setdisplayCname(InputCname)
+  //   }
+   
+  //   // Check if Phone Number has changed
+  //   if (InputPhoneNo !== displayPhoneNo || InputPhoneNo !== "") {
+  //      data.PhoneNumber = InputPhoneNo;
+  //      setdisplayPhoneNo(InputPhoneNo)
+  //   }
+
+  //   // Check if Address has changed
+  //   if (InputAddress !== displayAddress || InputAddress !== "") {
+  //      data.Address = InputAddress;
+  //      setDisplayAddress(InputAddress)
+  //   }
+  //   // Check if Desc has changed
+  //   if (InputDesc !== displayDesc || InputDesc !== "") {
+  //      data.Desc = InputDesc;
+  //      setDisplayDesc(InputDesc)
+  //   }
+  //   // Check if Link has changed
+  //   if (Inputlink1 !== displaylink1 || Inputlink1 !== "") {
+  //      data.Link = Inputlink1;
+  //      setdisplaylink1(Inputlink1)
+  //   }
+  //   // Check if Phone Number has changed
+  //   if (InputX !== displayX_Link || InputX !== "") {
+  //      data.X_Link = InputX;
+  //      setdisplayX_Link(InputX)
+  //   }
+  //   // Check if Phone Number has changed
+  //   if (InputInsta !== displayInsta_Link || InputInsta !== "") {
+  //      data.Instagram_Link = InputInsta;
+  //      setDisplayInsta_Link(InputInsta)
+  //   }
+  //   // Check if Phone Number has changed
+  //   if (InputFacebook !== displayFacebook_Link || InputFacebook !== "") {
+  //      data.Facebook_Link = InputFacebook;
+  //      setDisplayFacebook_Link(InputFacebook)
+  //   }
+
+  //   if (Object.keys(data).length > 0) {
+  //     console.log("Updating document with data:", data); // Log the data to be updated
+  //     const userRef = doc(collection(db, "UserInfo"), userID);
+
+  //   await updateDoc(userRef, data)
+  //     .then(() => {
+  //       console.log("Document has been added successfully");
+
+  //       console.log(displayAddress);
+  //       console.log( displayCname);
+  //       console.log(displayDesc);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+
+  //   // const imgRef = ref(imageDb, `files/${userID}`);
+  //   // const uploadTask = uploadBytesResumable(imgRef, uploadPhoto);
+
+  //   // uploadTask.on(
+  //   //   "state_changed",
+  //   //   (snapshot) => {},
+  //   //   (error) => {
+  //   //     console.error(error);
+  //   //   },
+  //   //   async () => {
+  //   //     const downloadURL = await getDownloadURL(imgRef);
+  //   //     setImageURL(downloadURL);
+
+  //   //     const userRef = doc(collection(db, "UserInfo"), userID);
+  //   //     await updateDoc(userRef, { Profile_URl: downloadURL });
+
+  //   //     console.log("Document updated with download URL:", downloadURL);
+  //   //   }
+  //   // );
+  //   }
+
+  // };
+
 
   const submitInNewWay = (e) => {
     e.preventDefault();
@@ -451,6 +501,8 @@ const Dashboard = () => {
         setImageURL("");
         setInputAddress("");
         setInputDesc("");
+
+        getData();
       })
       .catch((error) => {
         console.log(error);
@@ -483,346 +535,575 @@ const Dashboard = () => {
     );
   };
 
-  const GoToMiniSite = () => {
-    navigate(`/${UN}/${userID}`)
+  const EditCname = async(e) =>{
+    e.preventDefault();
+
+    const data = {
+      Company_Name: InputCname
+    };
+
+    const userRef = doc(collection(db, "UserInfo"), userID);
+    updateDoc(userRef, data)
+    .then(userRef => {
+        console.log("Value of an Existing Document Field has been updated");
+        setdisplayCname(data.Company_Name);
+        setInputCname("");
+    })
+    .catch(error => {
+      console.log(error);
+    })
   }
+
+  const EditAddress = async(e) =>{
+    e.preventDefault();
+
+    const data = {
+      Address: InputAddress
+    };
+
+    const userRef = doc(collection(db, "UserInfo"), userID);
+    updateDoc(userRef, data)
+    .then(userRef => {
+        console.log("Value of an Existing Document Field has been updated");
+        setDisplayAddress(data.Address)
+        setInputAddress("");
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
+
+  const EditDesc = async(e) =>{
+    e.preventDefault();
+
+    const data = {
+      Desc: InputDesc
+    };
+
+    const userRef = doc(collection(db, "UserInfo"), userID);
+    updateDoc(userRef, data)
+    .then(userRef => {
+        console.log("Value of an Existing Document Field has been updated");
+        setDisplayDesc(data.Desc)
+        setInputDesc("");
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
+  
+  const EditPhoneNo = async(e) =>{
+    e.preventDefault();
+
+    const data = {
+      PhoneNumber: InputPhoneNo
+    };
+
+    const userRef = doc(collection(db, "UserInfo"), userID);
+    updateDoc(userRef, data)
+    .then(userRef => {
+        console.log("Value of an Existing Document Field has been updated");
+        setdisplayPhoneNo(data.PhoneNumber)
+        setInputPhoneNo("");
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
+
+  const EditLink = async(e) =>{
+    e.preventDefault();
+
+
+    const data = {
+      Link: Inputlink1
+    };
+
+    const userRef = doc(collection(db, "UserInfo"), userID);
+      updateDoc(userRef, data)
+      .then(userRef => {
+          console.log("Value of an Existing Document Field has been updated");
+          setdisplaylink1(data.Link)
+          setInputlink1("");
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+
+  const EditFacebookLink = async(e) =>{
+    e.preventDefault();
+
+    const data = {
+      Facebook_Link: InputFacebook
+    };
+
+    const userRef = doc(collection(db, "UserInfo"), userID);
+      updateDoc(userRef, data)
+      .then(userRef => {
+          console.log("Value of an Existing Document Field has been updated");
+          setDisplayFacebook_Link(data.Facebook_Link)
+          setInputFacebook("");
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+
+  const EditInstaLink = async(e) =>{
+    e.preventDefault();
+
+
+    const data = {
+      Instagram_Link: InputInsta
+    };
+
+    const userRef = doc(collection(db, "UserInfo"), userID);
+      updateDoc(userRef, data)
+      .then(userRef => {
+          console.log("Value of an Existing Document Field has been updated");
+          setDisplayInsta_Link(data.Instagram_Link)
+          setInputInsta("");
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+
+  const EditXLink = async(e) =>{
+    e.preventDefault();
+
+    const data = {
+      X_Link: InputX
+    };
+
+    const userRef = doc(collection(db, "UserInfo"), userID);
+      updateDoc(userRef, data)
+      .then(userRef => {
+          console.log("Value of an Existing Document Field has been updated");
+          setdisplayX_Link(data.X_Link)
+          setInputX("");
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+
+
+
+  const GoToMiniSite = () => {
+    navigate(`/${UN}/${userID}`);
+  };
 
   const copyToClipboard = () => {
     const textToCopy = `tapon/${UN}/${userID}`;
 
     // Using navigator.clipboard.writeText() for modern browsers
 
-    navigator.clipboard.writeText(textToCopy)
+    navigator.clipboard
+      .writeText(textToCopy)
       .then(() => {
-        alert('Text successfully copied to clipboard');
+        alert("Text successfully copied to clipboard");
       })
       .catch((err) => {
-        console.error('Unable to copy text to clipboard', err);
+        console.error("Unable to copy text to clipboard", err);
       });
   };
 
-  
-
   return (
     <ThemeProvider theme={getThemeColors(Theme_Selected)}>
+      <>
+        <DashNav />
 
-
-    <>
-      <DashNav/>
-
-      <Section className="flex w-full h-auto"> {/*section*/ }
-        <div className="flex flex-col w-2/3  ml-4 ">  {/*leftcontainer*/ }
-
-        
-            <div className=" bg-blue-200 h-12 rounded-lg flex items-center p-3  w-fit mt-2  ml-8"> {/*linkcontainer*/ }
-              <p >Your Live Mini-Website: <span className="underline decoration-solid font-semibold mr-14" onClick={GoToMiniSite}>{`tapon/${UN}/${userID}`}</span></p>
-              <div className="flex items-center ml-15  "> {/*inside right*/ }
-                <p >Share Your Link to Anyone</p> 
-                <button className=" bg-white rounded-xl h-8 font-semibold w-24 ml-2 " onClick={copyToClipboard}>Copy Link</button>
+        <Section className="flex w-full h-auto">
+          {" "}
+          {/*section*/}
+          <div className="flex flex-col w-2/3  ml-4 ">
+            {" "}
+            {/*leftcontainer*/}
+            <div className=" bg-blue-200 h-12 rounded-lg flex items-center p-3  w-fit mt-2  ml-8">
+              {" "}
+              {/*linkcontainer*/}
+              <p>
+                Your Live Mini-Website:{" "}
+                <span
+                  className="underline decoration-solid font-semibold mr-14"
+                  onClick={GoToMiniSite}
+                >{`tapon/${UN}/${userID}`}</span>
+              </p>
+              <div className="flex items-center ml-15  ">
+                {" "}
+                {/*inside right*/}
+                <p>Share Your Link to Anyone</p>
+                <button
+                  className=" bg-white rounded-xl h-8 font-semibold w-24 ml-2 "
+                  onClick={copyToClipboard}
+                >
+                  Copy Link
+                </button>
               </div>
             </div>
-           
-
-
-
-
-
-
-
-
-
-            
-
-            <div className=" h-fit mt-12  ml-8  "> {/*textbox*/ }
-            
-            <h2 className=" font-bold text-xl">Details</h2>
-              
-
+            <div className=" h-fit mt-12  ml-8  ">
+              {" "}
+              {/*textbox*/}
+              <h2 className=" font-bold text-xl">Details</h2>
               <form className=" w-3/4 mt-10 mb-12">
-
-                   <div className="relative z-0 w-full mb-5 group">
-                       <input type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value={InputCname} onChange={(e) => {setInputCname(e.target.value)}}/>
-                       <label for="floating_email" className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Company Name<Edittext className="ml-1 mt-0.5"/></label>
-                   </div>
-                   <div className="relative z-0 w-full mb-5 group">
-                       <input type="text" name="floating_password" id="floating_password" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value={InputPhoneNo} onChange={(e) => {setInputPhoneNo(e.target.value)}} />
-                       <label for="floating_password" className=" flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" >Phone Number <Edittext className="ml-1 mt-0.5"/></label>
-                   </div>
-                   <div className="relative z-0 w-full mb-5 group">
-                       <input type="text" name="repeat_password" id="floating_repeat_password" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value={InputAddress} onChange={(e)=>{setInputAddress(e.target.value)}} />
-                       <label for="floating_repeat_password" className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" >Address <Edittext className="ml-1 mt-0.5"/></label>
-                   </div>
-                   <div className="relative z-0 w-full mb-5 group">
-                       <input type="text" name="repeat_password" id="floating_repeat_password" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value={InputDesc} onChange={(e)=>{setInputDesc(e.target.value)}} />
-                       <label for="floating_repeat_password" className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" >Description <Edittext className="ml-1 mt-0.5"/></label>
-                   </div>
-                   <div className="grid md:grid-cols-2 md:gap-6">
-                     <div className="relative z-0 w-full mb-5 group">
-                         <input type="text" name="floating_first_name" id="floating_first_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value={Inputlink1} onChange={(e) => {setInputlink1(e.target.value)}} />
-                         <label for="floating_first_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" >Link</label>
-                     </div>
-                     <div className="relative z-0 w-full mb-5 group">
-                         <input type="text" name="floating_company" id="floating_company" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value={InputX} onChange={(e)=>{setInputX(e.target.value)}} />
-                         <label for="floating_company" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" >Twitter Link</label>
-                     </div>
-                   </div>
-                   <div className="grid md:grid-cols-2 md:gap-6">
-                     <div className="relative z-0 w-full mb-5 group">
-                         <input type="text" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value={InputInsta} onChange={(e)=>{setInputInsta(e.target.value)}} />
-                          <label for="floating_phone" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" >Instagram Link</label>
-                     </div>
-                     <div className="relative z-0 w-full mb-5 group">
-                                          <input type="text" name="floating_company" id="floating_company" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value={InputFacebook} onChange={(e)=>{setInputFacebook(e.target.value)}} />
-                         <label for="floating_company" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" >Facebook Link</label>
-                     </div>
-                 
-                   </div>
-                   {/* <Button text ="Submit" onClick={submitInNewWay} /> */}
-                   <button type="submit" className="text-white bg-blue-200 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  mt-5" onClick={submitInNewWay}>Submit</button>
+                <div className="relative z-0 w-full mb-5 group">
+                  
+                  <input
+                    type="text"
+                    name="floating_email"
+                    id="floating_email"
+                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    placeholder=" "
+                    value={InputCname}
+                    onChange={(e) => {
+                      setInputCname(e.target.value);
+                    }}
+                  />
+                  <span><button onClick={EditCname}>Edit</button></span>
+                  <label
+                    for="floating_email"
+                    className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  >
+                    Company Name - {displayCname}
+                    
+                  </label>
+                </div>
+                <div className="relative z-0 w-full mb-5 group">
+                  <input
+                    type="text"
+                    name="floating_password"
+                    id="floating_password"
+                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    placeholder=" "
+                    value={InputPhoneNo}
+                    onChange={(e) => {
+                      setInputPhoneNo(e.target.value);
+                    }}
+                  />
+                  <span><button onClick={EditPhoneNo}>Edit</button></span>
+                  <label
+                    for="floating_password"
+                    className=" flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  >
+                    Phone Number - {displayPhoneNo} 
+                  </label>
+                </div>
+                <div className="relative z-0 w-full mb-5 group">
+                  <input
+                    type="text"
+                    name="repeat_password"
+                    id="floating_repeat_password"
+                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    placeholder=" "
+                    value={InputAddress}
+                    onChange={(e) => {
+                      setInputAddress(e.target.value);
+                    }}
+                  />
+                  <span><button onClick={EditAddress}>Edit</button></span>
+                  <label
+                    for="floating_repeat_password"
+                    className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  >
+                    Address - {displayAddress} 
+                  </label>
+                </div>
+                <div className="relative z-0 w-full mb-5 group">
+                  <input
+                    type="text"
+                    name="repeat_password"
+                    id="floating_repeat_password"
+                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    placeholder=" "
+                    value={InputDesc}
+                    onChange={(e) => {
+                      setInputDesc(e.target.value);
+                    }}
+                  />
+                  <span><button onClick={EditDesc}>Edit</button></span>
+                  <label
+                    for="floating_repeat_password"
+                    className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  >
+                    Description - {displayDesc} 
+                  </label>
+                </div>
+                <div className="grid md:grid-cols-2 md:gap-6">
+                  <div className="relative z-0 w-full mb-5 group">
+                    <input
+                      type="text"
+                      name="floating_first_name"
+                      id="floating_first_name"
+                      className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                      placeholder=" "
+                      value={Inputlink1}
+                      onChange={(e) => {
+                        setInputlink1(e.target.value);
+                      }}
+                    />
+                    <span><button onClick={EditLink}>Edit</button></span>
+                    <label
+                      for="floating_first_name"
+                      className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                    >
+                      Link - {displaylink1}
+                    </label>
+                  </div>
+                  <div className="relative z-0 w-full mb-5 group">
+                    <input
+                      type="text"
+                      name="floating_company"
+                      id="floating_company"
+                      className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                      placeholder=" "
+                      value={InputX}
+                      onChange={(e) => {
+                        setInputX(e.target.value);
+                      }}
+                    />
+                    <span><button onClick={EditXLink}>Edit</button></span>
+                    <label
+                      for="floating_company"
+                      className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                    >
+                      Twitter Link - {displayX_Link}
+                    </label>
+                  </div>
+                </div>
+                <div className="grid md:grid-cols-2 md:gap-6">
+                  <div className="relative z-0 w-full mb-5 group">
+                    <input
+                      type="text"
+                      className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                      placeholder=" "
+                      value={InputInsta}
+                      onChange={(e) => {
+                        setInputInsta(e.target.value);
+                      }}
+                    />
+                    <span><button onClick={EditInstaLink}>Edit</button></span>
+                    <label
+                      for="floating_phone"
+                      className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                    >
+                      Instagram Link - {displayInsta_Link}
+                    </label>
+                  </div>
+                  <div className="relative z-0 w-full mb-5 group">
+                    <input
+                      type="text"
+                      name="floating_company"
+                      id="floating_company"
+                      className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                      placeholder=" "
+                      value={InputFacebook}
+                      onChange={(e) => {
+                        setInputFacebook(e.target.value);
+                      }}
+                    />
+                    <span><button onClick={EditFacebookLink}>Edit</button></span>
+                    <label
+                      for="floating_company"
+                      className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                    >
+                      Facebook Link - {displayFacebook_Link}
+                    </label>
+                  </div>
+                </div>
+                {/* <Button text ="Submit" onClick={submitInNewWay} /> */}
+                <button
+                  type="submit"
+                  className="text-white bg-blue-200 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  mt-5"
+                  onClick={submitInNewWay}
+                >
+                  Save Changes
+                </button>
               </form>
-
               <h3 className=" font-bold text-xl">Services</h3>
               <div className="mt-5" onClick={() => setShowModal(true)}>
-              <Button text ="Add Service +" /></div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-              {showModal ? (
-        <>
-          <div
-            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-          >
-            <div className="border-0 rounded-lg shadow-lg relative w-2/5 my-6 mx-auto  ">
-              {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                {/*header*/}
-                <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-                  <h3 className="text-3xl font-semibold">
-                    Add Service Details
-                  </h3>
-                  <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={() => setShowModal(false)}
-                  >
-                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                      x
-                    </span>
-                  </button>
-                </div>
-
-
-
-                {/*body*/}
-                <div className="relative p-6 flex flex-row h-full">
-                  <div className=" flex items-center w-20 h-15  bg-black mr-10 rounded-lg text-white font-light text-xs  justify-center cursor-pointer ">Add Image</div>
-
-
-                  <div className="relative z-0 w-full mb-5 group">
-                       <input type="text" name="repeat_password" id="floating_repeat_password" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value={InputDesc} onChange={(e)=>{setInputDesc(e.target.value)}} />
-                       <label for="floating_repeat_password" className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" >Description <Edittext className="ml-1 mt-0.5"/></label>
-                   </div>
-                </div>
-
-
-
-                {/*footer*/}
-                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                  <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Close
-                  </button>
-                  <button
-                    className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Save Changes
-                  </button>
-                </div>
+                <Button text="Add Service +" />
               </div>
+              {showModal ? (
+                <>
+                  <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+                    <div className="border-0 rounded-lg shadow-lg relative w-2/5 my-6 mx-auto  ">
+                      {/*content*/}
+                      <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                        {/*header*/}
+                        <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+                          <h3 className="text-3xl font-semibold">
+                            Add Service Details
+                          </h3>
+                          <button
+                            className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                            onClick={() => setShowModal(false)}
+                          >
+                            <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                              x
+                            </span>
+                          </button>
+                        </div>
+
+                        {/*body*/}
+                        <div className="relative p-6 flex flex-row h-full">
+                          <div className=" flex items-center w-20 h-15  bg-black mr-10 rounded-lg text-white font-light text-xs  justify-center cursor-pointer ">
+                            Add Image
+                          </div>
+
+                          <div className="relative z-0 w-full mb-5 group">
+                            <input
+                              type="text"
+                              name="repeat_password"
+                              id="floating_repeat_password"
+                              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                              placeholder=" "
+                              value={InputDesc}
+                              onChange={(e) => {
+                                setInputDesc(e.target.value);
+                              }}
+                            />
+                            <label
+                              for="floating_repeat_password"
+                              className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                            >
+                              Description <Edittext className="ml-1 mt-0.5" />
+                            </label>
+                          </div>
+                        </div>
+
+                        {/*footer*/}
+                        <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                          <button
+                            className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            type="button"
+                            onClick={() => setShowModal(false)}
+                          >
+                            Close
+                          </button>
+                          <button
+                            className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            type="button"
+                            onClick={() => setShowModal(false)}
+                          >
+                            Save Changes
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                </>
+              ) : null}
             </div>
           </div>
-          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-        </>
-      ) : null}
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
-            </div>
-
-
-
-
-            
-
-
-
-        </div>
-        <div className="border-2 w-0 h-screen  ml-4"></div> {/*middlemargin*/ }
-
-
-
-
-
-
-        <div className="   flex w-2/6 justify-center"> {/*rightcontainer*/ }
-
-
-
-        <Tilt className="Tilt"  options={{ max: 40, perspective: 1000, easing: 'cubic-bezier(.03,.98,.52,.99)', scale: 1.05}}>
-          
-        <Phoneborder>
-       
-  
-
-  
-    <Phonecontainer  style={{ background: `url(${theme_url}) center/cover no-repeat` }}>
-
-      <div className="rounded-full bg-black w-24 h-24">
-        <img src={img1} alt="not found" />
-      </div>
-
-      <h1>{displayCname}</h1>
-      <h2>{displayFullName}</h2>
-
-      <Infocontainer>
-        <div>
-          <img src={phoneImg} alt="" />
-          {displayPhoneNo}
-        </div>
-
-        <div>
-          <img src={AddressImg} alt="" />
-          {displayAddress}
-        </div>
-
-        <div>
-          <img src={linkImg} alt="" />
-          {displaylink1}
-        </div>
-
-        <div>
-          <img src={mailImg} alt="" />
-          {displayDesc}
-        </div>
-      </Infocontainer>
-
-      <Linkcontainer>
-        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-          <img src={twitterImg} alt="" />
-        </a>
-        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-          <img src={instaImg} alt="" />
-        </a>
-        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
-          <img src={youtubeImg} alt="" />
-        </a>
-        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-          <img src={fbImg} alt="" />
-        </a>
-      </Linkcontainer>
-
-
-      <Servicescontainer>
-        <Card>
-
-        </Card>
-        <Card>
-          
-        </Card>
-      </Servicescontainer>
-
-      
-
-      <Cardbottoncontainer>
-        <div id="services">
-          <img src={saveCardImg} alt="" />
-          <div>Save Card</div>
-        </div>
-
-        <div id="services">
-          <img src={addContactImg} alt="" />
-          <div>Add Contact</div>
-        </div>
-      </Cardbottoncontainer>
-
-
-      
-
-      <BottomText>
-        tapON
-      </BottomText>
-
-    </Phonecontainer>
-    
-
-</Phoneborder>
-</Tilt>
-
-        </div>
-
-
-
-
-
-      </Section>
-      
-    </>
+          <div className="border-2 w-0 h-screen  ml-4"></div> {/*middlemargin*/}
+          <div className="   flex w-2/6 justify-center">
+            {" "}
+            {/*rightcontainer*/}
+            <Tilt
+              className="Tilt"
+              options={{
+                max: 40,
+                perspective: 1000,
+                easing: "cubic-bezier(.03,.98,.52,.99)",
+                scale: 1.05,
+              }}
+            >
+              <Phoneborder>
+                <Phonecontainer
+                  style={{
+                    background: `url(${theme_url}) center/cover no-repeat`,
+                  }}
+                >
+                  <div className="rounded-full bg-black w-24 h-24">
+                    <img src={displayPhoto} alt="not found" />
+                  </div>
+
+                  <h1>{displayCname}</h1>
+                  <h2>{displayFullName}</h2>
+                  <h3>{displayDesc}</h3>
+
+                  <Infocontainer>
+                    <div>
+                      <img src={phoneImg} alt="" />
+                      {displayPhoneNo}
+                    </div>
+
+                    <div>
+                      <img src={AddressImg} alt="" />
+                      {displayAddress}
+                    </div>
+
+                    <div>
+                      <img src={linkImg} alt="" />
+                      {displaylink1}
+                    </div>
+
+                    <div>
+                      <img src={mailImg} alt="" />
+                      {userEmail}
+                    </div>
+                  </Infocontainer>
+
+                  <Linkcontainer>
+                    <a
+                      href="https://twitter.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img src={twitterImg} alt="" />
+                    </a>
+                    <a
+                      href="https://instagram.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img src={instaImg} alt="" />
+                    </a>
+                    <a
+                      href="https://youtube.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img src={youtubeImg} alt="" />
+                    </a>
+                    <a
+                      href="https://facebook.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img src={fbImg} alt="" />
+                    </a>
+                  </Linkcontainer>
+
+                  <Servicescontainer>
+                    <Card></Card>
+                    <Card></Card>
+                  </Servicescontainer>
+
+                  <Cardbottoncontainer>
+                    <div id="services">
+                      <img src={saveCardImg} alt="" />
+                      <div>Save Card</div>
+                    </div>
+
+                    <div id="services">
+                      <img src={addContactImg} alt="" />
+                      <div>Add Contact</div>
+                    </div>
+                  </Cardbottoncontainer>
+
+                  <BottomText>tapON</BottomText>
+                </Phonecontainer>
+              </Phoneborder>
+            </Tilt>
+          </div>
+        </Section>
+      </>
     </ThemeProvider>
-
-    
-
-    
   );
 };
 
 export default Dashboard;
-
