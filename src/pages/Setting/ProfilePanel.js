@@ -4,6 +4,7 @@ import Button from '../../components/Navbars/Button'
 import { auth, db } from '../auth/firebase';
 import { collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { updateProfile } from 'firebase/auth';
+import { Link } from 'react-router-dom';
 
 
 const PadBox = styled.div`
@@ -12,11 +13,24 @@ height: 100vh;
 width: 100vh;
 display: flex; /* Added flex display */
 flex-direction: column;
+@media (max-width: 64em){
+   width: 100%;
+   height: 100%;
+   padding: 5%;
+   
+  
+  
+}
 
 `;
 const Buttoncontainer= styled.div`
 width: fit-content;
 margin-top: 20px;
+@media (max-width: 64em){
+  align-self: center;
+
+}
+
 
 
 
@@ -34,6 +48,18 @@ const Label = styled.div`
     font-size: 16px;
   }
 `;
+const Bottom=styled.div`
+display: none;
+@media (max-width: 64em){
+display: block;
+justify-content: space-between;
+display: flex;
+margin-top: 10%;
+cursor: pointer;
+}
+
+
+`
 
 
 function ProfilePanel() {
@@ -135,6 +161,14 @@ function ProfilePanel() {
 
                 <button onClick={updateInfo} className=' bg-black text-white p-3 px-6 rounded-3xl'>Update</button>
               </Buttoncontainer>
+
+              <Bottom>
+              <Link to={'/Settings/Password'}>
+              <button  className=' bg-black text-white p-3  rounded-3xl text-sm'>Change Password</button></Link>
+              <Link to={'/Settings/Billing'}>
+              <button  className=' bg-black text-white p-3  rounded-3xl text-sm'>Change Plan</button></Link>
+
+              </Bottom>
 
 
 

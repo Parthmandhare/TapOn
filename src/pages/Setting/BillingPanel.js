@@ -12,11 +12,23 @@ height: 100vh;
 width: 100vh;
 display: flex; /* Added flex display */
 flex-direction: column;
+@media (max-width: 64em){
+   width: 100%;
+   height: 100%;
+   padding: 5%;
+   
+  
+  
+}
 
 `;
 const Buttoncontainer= styled.div`
 width: fit-content;
 margin-top: 20px;
+@media (max-width: 64em){
+  align-self: center;
+
+}
 
 
 
@@ -42,6 +54,20 @@ const Label = styled.div`
     font-size: 16px;
   }
 `;
+
+
+const Bottom=styled.div`
+display: none;
+@media (max-width: 64em){
+display: block;
+justify-content: space-between;
+display: flex;
+margin-top: 10%;
+cursor: pointer;
+}
+
+
+`
 
 const BillingPanel = () => {
 
@@ -89,6 +115,13 @@ const BillingPanel = () => {
           <Buttoncontainer>
               <Link to={'/auth/plans'}><Button text ="Change Plan" /></Link>
               </Buttoncontainer>
+              <Bottom>
+              <Link to={'/Settings/ProfileSetting'}>
+              <button  className=' bg-black text-white p-3  rounded-3xl text-xs'>Profile Setting</button></Link>
+              <Link to={'/Settings/Password'}>
+              <button  className=' bg-black text-white p-3  rounded-3xl text-xs'>Change Password</button></Link>
+
+              </Bottom>
               </PadBox>
   )
 }
