@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Button from '../../components/Navbars/Button'
 import { auth } from '../auth/firebase';
 import { EmailAuthProvider, reauthenticateWithCredential, updatePassword } from 'firebase/auth';
+import { Link } from 'react-router-dom';
 
 
 
@@ -12,11 +13,23 @@ height: 100vh;
 width: 100vh;
 display: flex; /* Added flex display */
 flex-direction: column;
+@media (max-width: 64em){
+   width: 100%;
+   height: 100%;
+   padding: 5%;
+   
+  
+  
+}
 
 `;
 const Buttoncontainer= styled.div`
 width: fit-content;
 margin-top: 20px;
+@media (max-width: 64em){
+  align-self: center;
+
+}
 
 
 
@@ -30,6 +43,18 @@ const Label = styled.div`
   font-size: 24px;
   
 `;
+const Bottom=styled.div`
+display: none;
+@media (max-width: 64em){
+display: block;
+justify-content: space-between;
+display: flex;
+margin-top: 10%;
+cursor: pointer;
+}
+
+
+`
 
 
 const PasswordPanel = () => {
@@ -99,7 +124,7 @@ const PasswordPanel = () => {
     
   }
   return (
-    <PadBox>
+    <PadBox >
       
          <Label>
           <h2>Change Password</h2>
@@ -123,9 +148,19 @@ const PasswordPanel = () => {
               <button onClick = {updatePass} className=' bg-black text-white p-3 px-5 rounded-3xl hover:h-14 hover:w-44'>Change Password</button>
               </Buttoncontainer>
 
+              
+
+
 
 
               </form>
+              <Bottom>
+              <Link to={'/Settings/ProfileSetting'}>
+              <button  className=' bg-black text-white p-3  rounded-3xl text-xs'>Profile Setting</button></Link>
+              <Link to={'/Settings/Billing'}>
+              <button  className=' bg-black text-white p-3  rounded-3xl text-xs'>Change Plan</button></Link>
+
+              </Bottom>
               
              
 

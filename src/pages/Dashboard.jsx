@@ -18,6 +18,8 @@ import saveCardImg from "../assets/img/download.png";
 import addContactImg from "../assets/img/bookmark.png";
 import img1 from "../assets/img/gamer.png";
 
+import Pencill from "../assets/img/pencil.png";
+
 import {
   collection,
   doc,
@@ -231,18 +233,27 @@ const Phonecontainer = styled.div`
   position: fixed;
 `;
 
+
 const PhoneContentcontainer = styled.div`
   display: flex;
   flex-direction: column;
+  min-height: 100%;
   height: fit-content;
   align-items: center;
   color: ${(props) => props.theme.textTemp};
   & div#imagediv {
-    width: 48px;
-    height: 48px;
+    width: 30%;
+    height: 80px;
     background-color: black;
     border-radius: 100%;
+    margin-top:2%;
+    /* object-fit: contain; */
+    /* overflow: hidden; */
+   
+    
+    
   }
+  
 
   @media (max-width: 64em) {
     display: flex;
@@ -410,7 +421,9 @@ const Cardbottoncontainer = styled.div`
     margin-left: 5px;
     width: 8em;
     height: 2em;
-    background-color: #efefef;
+    background-color: ${props => props.theme.backgroundcards};
+    border: solid 1px ;
+    border-color: ${props=>props.theme.bordercolor};
     border-radius: 10px;
 
     & img {
@@ -418,6 +431,7 @@ const Cardbottoncontainer = styled.div`
       height: 20px;
       object-fit: cover;
       margin-right: 10px;
+      margin-left: 2px;
     }
   }
   @media (max-width: 64em) {
@@ -433,7 +447,9 @@ const Cardbottoncontainer = styled.div`
     margin-left: 5px; */
       width: 8em;
       height: 3em;
-      background-color: #8e4b4b;
+      background-color: ${props => props.theme.backgroundcards};
+    border: solid 1px ;
+    border-color: ${props=>props.theme.bordercolor};
       border-radius: 10px;
 
       & img {
@@ -444,6 +460,46 @@ const Cardbottoncontainer = styled.div`
       }
     }
   }
+`;
+
+const VisuallyHidden = styled.textarea`
+  position: absolute;
+  clip: rect(1px, 1px, 1px, 1px);
+`;
+
+const CopyButton = styled.button`
+font-weight: 500;
+  background-color: white;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  opacity: 1;
+  width: 80px;
+  height: 40px;
+  z-index: 9;
+  border-radius: 16px;
+`;
+
+const ButtonTooltipContainer = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 30px;
+  /* background-color: yellow; */
+`;
+
+const CustomTooltip = styled.span`
+  position: absolute;
+  margin-top: 6px;
+  top:80%;
+  left: 50%;
+  transform: translateX(40%);
+  display: none;
+  padding: 5px 12px;
+  background-color: #000000df;
+  border-radius: 4px;
+  color: #fff;
+  opacity: 75%;
 `;
 
 const BottomText = styled.div`
@@ -467,23 +523,36 @@ const Servicescontainer = styled.div`
   width: 75%;
   height: fit-content;
   padding: 2%;
+   @media (max-width: 64em) {
+    width:50%;
+    /* background-color: antiquewhite; */
+
+
+   }
+
+
 `;
 
 const CardcontainerP = styled.div`
-  border: solid 2px black;
+ border: solid 1px ;
+ border-color: ${props=>props.theme.bordercolor};
   margin-bottom: 2%;
   margin-top: 2%;
   font-weight: 500;
   font-style: italic;
+  font-size: larger;
   align-items: center;
   justify-content: center;
   display: flex;
   min-width: 20vh;
   min-height: 8vh;
-  background-color: #adadad;
+  background-color: ${props => props.theme.backgroundcards};
   border-radius: 8px;
+  @media (max-width: 64em) {
+    min-width: 15vh;
+    min-height: 6vh;
+  }
 `;
-
 const Card = styled.div`
   display: flex;
   flex-direction: row;
@@ -687,6 +756,8 @@ const PDescriptionleft = styled.div`
 
 const Dashboard = () => {
   const navigate = useNavigate();
+
+  const [isTooltipVisible, setTooltipVisible] = useState(false);
 
   const [displayUser, setDisplayUser] = useState("Please Login Bhai!");
   const [userID, setUserID] = useState("");
@@ -1179,6 +1250,20 @@ const Dashboard = () => {
 
   }
 
+  const copyToClipboard = () => {
+    const urlBox = document.getElementById('box');
+    urlBox.value = `https://tapon/${UN}/${userID}`;
+    urlBox.focus();
+    urlBox.select();
+    document.execCommand('copy');
+
+    setTooltipVisible(true);
+
+    setTimeout(() => {
+      setTooltipVisible(false);
+    }, 500);
+  };
+
   return (
     <ThemeProvider theme={getThemeColors(Theme_Selected)}>
       <>
@@ -1203,15 +1288,21 @@ const Dashboard = () => {
               <div id="div2" className="flex flex-row  w-fit  ">
                 <p className=" mt-2  mr-2">Share Your Link </p>
 
-                <Copied />
+                <ButtonTooltipContainer>
+                  <CopyButton title="Copy Share Link" onClick={copyToClipboard}>
+                    Copy
+                  </CopyButton>
+                  <CustomTooltip style={{ display: isTooltipVisible ? 'inline' : 'none' }}>Copied!</CustomTooltip>
+                  <VisuallyHidden id="box" />
+                </ButtonTooltipContainer>
               </div>
             </LinkCard>
 
             {/*textbox*/}
             <LeftContent className="  h-5/6   ml-8  ">
               <h2 className=" font-bold text-xl">Details</h2>
-              <form className=" w-3/4 mt-10 mb-12 h-fit ">
-                <div className="relative z-0 w-full mb-5 group">
+              <form className=" w-3/4 mt-10 mb-12 h-fit  ">
+                <div className="relative z-0 w-full mb-5 group  flex">
                   <input
                     type="text"
                     name="floating_email"
@@ -1223,9 +1314,10 @@ const Dashboard = () => {
                       setInputCname(e.target.value);
                     }}
                   />
+                  { InputCname && (
                   <span>
-                    <button onClick={EditCname}>Edit</button>
-                  </span>
+                    <button className=" align-middle bg-black text-white p-2 text-xs  rounded-full mt-1" onClick={EditCname}><img src={Pencill}/></button>
+                  </span>)}
                   <label
                     for="floating_email"
                     className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
@@ -1233,7 +1325,7 @@ const Dashboard = () => {
                     Company Name - {displayCname}
                   </label>
                 </div>
-                <div className="relative z-0 w-full mb-5 group">
+                <div className="relative z-0 w-full mb-5 group  flex">
                   <input
                     type="text"
                     name="floating_password"
@@ -1245,9 +1337,10 @@ const Dashboard = () => {
                       setInputPhoneNo(e.target.value);
                     }}
                   />
+                  { InputPhoneNo && (
                   <span>
-                    <button onClick={EditPhoneNo}>Edit</button>
-                  </span>
+                    <button className=" align-middle bg-black text-white p-2   rounded-full mt-1" onClick={EditPhoneNo}><img src={Pencill}/></button>
+                  </span>)}
                   <label
                     for="floating_password"
                     className=" flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
@@ -1255,7 +1348,7 @@ const Dashboard = () => {
                     Phone Number - {displayPhoneNo}
                   </label>
                 </div>
-                <div className="relative z-0 w-full mb-5 group">
+                <div className="relative z-0 w-full mb-5 group  flex">
                   <input
                     type="text"
                     name="repeat_password"
@@ -1267,9 +1360,10 @@ const Dashboard = () => {
                       setInputAddress(e.target.value);
                     }}
                   />
+                  { InputAddress && (
                   <span>
-                    <button onClick={EditAddress}>Edit</button>
-                  </span>
+                    <button className=" align-middle bg-black text-white p-2 text-xs  rounded-full mt-1" onClick={EditAddress}><img src={Pencill}/></button>
+                  </span>)}
                   <label
                     for="floating_repeat_password"
                     className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
@@ -1277,21 +1371,22 @@ const Dashboard = () => {
                     Address - {displayAddress}
                   </label>
                 </div>
-                <div className="relative z-0 w-full mb-5 group">
+                <div className="relative z-0 w-full mb-5 group  flex">
                   <input
                     type="text"
                     name="repeat_password"
                     id="floating_repeat_password"
                     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    placeholder=" "
+                    placeholder=""
                     value={InputDesc}
                     onChange={(e) => {
                       setInputDesc(e.target.value);
                     }}
                   />
+                  { InputDesc && (
                   <span>
-                    <button onClick={EditDesc}>Edit</button>
-                  </span>
+                    <button className=" align-middle bg-black text-white p-2 text-xs  rounded-full mt-1" onClick={EditDesc}><img src={Pencill}/></button>
+                  </span>)}
                   <label
                     for="floating_repeat_password"
                     className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
@@ -1300,29 +1395,30 @@ const Dashboard = () => {
                   </label>
                 </div>
                 <div className="grid md:grid-cols-2 md:gap-6">
-                  <div className="relative z-0 w-full mb-5 group">
+                  <div className="relative z-0 w-full mb-5 group  flex">
                     <input
                       type="text"
                       name="floating_first_name"
                       id="floating_first_name"
                       className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                      placeholder=" "
+                      placeholder=""
                       value={Inputlink1}
                       onChange={(e) => {
                         setInputlink1(e.target.value);
                       }}
                     />
+                    { Inputlink1 && (
                     <span>
-                      <button onClick={EditLink}>Edit</button>
-                    </span>
+                      <button className=" align-middle bg-black text-white p-2 text-xs  rounded-full mt-1" onClick={EditLink}><img src={Pencill}/></button>
+                    </span>)}
                     <label
                       for="floating_first_name"
-                      className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                    >
-                      Link - {displaylink1}
+                      className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                    >Link - {displaylink1}
+                   
                     </label>
                   </div>
-                  <div className="relative z-0 w-full mb-5 group">
+                  <div className="relative z-0 w-full mb-5 group flex  ">
                     <input
                       type="text"
                       name="floating_company"
@@ -1334,19 +1430,21 @@ const Dashboard = () => {
                         setInputX(e.target.value);
                       }}
                     />
+                    { InputX && (
                     <span>
-                      <button onClick={EditXLink}>Edit</button>
-                    </span>
+                    
+                      <button className=" align-middle bg-black text-white p-2 text-xs  mt-1 rounded-full" onClick={EditXLink}><img src={Pencill}/></button>
+                    </span>)}
                     <label
                       for="floating_company"
-                      className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                     >
                       Twitter Link - {displayX_Link}
                     </label>
                   </div>
                 </div>
                 <div className="grid md:grid-cols-2 md:gap-6">
-                  <div className="relative z-0 w-full mb-5 group">
+                  <div className="relative z-0 w-full mb-5 group  flex">
                     <input
                       type="text"
                       className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -1356,17 +1454,18 @@ const Dashboard = () => {
                         setInputInsta(e.target.value);
                       }}
                     />
+                    { InputInsta && (
                     <span>
-                      <button onClick={EditInstaLink}>Edit</button>
-                    </span>
+                      <button className=" align-middle bg-black  p-2 text-xs mt-1 rounded-full font-semibold" onClick={EditInstaLink}><img src={Pencill}/></button>
+                    </span>)}
                     <label
                       for="floating_phone"
-                      className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                     >
                       Instagram Link - {displayInsta_Link}
                     </label>
                   </div>
-                  <div className="relative z-0 w-full mb-5 group">
+                  <div className="relative z-0 w-full mb-5 group flex">
                     <input
                       type="text"
                       name="floating_company"
@@ -1378,12 +1477,13 @@ const Dashboard = () => {
                         setInputFacebook(e.target.value);
                       }}
                     />
+                    { InputFacebook && (
                     <span>
-                      <button onClick={EditFacebookLink}>Edit</button>
-                    </span>
+                      <button className=" align-middle bg-black text-white p-2 text-xs mt-1 rounded-full" onClick={EditFacebookLink}><img src={Pencill}/></button>
+                    </span>)}
                     <label
                       for="floating_company"
-                      className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                     >
                       Facebook Link - {displayFacebook_Link}
                     </label>
@@ -1413,9 +1513,10 @@ const Dashboard = () => {
                     scale: 1.05,
                   }}
                 >
+                  {displayService1 && (
                   <Servicecards onClick={() => setShowServiceModal(true)}>
                     <Cardcontent>{displayService1}</Cardcontent>
-                  </Servicecards>
+                  </Servicecards>)}
                 </Tilt>
 
                 <Tilt
@@ -1427,9 +1528,10 @@ const Dashboard = () => {
                     scale: 1.05,
                   }}
                 >
+                  {displayService2 && (
                   <Servicecards onClick={() => setShowServiceModal2(true)}>
                     <Cardcontent>{displayService2}</Cardcontent>
-                  </Servicecards>
+                  </Servicecards>)}
                 </Tilt>
 
                 <Tilt
@@ -1441,9 +1543,10 @@ const Dashboard = () => {
                     scale: 1.05,
                   }}
                 >
+                  {displayService3 && (
                   <Servicecards onClick={() => setShowServiceModal3(true)}>
                     <Cardcontent>{displayService3}</Cardcontent>
-                  </Servicecards>
+                  </Servicecards>)}
                 </Tilt>
 
                 <Tilt
@@ -1455,9 +1558,10 @@ const Dashboard = () => {
                     scale: 1.05,
                   }}
                 >
+                  {displayService4 && (
                   <Servicecards onClick={() => setShowServiceModal4(true)}>
                     <Cardcontent>{displayService4}</Cardcontent>
-                  </Servicecards>
+                  </Servicecards>)}
                 </Tilt>
               </ServiceCardsContainer>
               <div
@@ -2015,7 +2119,7 @@ const Dashboard = () => {
           </LeftContainer>
           <MiddleMargin className="border-2 w-0 h-100vh "></MiddleMargin>
           <RightContainer>
-            <Phonecontainer>
+          <Phonecontainer>
               <Tilt
                 className="Tilt"
                 options={{
@@ -2031,12 +2135,18 @@ const Dashboard = () => {
                       background: `url(${theme_url}) center/cover no-repeat`,
                     }}
                   >
-                    <div className="rounded-full bg-black w-24 h-24">
-                      <img src={displayPhoto} alt="not found" />
-                    </div>
+                    {displayPhoto && (
+                    <div id="imagediv"  style={{
+                      background: `url(${displayPhoto}) center/cover no-repeat`,
+                    }}>
+                      
+                    </div>)}
 
-                    <h1>{displayCname}</h1>
-                    <h2>{displayFullName}</h2>
+                    {displayCname && (
+
+                    <h1>{displayCname}</h1>)}
+                    {displayFullName && (
+                    <h2>{displayFullName}</h2>)}
                     <h3>{displayDesc}</h3>
 
                     <Infocontainer>
@@ -2061,7 +2171,7 @@ const Dashboard = () => {
                         </div>
                       )}
 
-                      {{userEmail} && (
+                      {displayDesc && (
                         <div>
                           <img src={mailImg} alt="" />
                           {userEmail}
@@ -2101,10 +2211,15 @@ const Dashboard = () => {
                     </Linkcontainer>
 
                     <Servicescontainer>
-                      <CardcontainerP>{displayService1}</CardcontainerP>
-                      <CardcontainerP>{displayService2}</CardcontainerP>
-                      <CardcontainerP>{displayService3}</CardcontainerP>
-                      <CardcontainerP>{displayService4}</CardcontainerP>
+                    {displayService1 && (
+                      <CardcontainerP>{displayService1}</CardcontainerP>)}
+                      {displayService2 && (
+                      <CardcontainerP>{displayService2}</CardcontainerP>)}
+                      {displayService3 && (
+                      <CardcontainerP>{displayService3}</CardcontainerP>)}
+                      {displayService4 && (
+                      <CardcontainerP>{displayService4}</CardcontainerP>)}
+                      
                     </Servicescontainer>
 
                     <Cardbottoncontainer>
