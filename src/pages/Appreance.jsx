@@ -541,6 +541,7 @@ const Appreance = () => {
       .then(() => {
         console.log("Document has been added successfully");
         setTheme_Selected(customTheme);
+        setTheme_url(url);
       })
       .catch((error) => {
         console.log(error);
@@ -561,9 +562,11 @@ const Appreance = () => {
     deleteObject(desertRef).then(async() => {
    
        alert("Deleted!");
+       console.log(displayPhoto);
        setDisplayPhoto(null); 
+       console.log(displayPhoto);
       //  setForceUpdate(!forceUpdate); // Force a re-render
-      setDisplayPhoto(`${desertRef}?${Date.now()}`); // Append a timestamp to the image URL
+      // setDisplayPhoto(`${desertRef}?${Date.now()}`); // Append a timestamp to the image URL
    
     }).catch((error) => {
        console.log("Profile is not deleting");
