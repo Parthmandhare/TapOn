@@ -50,7 +50,9 @@ export default function Register() {
                 const userRef = doc(collection(db, "UserInfo"), userUID);
 
                 const data = {
-                  Full_Name : FullName
+                  Full_Name : user.displayName,
+                  Theme: "Default",
+                  email: user.email
                 }
 
                 // const docRef = await setDoc(CollectionRef, data).then((re)=>{
@@ -100,7 +102,8 @@ export default function Register() {
 
     const data = {
       Full_Name : user.displayName,
-      Theme: "Default"
+      Theme: "Default",
+      email: user.email
     }
 
     // const docRef = await setDoc(CollectionRef, data).then((re)=>{

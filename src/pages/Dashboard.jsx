@@ -921,6 +921,7 @@ const Dashboard = () => {
       X_Link: InputX,
       Address: InputAddress,
       Desc: InputDesc,
+      Email: userEmail
     };
 
     const userRef = doc(collection(db, "UserInfo"), userID);
@@ -1278,7 +1279,7 @@ const Dashboard = () => {
                 <p className=" font-medium">
                   Your Mini-Website is Live :
                   <span
-                    className="underline decoration-solid font-semibold"
+                    className="underline decoration-solid font-semibold cursor-pointer"
                     onClick={GoToMiniSite}
                   >
                     {`https//tapon/${UN}/${userID}`}
