@@ -734,6 +734,9 @@ const Dashboard = () => {
   const [showPreview, setShowPreview] = React.useState(false);
   // const [serviceCards, setServiceCards] = useState([]);
   const [showServiceModal, setShowServiceModal] = React.useState(false);
+  const [showServiceModal2, setShowServiceModal2] = React.useState(false);
+  const [showServiceModal3, setShowServiceModal3] = React.useState(false);
+  const [showServiceModal4, setShowServiceModal4] = React.useState(false);
 
   const [UN, setUN] = useState("");
 
@@ -808,6 +811,11 @@ const Dashboard = () => {
     setUN(docData.data().username);
 
     setDisplayFullName(docData.data().Full_Name);
+
+    setDisplayService1(docData.data().Service1);
+    setDisplayService2(docData.data().Service2);
+    setDisplayService3(docData.data().Service3);
+    setDisplayService4(docData.data().Service4);
   };
 
   let isNullOrWhiteSpaces = (value) => {
@@ -840,7 +848,6 @@ const Dashboard = () => {
       Instagram_Link: InputInsta,
       Facebook_Link: InputFacebook,
       X_Link: InputX,
-      Profile_URl: ImageURL,
       Address: InputAddress,
       Desc: InputDesc,
     };
@@ -850,41 +857,52 @@ const Dashboard = () => {
     updateDoc(userRef, data)
       .then(() => {
         console.log("Document has been added successfully");
+
+
+        // Update state variables with the new data
+        setdisplayCname(data.Company_Name);
+        setdisplayPhoneNo(data.PhoneNumber);
+        setdisplaylink1(data.Link);
+        setDisplayInsta_Link(data.Instagram_Link);
+        setdisplayX_Link(data.X_Link);
+        setDisplayFacebook_Link(data.Facebook_Link);
+        setDisplayDesc(data.Desc);
+        setInputAddress(data.Address);  
+
         setInputCname("");
         setInputPhoneNo("");
         setInputlink1("");
         setInputFacebook("");
         setInputInsta("");
         setInputX("");
-        setImageURL("");
         setInputAddress("");
         setInputDesc("");
-
-        getData();
       })
       .catch((error) => {
         console.log(error);
       });
 
-    const imgRef = ref(imageDb, `files/${userID}`);
-    const uploadTask = uploadBytesResumable(imgRef, uploadPhoto);
+    // const imgRef = ref(imageDb, `files/${userID}`);
+    // const uploadTask = uploadBytesResumable(imgRef, uploadPhoto);
 
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {},
-      (error) => {
-        console.error(error);
-      },
-      async () => {
-        const downloadURL = await getDownloadURL(imgRef);
-        setImageURL(downloadURL);
+    // uploadTask.on(
+    //   "state_changed",
+    //   (snapshot) => {},
+    //   (error) => {
+    //     console.error(error);
+    //   },
+    //   async () => {
+    //     const downloadURL = await getDownloadURL(imgRef);
+    //     setImageURL(downloadURL);
 
-        const userRef = doc(collection(db, "UserInfo"), userID);
-        await updateDoc(userRef, { Profile_URl: downloadURL });
+    //     const userRef = doc(collection(db, "UserInfo"), userID);
+    //     await updateDoc(userRef, { Profile_URl: downloadURL });
 
-        console.log("Document updated with download URL:", downloadURL);
-      }
-    );
+    //     console.log("Document updated with download URL:", downloadURL);
+    //   }
+    // );
+
+
   };
 
   const EditCname = async (e) => {
@@ -1090,6 +1108,75 @@ const Dashboard = () => {
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  const EditService1 = () =>{
+    const data = {
+      Service1: service1
+    }
+
+    const userRef = doc(collection(db, "UserInfo"), userID);
+    updateDoc(userRef, data)
+      .then((userRef) => {
+        console.log("Value of an Existing Document Field has been updated");
+        setDisplayService1(service1);
+        setShowServiceModal(false)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  }
+  const EditService2 = () =>{
+    const data = {
+      Service2: service2
+    }
+
+    const userRef = doc(collection(db, "UserInfo"), userID);
+    updateDoc(userRef, data)
+      .then((userRef) => {
+        console.log("Value of an Existing Document Field has been updated");
+        setDisplayService2(service2);
+        setShowServiceModal2(false)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  }
+  const EditService3 = () =>{
+    const data = {
+      Service3: service3
+    }
+
+    const userRef = doc(collection(db, "UserInfo"), userID);
+    updateDoc(userRef, data)
+      .then((userRef) => {
+        console.log("Value of an Existing Document Field has been updated");
+        setDisplayService3(service3);
+        setShowServiceModal3(false)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  }
+  const EditService4 = () =>{
+    const data = {
+      Service4: service4
+    }
+
+    const userRef = doc(collection(db, "UserInfo"), userID);
+    updateDoc(userRef, data)
+      .then((userRef) => {
+        console.log("Value of an Existing Document Field has been updated");
+        setDisplayService4(service4);
+        setShowServiceModal4(false)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
   }
 
   return (
@@ -1340,7 +1427,7 @@ const Dashboard = () => {
                     scale: 1.05,
                   }}
                 >
-                  <Servicecards onClick={() => setShowServiceModal(true)}>
+                  <Servicecards onClick={() => setShowServiceModal2(true)}>
                     <Cardcontent>{displayService2}</Cardcontent>
                   </Servicecards>
                 </Tilt>
@@ -1354,7 +1441,7 @@ const Dashboard = () => {
                     scale: 1.05,
                   }}
                 >
-                  <Servicecards onClick={() => setShowServiceModal(true)}>
+                  <Servicecards onClick={() => setShowServiceModal3(true)}>
                     <Cardcontent>{displayService3}</Cardcontent>
                   </Servicecards>
                 </Tilt>
@@ -1368,7 +1455,7 @@ const Dashboard = () => {
                     scale: 1.05,
                   }}
                 >
-                  <Servicecards onClick={() => setShowServiceModal(true)}>
+                  <Servicecards onClick={() => setShowServiceModal4(true)}>
                     <Cardcontent>{displayService4}</Cardcontent>
                   </Servicecards>
                 </Tilt>
@@ -1522,6 +1609,91 @@ const Dashboard = () => {
                             className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                             onClick={() => {
                               setShowServiceModal(false);
+                            }}
+                          >
+                            <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                              x
+                            </span>
+                          </button>
+                        </div>
+
+                        {/*body*/}
+                        <div className="relative p-6 flex flex-row h-full">
+                          <div className="relative z-0 w-full mb-5 group">
+                            <input
+                              type="text"
+                              name="repeat_password"
+                              id="floating_repeat_password"
+                              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                              placeholder=" " value={service1} onChange={(e)=>{setService1(e.target.value)}}
+                            />
+                            <label
+                              for="floating_repeat_password"
+                              className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                            >
+                              Name - {displayService1} <Edittext className="ml-1 mt-0.5" />
+                            </label>
+                          </div>
+                        </div>
+
+                        {/*footer*/}
+                        <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                          <button
+                            className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            type="button"
+                            onClick={() => setShowServiceModal(false)}
+                          >
+                            Close
+                          </button>
+                          {/* <button
+                            className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            type="button"
+                            onClick={() => setShowServiceModal(false)}
+                          >
+                            Delete
+                          </button> */}
+                          <button
+                            className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            type="button"
+                            onClick={EditService1}
+                          >
+                            Save Changes
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                </>
+              ) : null}
+
+
+
+
+
+
+
+
+
+
+{showServiceModal2 ? (
+                <>
+                  <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+                    <div
+                      id="divmodwid"
+                      className="border-0 rounded-lg shadow-lg relative w-2/5 my-6 mx-auto  "
+                    >
+                      {/*content*/}
+                      <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                        {/*header*/}
+                        <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+                          <h3 className="text-3xl font-semibold">
+                            Edit Service details
+                          </h3>
+                          <button
+                            className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                            onClick={() => {
+                              setShowServiceModal2(false);
 
                               // const newServiceCardData = {
                               //   uploadedPicData:{text: 'text'} ,
@@ -1545,13 +1717,13 @@ const Dashboard = () => {
                               name="repeat_password"
                               id="floating_repeat_password"
                               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                              placeholder=" "
+                              placeholder=" " value={service2} onChange={(e)=>{setService2(e.target.value)}}
                             />
                             <label
                               for="floating_repeat_password"
                               className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                             >
-                              Name <Edittext className="ml-1 mt-0.5" />
+                              Name - {displayService2} <Edittext className="ml-1 mt-0.5" />
                             </label>
                           </div>
                         </div>
@@ -1561,14 +1733,94 @@ const Dashboard = () => {
                           <button
                             className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
-                            onClick={() => setShowServiceModal(false)}
+                            onClick={() => setShowServiceModal2(false)}
                           >
                             Close
                           </button>
                           <button
                             className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
-                            onClick={() => setShowServiceModal(false)}
+                            onClick={EditService2}
+                          >
+                            {/* () => setShowServiceModal2(false) */}
+                            Save Changes
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                </>
+              ) : null}
+
+
+
+
+{showServiceModal3 ? (
+                <>
+                  <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+                    <div
+                      id="divmodwid"
+                      className="border-0 rounded-lg shadow-lg relative w-2/5 my-6 mx-auto  "
+                    >
+                      {/*content*/}
+                      <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                        {/*header*/}
+                        <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+                          <h3 className="text-3xl font-semibold">
+                            Edit Service details
+                          </h3>
+                          <button
+                            className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                            onClick={() => {
+                              setShowServiceModal3(false);
+
+                              // const newServiceCardData = {
+                              //   uploadedPicData:{text: 'text'} ,
+                              //   descriptionLeftData: {text: 'This is the description text'} ,
+                              // };
+
+                              // addServiceCard(newServiceCardData);
+                            }}
+                          >
+                            <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                              x
+                            </span>
+                          </button>
+                        </div>
+
+                        {/*body*/}
+                        <div className="relative p-6 flex flex-row h-full">
+                          <div className="relative z-0 w-full mb-5 group">
+                            <input
+                              type="text"
+                              name="repeat_password"
+                              id="floating_repeat_password"
+                              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                              placeholder=" " value={service3} onChange={(e)=>{setService3(e.target.value)}}
+                            />
+                            <label
+                              for="floating_repeat_password"
+                              className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                            >
+                              Name -{displayService3}<Edittext className="ml-1 mt-0.5" />
+                            </label>
+                          </div>
+                        </div>
+
+                        {/*footer*/}
+                        <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                          <button
+                            className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            type="button"
+                            onClick={() => setShowServiceModal3(false)}
+                          >
+                            Close
+                          </button>
+                          <button
+                            className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            type="button"
+                            onClick={EditService3}
                           >
                             Save Changes
                           </button>
@@ -1579,6 +1831,88 @@ const Dashboard = () => {
                   <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
                 </>
               ) : null}
+
+
+
+              {showServiceModal4 ? (
+                <>
+                  <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+                    <div
+                      id="divmodwid"
+                      className="border-0 rounded-lg shadow-lg relative w-2/5 my-6 mx-auto  "
+                    >
+                      {/*content*/}
+                      <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                        {/*header*/}
+                        <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+                          <h3 className="text-3xl font-semibold">
+                            Edit Service details
+                          </h3>
+                          <button
+                            className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                            onClick={() => {
+                              setShowServiceModal4(false);
+
+                              // const newServiceCardData = {
+                              //   uploadedPicData:{text: 'text'} ,
+                              //   descriptionLeftData: {text: 'This is the description text'} ,
+                              // };
+
+                              // addServiceCard(newServiceCardData);
+                            }}
+                          >
+                            <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                              x
+                            </span>
+                          </button>
+                        </div>
+
+                        {/*body*/}
+                        <div className="relative p-6 flex flex-row h-full">
+                          <div className="relative z-0 w-full mb-5 group">
+                            <input
+                              type="text"
+                              name="repeat_password"
+                              id="floating_repeat_password"
+                              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                              placeholder=" " value={service4} onChange={(e)=>{setService4(e.target.value)}}
+                            />
+                            <label
+                              for="floating_repeat_password"
+                              className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                            >
+                              Name - {displayService4} <Edittext className="ml-1 mt-0.5" />
+                            </label>
+                          </div>
+                        </div>
+
+                        {/*footer*/}
+                        <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                          <button
+                            className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            type="button"
+                            onClick={() => setShowServiceModal4(false)}
+                          >
+                            Close
+                          </button>
+                          <button
+                            className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            type="button"
+                            onClick={EditService4}
+                          >
+                            Save Changes
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                </>
+              ) : null}
+
+
+
+
               {showPreview ? (
                 <>
                   <div
@@ -1602,7 +1936,7 @@ const Dashboard = () => {
 
                           <h1>{displayCname}</h1>
                           <h2>{displayFullName}</h2>
-
+                          <h3>{displayDesc}</h3>
                           <Infocontainerpre>
                             <div>
                               <img src={phoneImg} alt="" />
@@ -1621,7 +1955,7 @@ const Dashboard = () => {
 
                             <div>
                               <img src={mailImg} alt="" />
-                              {displayDesc}
+                              {userEmail}
                             </div>
                           </Infocontainerpre>
 
@@ -1703,6 +2037,7 @@ const Dashboard = () => {
 
                     <h1>{displayCname}</h1>
                     <h2>{displayFullName}</h2>
+                    <h3>{displayDesc}</h3>
 
                     <Infocontainer>
                       {displayPhoneNo && (
@@ -1726,10 +2061,10 @@ const Dashboard = () => {
                         </div>
                       )}
 
-                      {displayDesc && (
+                      {{userEmail} && (
                         <div>
                           <img src={mailImg} alt="" />
-                          {displayDesc}
+                          {userEmail}
                         </div>
                       )}
                     </Infocontainer>
@@ -1766,11 +2101,10 @@ const Dashboard = () => {
                     </Linkcontainer>
 
                     <Servicescontainer>
-                      <CardcontainerP>salon</CardcontainerP>
-                      <CardcontainerP>salon</CardcontainerP>
-                      <CardcontainerP>salon</CardcontainerP>
-                      <CardcontainerP>salon</CardcontainerP>
-                      <CardcontainerP>salon</CardcontainerP>
+                      <CardcontainerP>{displayService1}</CardcontainerP>
+                      <CardcontainerP>{displayService2}</CardcontainerP>
+                      <CardcontainerP>{displayService3}</CardcontainerP>
+                      <CardcontainerP>{displayService4}</CardcontainerP>
                     </Servicescontainer>
 
                     <Cardbottoncontainer>
