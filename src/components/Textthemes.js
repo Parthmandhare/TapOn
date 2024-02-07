@@ -5,7 +5,6 @@ export const getThemeColors = (themeName) => {
         textTemp: 'white',
         backgroundcards: 'trasparent',
         bordercolor:'white',
-        size:'',
       };
     case 'template_2':
       return {

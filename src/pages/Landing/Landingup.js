@@ -13,7 +13,7 @@ import Bigf from '../../components/Footers/Bigf'
 import Navprof from '../../components/Navbars/Navprof'
 import Error from '../Error/Error'
 import Smain from '../Setting/Smain'
-import Pricing from '../auth/Pricing'
+import ScrollToTop from './ScrollToTop'
 
 
 
@@ -31,19 +31,13 @@ function Landingup() {
     <div id="About" ><About/></div>
     <div id="Roadmap"><Roadmap/></div>
     <div id="Showcase"><Showcase/></div>
+    <div id="Team"><Team/></div>
     <div id="Faq"><Faq/></div>
-   
-   <Bigf/>
 
-   {/* <Pricing/> */}
+    <Faq/>
+    <Bigf/> 
 
-
-
-    {/* <div id="Team"><Team/></div> */}
-
-
-
-   
+    <ScrollToTop/>
 
 
     {/* <Error/> */}

@@ -182,8 +182,7 @@ export default function Pricing() {
 
 <container className=" font-sans  lg:bg-transparent flex flex-col lg:flex-row absolute justify-center lg:top-1/2 lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:-translate-y-1/2 px-5 xl:px-0 py-8 lg:py-0 w-full gap-6 items-center lg:items-stretch">
             {/*card below transition */}
-            <Imgdiv>
-            <img src={ArrowL}></img></Imgdiv>
+        
             <Cardcontainer>
               
             <Card1  className="relative  border-black  bg-blackrounded-xl">

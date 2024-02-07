@@ -20,8 +20,11 @@ import img1 from "../assets/img/gamer.png";
 
 import Pencill from "../assets/img/pencil.png";
 
+import tempUser from "../assets/img/temp_user.png"
+
 import {
   collection,
+  deleteField,
   doc,
   getDoc,
   getDocs,
@@ -30,6 +33,7 @@ import {
 } from "firebase/firestore";
 
 import {
+  deleteObject,
   getDownloadURL,
   ref,
   uploadBytes,
@@ -292,26 +296,6 @@ const PhoneContentcontainer = styled.div`
     margin-top: 10px;
   }
 `;
-const Discdiv = styled.div`
-
-
-background-color: aqua;
-display: flex;
-
-flex-wrap: wrap;
-  
-
-
-`
-
-const StyledH3 = styled.h3`
- /* Reset margin and padding to ensure consistent styling */
-  margin: 0;
-  padding: 0;
-  /* Ensure it takes full width within the flex container */
-  flex-basis: 100%;
-`;
-
 
 const PhoneContentcontainerpreview = styled.div`
   @media (max-width: 64em) {
@@ -487,7 +471,6 @@ const Linkcontainer = styled.div`
     }
   }
 `;
-
 const Cardbottoncontainer = styled.div`
   display: flex;
   cursor: pointer;
@@ -726,6 +709,70 @@ const PUploadedpic = styled.div`
      height: 80%;
      } */
 `;
+
+const PhotoDiv=styled.div`
+/* background-color: beige; */
+width: 75%;
+/* align-items: center; */
+& div#imgdiv{
+
+width: 55%;
+height: 20vh;
+}
+
+& div#contimgdiv{
+
+
+}
+@media (max-width:64em) {
+  /* background-color: beige; */
+  width: 100%;
+  align-items: center;
+
+  & div#imgdiv{
+
+    width: 60%;
+    height: 10vh;
+  }
+  & div#contimgdiv{
+    width: 95%;
+    align-items: center;
+
+  
+}
+
+
+
+  
+}
+
+
+
+
+`
+const Buttondiv = styled.div`
+align-items: center;
+justify-content: center;
+@media (max-width:64em) {
+  /* background-color: #e6e601; */
+  padding: 2%;
+  overflow: hidden;
+  height: fit-content;
+  & div{
+
+    width: 100%;
+    margin: 2%;
+  }
+
+
+
+  
+}
+
+  
+
+  
+`
 const Descriptionleft = styled.div`
   box-shadow: 1px 1px black;
   width: 83%;
@@ -846,8 +893,9 @@ const Dashboard = () => {
   const [displayPhoneNo, setdisplayPhoneNo] = useState("");
 
   const [displayUserName, setDisplayUserName] = useState("");
+  // tempUser
 
-  const [displayPhoto, setDisplayPhoto] = useState("");
+  const [displayPhoto, setDisplayPhoto] = useState(tempUser);
   const [displayAddress, setDisplayAddress] = useState("");
 
   const [displayFacebook_Link, setDisplayFacebook_Link] = useState(
@@ -906,6 +954,8 @@ const Dashboard = () => {
   const[displayService4, setDisplayService4] = useState("Service4");
 
 
+  const[updateProfile, setUpdateProfile] = useState("")
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -916,6 +966,10 @@ const Dashboard = () => {
         setUserEmail(user.email);
         getData(user.uid);
         setThemes(user.uid);
+
+        if(displayPhoto == "" || displayPhoto == null){
+          setDisplayPhoto(tempUser)
+        }
       } else {
         console.log("No user is signed in.");
       }
@@ -951,7 +1005,13 @@ const Dashboard = () => {
     setdisplaylink1(docData.data().Link);
     setdisplayPhoneNo(docData.data().PhoneNumber);
     setDisplayUserName(docData.data().User_Name);
-    setDisplayPhoto(docData.data().Profile_URl);
+
+    if(docData.data().Profile_URl == "" || docData.data().Profile_URl == null){
+      setDisplayPhoto(tempUser)
+    }else{
+      setDisplayPhoto(docData.data().Profile_URl);
+    }
+    
     setDisplayAddress(docData.data().Address);
     setDisplayFacebook_Link(docData.data().Facebook_Link);
     setDisplayInsta_Link(docData.data().Instagram_Link);
@@ -985,7 +1045,7 @@ const Dashboard = () => {
       isNullOrWhiteSpaces(InputX)
     ) {
       alert(
-        "Fill all the field, To change single input click on the edit icon on right side"
+        "Fill all the field or click on the edit button on the right side"
       );
       return;
     }
@@ -1018,7 +1078,7 @@ const Dashboard = () => {
         setdisplayX_Link(data.X_Link);
         setDisplayFacebook_Link(data.Facebook_Link);
         setDisplayDesc(data.Desc);
-        setInputAddress(data.Address);  
+        setDisplayAddress(data.Address);  
 
         setInputCname("");
         setInputPhoneNo("");
@@ -1032,27 +1092,6 @@ const Dashboard = () => {
       .catch((error) => {
         console.log(error);
       });
-
-    // const imgRef = ref(imageDb, `files/${userID}`);
-    // const uploadTask = uploadBytesResumable(imgRef, uploadPhoto);
-
-    // uploadTask.on(
-    //   "state_changed",
-    //   (snapshot) => {},
-    //   (error) => {
-    //     console.error(error);
-    //   },
-    //   async () => {
-    //     const downloadURL = await getDownloadURL(imgRef);
-    //     setImageURL(downloadURL);
-
-    //     const userRef = doc(collection(db, "UserInfo"), userID);
-    //     await updateDoc(userRef, { Profile_URl: downloadURL });
-
-    //     console.log("Document updated with download URL:", downloadURL);
-    //   }
-    // );
-
 
   };
 
@@ -1344,6 +1383,148 @@ const Dashboard = () => {
     }, 500);
   };
 
+  
+  const deleteProfile = async() =>{
+    const desertRef = ref(imageDb, `files/${userID}`);
+   
+    deleteObject(desertRef).then(async() => {
+   
+       alert("Deleted!");
+       setDisplayPhoto(tempUser); 
+      //  setForceUpdate(!forceUpdate); // Force a re-render
+      // setDisplayPhoto(`${desertRef}?${Date.now()}`); // Append a timestamp to the image URL
+
+      const data = {
+        Profile_URl: deleteField()
+      }
+  
+      const userRef = doc(collection(db, "UserInfo"), userID);
+      updateDoc(userRef, data)
+        .then((userRef) => {
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+   
+    }).catch((error) => {
+       console.log("Profile is not deleting");
+    });
+
+
+   }
+
+
+  const EditProfile = async(e) =>{
+    const imgRef = ref(imageDb, `files/${userID}`);
+    const uploadTask = uploadBytesResumable(imgRef, updateProfile);
+
+  uploadTask.on(
+    "state_changed",
+    (snapshot) => {
+      // Progress handling (e.g., update a progress bar)
+    },
+    (error) => {
+      // Error handling
+      console.error(error);
+      // Alert the user about the error
+    },
+    async () => {
+      const downloadURL = await getDownloadURL(imgRef);
+      // setImageURL(downloadURL);
+
+      // Update Firestore with download URL
+      const userRef = doc(collection(db, "UserInfo"), userID);
+      await updateDoc(userRef, { Profile_URl: downloadURL });
+
+      console.log("Document updated with download URL:", downloadURL);
+      // Alert the user about successful upload and update
+
+      // setDisplayProfile(downloadURL)
+      setDisplayPhoto(downloadURL);
+      console.log("image is uploaded");
+      setIsUploadModalOpen(false);
+    }
+    
+  );
+  
+  }
+
+  const uploadProfile = (e) =>{
+    e.preventDefault();
+    EditProfile();
+    setIsUploadModalOpen(false); 
+  }
+
+  const DeleteService1 = () =>{
+    const data = {
+      Service1: deleteField()
+    }
+
+    const userRef = doc(collection(db, "UserInfo"), userID);
+    updateDoc(userRef, data)
+      .then((userRef) => {
+        console.log("Value of an Existing Document Field has been updated");
+        setDisplayService1("");
+        setService1("");
+        setShowServiceModal(false)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  const DeleteService2 = () =>{
+    const data = {
+      Service2: deleteField()
+    }
+
+    const userRef = doc(collection(db, "UserInfo"), userID);
+    updateDoc(userRef, data)
+      .then((userRef) => {
+        console.log("Value of an Existing Document Field has been updated");
+        setDisplayService2("");
+        setService2("");
+        setShowServiceModal2(false)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  const DeleteService3 = () =>{
+    const data = {
+      Service3: deleteField()
+    }
+
+    const userRef = doc(collection(db, "UserInfo"), userID);
+    updateDoc(userRef, data)
+      .then((userRef) => {
+        console.log("Value of an Existing Document Field has been updated");
+        setDisplayService3("");
+        setService3("");
+        setShowServiceModal3(false)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  const DeleteService4 = () =>{
+    const data = {
+      Service4: deleteField()
+    }
+
+    const userRef = doc(collection(db, "UserInfo"), userID);
+    updateDoc(userRef, data)
+      .then((userRef) => {
+        console.log("Value of an Existing Document Field has been updated");
+        setDisplayService4("");
+        setService4("");
+        setShowServiceModal4(false)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+
   return (
     <ThemeProvider theme={getThemeColors(Theme_Selected)}>
       <>
@@ -1380,10 +1561,51 @@ const Dashboard = () => {
 
             {/*textbox*/}
             <LeftContent className="  h-5/6   ml-8  ">
+
+            {isUploadModalOpen && (
+          <div className="fixed top-0 left-0 w-full h-screen flex items-center justify-center bg-black opacity-75">
+            <div className="bg-white p-4 rounded-lg shadow-lg py-14 px-10">
+              <div className="grid grid-rows-2 gap-10">
+                <input type="file" placeholder="Upload Your Profile Pic" onChange={(e) => setUpdateProfile(e.target.files[0])} />
+                
+                <div className="grid grid-cols-2 gap-10">
+                  <button onClick={uploadProfile} className="bg-black text-white p-5 rounded-lg font-semibold">Upload Profile Picture</button>
+                  <button onClick={() => setIsUploadModalOpen(false)} className="border-4 border-black rounded-lg font-bold">Cancel</button>
+                </div>
+
+              </div>
+      
+            </div>
+          </div>
+      )}
+
+
+
+      <PhotoDiv>
+
+<div className="grid grid-rows-1">
+          <div className=" h-96 ">
+            <p className="text-3xl font-semibold mb-2">Profile</p>
+            <div id="contimgdiv" className="grid grid-cols-2 bg-gray-400 h-60 rounded-lg p-10  content-center">
+              <div id="imgdiv" className="rounded-full bg-slate-200 w-40 ">
+                <img src={displayPhoto} key={displayPhoto} alt="not found" className="rounded-full w-full h-full"/>
+              </div>
+
+              <Buttondiv className="grid grid-rows-2 text-center  ">
+                <div className=" bg-black text-white rounded-xl pt-3 w-64 h-14 cursor-pointer " id="Upload Profile" onClick={() => setIsUploadModalOpen(true)}>Upload Profile</div>
+                <div className=" bg-white text-black rounded-xl pt-3 w-64 h-14 cursor-pointer" onClick={deleteProfile}>Remove Profile</div>
+
+              </Buttondiv>
+            </div>
+          </div>
+        </div></PhotoDiv>
+
+
               <h2 className=" font-bold text-xl">Details</h2>
               <form className=" w-3/4 mt-10 mb-12 h-fit  ">
                 <div className="relative z-0 w-full mb-5 group  flex">
                   <input
+                    maxLength="14"
                     type="text"
                     name="floating_email"
                     id="floating_email"
@@ -1653,6 +1875,16 @@ const Dashboard = () => {
               >
                 <Button text="* Preview" />
               </div>
+
+            <div>
+              <h3 className=" font-bold text-xl">Change Your Theme</h3>
+              <div className="mt-5">
+                <Link to={"/Appreance"}>
+                <Button text="Select Theme" />
+                </Link>
+              </div>
+            </div>
+
               {showModal ? (
                 <>
                   <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -1834,7 +2066,7 @@ const Dashboard = () => {
                           <button
                             className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
-                            onClick={() => setShowServiceModal(false)}
+                            onClick={DeleteService1}
                           >
                             Delete
                           </button>
@@ -1926,7 +2158,7 @@ const Dashboard = () => {
                           <button
                             className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
-                            onClick={() => setShowServiceModal2(false)}
+                            onClick={DeleteService2}
                           >
                             Delete
                           </button>
@@ -2013,7 +2245,7 @@ const Dashboard = () => {
                           <button
                             className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
-                            onClick={() => setShowServiceModal3(false)}
+                            onClick={DeleteService3}
                           >
                             Delete
                           </button>
@@ -2098,7 +2330,7 @@ const Dashboard = () => {
                           <button
                             className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
-                            onClick={() => setShowServiceModal4(false)}
+                            onClick={DeleteService4}
                           >
                             Delete
                           </button>

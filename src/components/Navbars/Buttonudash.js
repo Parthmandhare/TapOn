@@ -6,10 +6,21 @@ import { signOut } from 'firebase/auth';
 import { auth, db } from '../../pages/auth/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
+import tempImg from "../../assets/img/temp_user.png"
+
 const Buttonudash = () => {
   const navigate = useNavigate();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
+
+  const handleDropdownToggle = () => {
+    setDropdownOpen(!isDropdownOpen);
+  };
+
+  const[userID, setUserID] = useState("");
+
+  const[displayPhoto, setDisplayPhoto] = useState("");
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -23,18 +34,8 @@ const Buttonudash = () => {
     };
   }, []);
 
-  const handleDropdownToggle = () => {
-    setDropdownOpen(!isDropdownOpen);
-  };
-
-
-  
-
-  const[userID, setUserID] = useState("");
-
-  const[displayPhoto, setDisplayPhoto] = useState("");
-
   useEffect(() => {
+  
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         console.log("User object:", user);
@@ -44,6 +45,7 @@ const Buttonudash = () => {
       } else {
         console.log("No user is signed in.");
       }
+      
     });
 
     // Clean up subscription on unmount
@@ -58,8 +60,11 @@ const Buttonudash = () => {
 
     const docRef = doc(db, "UserInfo", userId);
     const docData = await getDoc(docRef);
-    setDisplayPhoto(docData.data().Profile_URl);
-  
+    if(docData.data().Profile_URl == "" || docData.data().Profile_URl == null){
+      setDisplayPhoto(tempImg)
+    }else{
+      setDisplayPhoto(docData.data().Profile_URl);
+    }
   };
 
   const dropdownStyle = {

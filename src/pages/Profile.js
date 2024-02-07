@@ -3,6 +3,7 @@ import Bigf from "../components/Footers/Bigf";
 
 import { collection, doc, getDoc } from 'firebase/firestore';
 import React, { useEffect, useRef, useState } from 'react';
+import { toPng } from 'html-to-image';
 import { useParams } from 'react-router-dom';
 import { auth, db } from './auth/firebase';
 
@@ -802,7 +803,8 @@ const PDescriptionleft = styled.div`
 
 export default function Profile() {
 
-  const pdfRef = useRef();
+  // const pdfRef = useRef();
+  const exportRef = useRef();
 
   const { id } = useParams();
   // const [userID, setUserID] = useState("");
@@ -903,20 +905,20 @@ export default function Profile() {
     fetchData();
   }, [id]);
 
-  const downloadPDF = () => {
-    const input = pdfRef.current;
+  // const downloadPDF = () => {
+  //   const input = pdfRef.current;
 
-    html2canvas(input)
-      .then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm', 'a4', true);
-        const imgProps= pdf.getImageProperties(imgData);
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-        pdf.addImage(imgData, 'PNG',  0,  0, pdfWidth, pdfHeight);
-        pdf.save('profile-card.pdf');
-      });
-  };
+  //   html2canvas(input)
+  //     .then((canvas) => {
+  //       const imgData = canvas.toDataURL('image/png');
+  //       const pdf = new jsPDF('p', 'mm', 'a4', true);
+  //       const imgProps= pdf.getImageProperties(imgData);
+  //       const pdfWidth = pdf.internal.pageSize.getWidth();
+  //       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+  //       pdf.addImage(imgData, 'PNG',  0,  0, pdfWidth, pdfHeight);
+  //       pdf.save('profile-card.pdf');
+  //     });
+  // };
 
 
   const setThemes = async (userID) => {
@@ -954,21 +956,45 @@ export default function Profile() {
     downloadToFile(vcardContent, 'contact.vcf', 'text/vcard');
   };
 
-  const saveCardAsPDF = () => {
-    html2canvas(phoneContainerRef.current)
-      .then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF({ orientation: 'portrait', unit: 'in', format: 'letter' });
-        const imgProps = pdf.getImageProperties(imgData);
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-        pdf.addImage(imgData, 'PNG',  0,  0, pdfWidth, pdfHeight);
-        pdf.save('profile-card.pdf');
-      })
-      .catch((error) => {
-        console.error('Error generating PDF:', error);
-      });
+  // const saveCardAsPDF = () => {
+  //   html2canvas(phoneContainerRef.current)
+  //     .then((canvas) => {
+  //       const imgData = canvas.toDataURL('image/png');
+  //       const pdf = new jsPDF({ orientation: 'portrait', unit: 'in', format: 'letter' });
+  //       const imgProps = pdf.getImageProperties(imgData);
+  //       const pdfWidth = pdf.internal.pageSize.getWidth();
+  //       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+  //       pdf.addImage(imgData, 'PNG',  0,  0, pdfWidth, pdfHeight);
+  //       pdf.save('profile-card.pdf');
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error generating PDF:', error);
+  //     });
+  // };
+
+  const captureAndDownload = () => {
+    if (exportRef.current) {
+      toPng(exportRef.current)
+        .then((dataUrl) => {
+          const link = document.createElement('a');
+          link.download = 'captured.png';
+          link.href = dataUrl;
+          link.click();
+        })
+        .catch((error) => {
+          console.error('Error capturing image:', error);
+        });
+    }
   };
+
+  const Print = () =>{     
+    //console.log('print');  
+    let printContents = document.getElementById('printablediv').innerHTML;
+    let originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+   document.body.innerHTML = originalContents; 
+  }
 
 
   return (
@@ -987,7 +1013,7 @@ export default function Profile() {
 <Maincontainer>
   
 
-      <Phonecontainer ref={phoneContainerRef}>
+      <Phonecontainer ref={exportRef} id='printablediv'>
               
                 <Phoneborder>
                   <PhoneContentcontainer
@@ -1083,7 +1109,7 @@ export default function Profile() {
                     </Servicescontainer>
 
                     <Cardbottoncontainer>
-                      <div id="services"  onClick={saveCardAsPDF}>
+                      <div id="services"  onClick={Print}>
                         <img src={saveCardImg} alt=""/>
                         <div>Save Card</div>
                       </div>
