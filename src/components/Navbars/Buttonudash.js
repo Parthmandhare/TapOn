@@ -9,10 +9,26 @@ import { doc, getDoc } from 'firebase/firestore';
 const Buttonudash = () => {
   const navigate = useNavigate();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const handleDropdownToggle = () => {
     setDropdownOpen(!isDropdownOpen);
   };
+
+
+  
 
   const[userID, setUserID] = useState("");
 
@@ -51,7 +67,7 @@ const Buttonudash = () => {
     maxHeight: isDropdownOpen ? '1000px' : '0',
     visibility: isDropdownOpen ? 'visible' : 'hidden',
     transition: 'opacity 0.3s ease, max-height 0.3s ease, visibility 0.3s ease',
-    width: '150px',
+    width: '100px',
     
     
   };

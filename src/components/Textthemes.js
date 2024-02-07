@@ -5,6 +5,7 @@ export const getThemeColors = (themeName) => {
         textTemp: 'white',
         backgroundcards: 'trasparent',
         bordercolor:'white',
+        size:'',
       };
     case 'template_2':
       return {
@@ -15,21 +16,21 @@ export const getThemeColors = (themeName) => {
       };
       case 'template_3':
       return {
-        textTemp: 'red',
+        textTemp: 'black',
         backgroundcards: 'white',
         bordercolor:'black',
 
       };
       case 'template_4':
       return {
-        textTemp: 'blue',
+        textTemp: 'black',
         backgroundcards: 'white',
         bordercolor:'black',
 
       };
       case 'template_5':
       return {
-        textTemp: 'yellow',
+        textTemp: 'black',
         backgroundcards: 'white',
         bordercolor:'black',
 

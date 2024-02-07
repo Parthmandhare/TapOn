@@ -241,6 +241,7 @@ const PhoneContentcontainer = styled.div`
   height: fit-content;
   align-items: center;
   color: ${(props) => props.theme.textTemp};
+  
   & div#imagediv {
     width: 30%;
     height: 80px;
@@ -253,6 +254,21 @@ const PhoneContentcontainer = styled.div`
     
     
   }
+  & h1{
+
+    font-size: 22px;
+    font-weight: 500;
+  }
+  & h2{
+
+    font-size: 20px;
+  }
+  & h3{
+
+    font-size: 15px;
+  }
+ 
+
   
 
   @media (max-width: 64em) {
@@ -276,11 +292,33 @@ const PhoneContentcontainer = styled.div`
     margin-top: 10px;
   }
 `;
+const Discdiv = styled.div`
+
+
+background-color: aqua;
+display: flex;
+
+flex-wrap: wrap;
+  
+
+
+`
+
+const StyledH3 = styled.h3`
+ /* Reset margin and padding to ensure consistent styling */
+  margin: 0;
+  padding: 0;
+  /* Ensure it takes full width within the flex container */
+  flex-basis: 100%;
+`;
+
 
 const PhoneContentcontainerpreview = styled.div`
   @media (max-width: 64em) {
     display: flex;
     flex-direction: column;
+    /* background-color: beige; */
+    height: fit-content;
 
     align-items: center;
 
@@ -288,6 +326,7 @@ const PhoneContentcontainerpreview = styled.div`
     display: flex;
     padding: 4%;
     align-items: center;
+  
 
     & div#imagediv2 {
       width: 48px;
@@ -300,35 +339,51 @@ const PhoneContentcontainerpreview = styled.div`
     margin-bottom: 20px;
   }
 
-  & > h1,
+  & > h1 {
+    margin-top: 10px;
+    font-size: 18px;
+  }
   & > h2 {
     margin-top: 10px;
+    font-size: 15px;
+  }
+  & > h3 {
+    margin-top: 10px;
+    font-size: 12px;
   }
 `;
 
 const Infocontainerpre = styled.div`
   @media (max-width: 64em) {
-    display: flex;
+ 
 
-    flex-direction: column;
-    align-items: flex-start;
-    margin-top: 20px;
-    /* background-color: beige; */
-    font-style: italic;
-    font-weight: bold;
-    overflow: hidden;
-    & > div {
+
+
+
       display: flex;
-      align-items: center;
-      margin-bottom: 10px;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  /* background-color: beige; */
+  font-style: italic;
+  font-weight: bold;
+  padding: 2%;
+  width: 80%;
 
-      font-size: 10px;
+  & > div {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    /* background-color: aquamarine; */
 
-      & img {
-        margin-right: 8px;
-        height: 1em;
-      }
+    font-size: small;
+
+    & img {
+      margin-right: 10px;
+      height: 1.3em;
     }
+  }
   }
 `;
 
@@ -340,11 +395,22 @@ const Infocontainer = styled.div`
   /* background-color: beige; */
   font-style: italic;
   font-weight: bold;
+  padding: 2%;
+  width: 80%;
+  overflow: hidden;
 
   & > div {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
+    /* flex-wrap: wrap; */
+    /* word-wrap: break-word; */
+    /* background-color: aquamarine; */
+
+
+
+    
+
 
     font-size: small;
 
@@ -352,7 +418,20 @@ const Infocontainer = styled.div`
       margin-right: 10px;
       height: 1.3em;
     }
+
+    
   }
+  &  div#adddiv {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    width: 98%;
+    /* background-color: aqua; */
+    overflow: hidden;
+    overflow-wrap: break-word;
+    
+    
+   }
   @media (max-width: 64em) {
     & > div {
       display: flex;
@@ -906,7 +985,7 @@ const Dashboard = () => {
       isNullOrWhiteSpaces(InputX)
     ) {
       alert(
-        "Fill all the field Bro! If you dont have any social media link then just enter random!"
+        "Fill all the field, To change single input click on the edit icon on right side"
       );
       return;
     }
@@ -1351,6 +1430,7 @@ const Dashboard = () => {
                 </div>
                 <div className="relative z-0 w-full mb-5 group  flex">
                   <input
+                  maxLength="60"
                     type="text"
                     name="repeat_password"
                     id="floating_repeat_password"
@@ -1374,6 +1454,7 @@ const Dashboard = () => {
                 </div>
                 <div className="relative z-0 w-full mb-5 group  flex">
                   <input
+                    maxLength="40"
                     type="text"
                     name="repeat_password"
                     id="floating_repeat_password"
@@ -1750,13 +1831,13 @@ const Dashboard = () => {
                           >
                             Close
                           </button>
-                          {/* <button
+                          <button
                             className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
                             onClick={() => setShowServiceModal(false)}
                           >
                             Delete
-                          </button> */}
+                          </button>
                           <button
                             className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
@@ -1843,6 +1924,13 @@ const Dashboard = () => {
                             Close
                           </button>
                           <button
+                            className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            type="button"
+                            onClick={() => setShowServiceModal2(false)}
+                          >
+                            Delete
+                          </button>
+                          <button
                             className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
                             onClick={EditService2}
@@ -1923,6 +2011,13 @@ const Dashboard = () => {
                             Close
                           </button>
                           <button
+                            className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            type="button"
+                            onClick={() => setShowServiceModal3(false)}
+                          >
+                            Delete
+                          </button>
+                          <button
                             className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
                             onClick={EditService3}
@@ -2001,6 +2096,13 @@ const Dashboard = () => {
                             Close
                           </button>
                           <button
+                            className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            type="button"
+                            onClick={() => setShowServiceModal4(false)}
+                          >
+                            Delete
+                          </button>
+                          <button
                             className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
                             onClick={EditService4}
@@ -2043,57 +2145,79 @@ const Dashboard = () => {
                           <h2>{displayFullName}</h2>
                           <h3>{displayDesc}</h3>
                           <Infocontainerpre>
-                            <div>
-                              <img src={phoneImg} alt="" />
-                              {displayPhoneNo}
-                            </div>
+                          {displayPhoneNo && (
+                        <div>
+                          <img src={phoneImg} alt="" />
+                          {displayPhoneNo}
+                        </div>
+                      )}
 
-                            <div>
-                              <img src={AddressImg} alt="" />
-                              {displayAddress}
-                            </div>
+                      {displayAddress && (
+                        <div>
+                          <img src={AddressImg} alt="" />
+                          {displayAddress}
+                        </div>
+                      )}
 
-                            <div>
-                              <img src={linkImg} alt="" />
-                              {displaylink1}
-                            </div>
+                      {displaylink1 && (
+                        <div>
+                          <img src={linkImg} alt="" />
+                          {displaylink1}
+                        </div>
+                      )}
 
-                            <div>
-                              <img src={mailImg} alt="" />
-                              {userEmail}
-                            </div>
+                      {displayDesc && (
+                        <div>
+                          <img src={mailImg} alt="" />
+                          {userEmail}
+                        </div>
+                      )}
                           </Infocontainerpre>
 
                           <Linkcontainer>
-                            <a
-                              href="https://twitter.com"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <img src={twitterImg} alt="" />
-                            </a>
-                            <a
-                              href="https://instagram.com"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <img src={instaImg} alt="" />
-                            </a>
-                            <a
-                              href="https://youtube.com"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <img src={youtubeImg} alt="" />
-                            </a>
-                            <a
-                              href="https://facebook.com"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <img src={fbImg} alt="" />
-                            </a>
+                          {displayInsta_Link && (
+                        <a
+                          href={displayInsta_Link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <img src={twitterImg} alt="" />
+                        </a>
+                      )}
+
+                      {displayX_Link && (
+                        <a
+                          href={displayX_Link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <img src={instaImg} alt="" />
+                        </a>
+                      )}
+                      {displayFacebook_Link && (
+                        <a
+                          href={displayFacebook_Link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <img src={fbImg} alt="" />
+                        </a>
+                      )}
                           </Linkcontainer>
+
+
+
+                          <Servicescontainer>
+                    {displayService1 && (
+                      <CardcontainerP>{displayService1}</CardcontainerP>)}
+                      {displayService2 && (
+                      <CardcontainerP>{displayService2}</CardcontainerP>)}
+                      {displayService3 && (
+                      <CardcontainerP>{displayService3}</CardcontainerP>)}
+                      {displayService4 && (
+                      <CardcontainerP>{displayService4}</CardcontainerP>)}
+                      
+                    </Servicescontainer>
 
                           <Cardbottoncontainer>
                             <div id="services">
@@ -2148,9 +2272,18 @@ const Dashboard = () => {
                     <h1>{displayCname}</h1>)}
                     {displayFullName && (
                     <h2>{displayFullName}</h2>)}
-                    <h3>{displayDesc}</h3>
+                    
+
+                  {displayDesc && (
+                     <h3>{displayDesc}</h3>
+                    
+                    )}
+                    
+                    
 
                     <Infocontainer>
+                    
+
                       {displayPhoneNo && (
                         <div>
                           <img src={phoneImg} alt="" />
@@ -2159,8 +2292,9 @@ const Dashboard = () => {
                       )}
 
                       {displayAddress && (
-                        <div>
+                        <div id="adddiv">
                           <img src={AddressImg} alt="" />
+                          
                           {displayAddress}
                         </div>
                       )}
