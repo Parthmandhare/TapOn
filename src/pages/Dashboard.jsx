@@ -52,6 +52,7 @@ import Edittext from "../components/Edittext";
 import Button from "../components/Navbars/Button";
 import CloseButton from "../components/Navbars/CloseButton";
 import Copied from "../components/Copied";
+import ServiceItem from "./ServiceItem";
 
 const Section = styled.div`
   display: flex;
@@ -237,8 +238,41 @@ const Phonecontainer = styled.div`
   position: fixed;
 `;
 
+
+const Manidetails= styled.div`
+justify-content: center;
+align-items: center;
+
+display: flex;
+flex-direction: column;
+/* background-color: antiquewhite; */
+height: fit-content;
+width: 90%;
+word-wrap: break-word;
+@media (max-width:64em ) {
+  & h1{
+    font-size: 24px;
+    font-weight: bold;
+    
+  }
+  & h2{
+      font-size: 20px;
+      font-weight: 400;
+    }
+    & h3{
+      font-size: 16px;
+      font-style: italic;
+    }
+  
+}
+
+
+`
+
 const PhoneContentcontainer = styled.div`
   display: flex;
+  
+  min-width: 100%;
   flex-direction: column;
   min-height: 100%;
   height: fit-content;
@@ -293,7 +327,8 @@ const PhoneContentcontainerpreview = styled.div`
     flex-direction: column;
     /* background-color: beige; */
     height: fit-content;
-
+     min-width: 250px;
+     min-height: 450px;
     align-items: center;
 
     color: ${(props) => props.theme.textTemp};
@@ -302,8 +337,15 @@ const PhoneContentcontainerpreview = styled.div`
     align-items: center;
 
     & div#imagediv2 {
-      width: 48px;
-      height: 48px;
+      width: 60px;
+      height: 60px;
+      overflow: hidden;
+      border-radius: 40px;
+      & img{
+         width: 100%;
+          height: 100%;
+          object-fit: cover;
+      }
     }
   }
 
@@ -345,7 +387,8 @@ const Infocontainerpre = styled.div`
       margin-bottom: 15px;
       /* background-color: aquamarine; */
 
-      font-size: small;
+      font-size: 12px;
+      word-wrap: break-word;
 
       & img {
         margin-right: 10px;
@@ -364,16 +407,22 @@ const Infocontainer = styled.div`
   font-style: italic;
   font-weight: bold;
   padding: 2%;
-  width: 80%;
+  width: 90%;
   overflow: hidden;
+  word-wrap: break-word;
+  justify-content: center;
+  align-items: center;
 
   & > div {
     display: flex;
-    align-items: center;
+    /* justify-content: center; */
+    /* align-items: center; */
     margin-bottom: 15px;
     /* flex-wrap: wrap; */
-    /* word-wrap: break-word; */
+    word-wrap: break-word;
     /* background-color: aquamarine; */
+    width: 80%;
+
 
     font-size: small;
 
@@ -386,10 +435,10 @@ const Infocontainer = styled.div`
     display: flex;
     align-items: center;
     margin-bottom: 15px;
-    width: 98%;
+    width: 80%;
     /* background-color: aqua; */
     overflow: hidden;
-    overflow-wrap: break-word;
+    word-wrap: break-word;
   }
   @media (max-width: 64em) {
     & > div {
@@ -450,18 +499,45 @@ const Cardbottoncontainer = styled.div`
   display: flex;
   cursor: pointer;
   margin-top: 20px;
+  /* background-color: aquamarine; */
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
 
-  & > div#services {
+  & > div#service1 {
     display: flex;
     align-items: center;
-    margin-right: 5px;
-    margin-left: 5px;
-    width: 8em;
-    height: 2em;
+    justify-content: center;
+    width: 48%;
+    height: 4vh;
     background-color: ${(props) => props.theme.backgroundcards};
     border: solid 1px;
     border-color: ${(props) => props.theme.bordercolor};
     border-radius: 10px;
+    font-size: 16px;
+    
+
+    & img {
+      width: 20px;
+      height: 20px;
+      object-fit: cover;
+      margin-right: 10px;
+      margin-left: 2px;
+    }
+  }
+  & > div#service2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+   
+    width: 48%;
+    height: 4vh;
+    background-color: ${(props) => props.theme.backgroundcards};
+    border: solid 1px;
+    border-color: ${(props) => props.theme.bordercolor};
+    border-radius: 10px;
+    
 
     & img {
       width: 20px;
@@ -557,23 +633,98 @@ const Servicescontainer = styled.div`
   margin-top: 10px;
   margin-bottom: 2px;
   /* background-color: aquamarine; */
-  width: 75%;
+  width: 95%;
   height: fit-content;
   padding: 2%;
   @media (max-width: 64em) {
-    width: 50%;
+    align-items: center;
+
+    flex-direction: column;
+    width: 90%;
     /* background-color: antiquewhite; */
   }
 `;
+const StyledImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* You can use 'cover', 'contain', 'fill', etc. depending on your requirement */
+`;
+const Serviceimg=styled.div`
+display: flex;
+background-color: beige;
+width: 10vh;
+height: 10vh;
+border-radius: 40px;
+ overflow: hidden;
+ @media (max-width: 64em) {
+  margin-top: 2%;
+
+  
+ }
+
+
+`
 
 const Profileimg1 = styled.div`
   display: flex;
-  width: 25%;
-  height: 5vh;
-  background-color: aliceblue;
-  border-radius: 100%;
-  margin-right: 5%;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background-color: #2f96f0;
+  /* border-radius: 100%; */
+  /* margin-right: 5%; */
 `;
+
+const Profileimgcont = styled.div`
+  display: flex;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  /* background-color: #2f96f0; */
+  align-items: center;
+  justify-content: center;
+  /* border-radius: 100%; */
+  /* margin-right: 5%; */
+`;
+const Rightside=styled.div`
+/* border-left: solid 2px black; */
+display: flex;
+flex-direction: column;
+
+width: 60%;
+height: 100%;
+/* justify-content: center; */
+align-items: center;
+overflow: hidden;
+word-wrap: break-word;
+/* background-color: aqua; */
+
+
+
+  
+
+
+`
+ 
+  
+
+const Serdesc=styled.div`
+margin-top: 4%;
+display: flex;
+align-self: center;
+/* background-color: #0b3024; */
+width: 90%;
+height: fit-content;
+min-height: 8vh;
+margin-bottom: 2%;
+justify-content: center;
+word-wrap: break-word;
+font-size: 14px;
+font-weight: 500;
+text-align: justify;
+margin-bottom: 4%;
+
+`
 
 const Profileimg2 = styled.div`
   display: flex;
@@ -585,23 +736,25 @@ const Profileimg2 = styled.div`
 `;
 const CardcontainerP = styled.div`
   display: flex;
-
-  border: solid 1px;
+  flex-direction: row;
+ 
+  border: solid 0.5px;
   border-color: ${(props) => props.theme.bordercolor};
+  
   margin-bottom: 2%;
   margin-top: 2%;
   font-weight: 500;
   font-style: italic;
   font-size: larger;
-  align-items: center;
-  justify-content: center;
+  /* align-items: center; */
+  /* justify-content: center; */
   display: flex;
-  min-width: 20vh;
-  min-height: 8vh;
-  background-color: ${(props) => props.theme.backgroundcards};
+  min-width: 100%;
+  min-height: 12vh;
+  background-color: ${(props) => props.theme.scardcolor};
   border-radius: 8px;
   @media (max-width: 64em) {
-    min-width: 15vh;
+    min-width: 100%;
     min-height: 6vh;
   }
 `;
@@ -624,7 +777,7 @@ const PhonecontainerPreview = styled.div`
   display: none;
 
   @media (max-width: 64em) {
-    background-color: aliceblue;
+    background-color: #007eec;
     display: block;
     display: flex;
     /* align-items: center;
@@ -847,6 +1000,7 @@ const PDescriptionleft = styled.div`
      } */
 `;
 
+
 const Dashboard = () => {
   const navigate = useNavigate();
 
@@ -937,6 +1091,8 @@ const Dashboard = () => {
   const [displayServicePhoto3, setDisplayServicePhoto3] = useState("");
   const [displayServicePhoto4, setDisplayServicePhoto4] = useState("");
 
+  const [displayServices, setDisplayServices] = useState([]);
+
   const [updateProfile, setUpdateProfile] = useState("");
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
@@ -984,6 +1140,7 @@ const Dashboard = () => {
     const docRef = doc(db, "UserInfo", userId);
     const docData = await getDoc(docRef);
 
+
     setdisplayCname(docData.data().Company_Name);
     setdisplaylink1(docData.data().Link);
     setdisplayPhoneNo(docData.data().PhoneNumber);
@@ -1022,6 +1179,14 @@ const Dashboard = () => {
     setDisplayServicePhoto2(docData.data().Service2_img);
     setDisplayServicePhoto3(docData.data().Service3_img);
     setDisplayServicePhoto4(docData.data().Service4_img);
+
+    if (docData.exists()) {
+      // Ensure that Services is an array before setting the state
+      const servicesData = docData.data().Services || [];
+      setDisplayServices(servicesData);
+    } else {
+      console.log("No such document!");
+    }
   };
 
   let isNullOrWhiteSpaces = (value) => {
@@ -1581,10 +1746,10 @@ const Dashboard = () => {
     setIsUploadModalOpen(false);
   };
 
-  const uploadImageService1 = (e) => {
-    e.preventDefault();
-    EditServiceImage1();
+  const uploadImageService1 = (e,i) => {
+    EditServiceImage(e,i);
   };
+
   const uploadImageService2 = (e) => {
     e.preventDefault();
     EditServiceImage2();
@@ -1685,6 +1850,254 @@ const Dashboard = () => {
   const openUploadImageModalService1 = () => {
     console.log("Open Modal");
   };
+
+  useEffect(() => {
+    if (userID) {
+      getData(userID);
+    }
+  }, [userID]);
+
+  const [services, setServices] = useState([]);
+  const handleAddMore = () => {
+    // Create a new service object with a unique index and empty values
+    const newService = { id: services.length +  1 , name: '', description: '', serviceURL: '' };
+  
+    // Get the current services from Firestore
+    const userRef = doc(collection(db, "UserInfo"), userID);
+    getDoc(userRef).then((docData) => {
+      if (docData.exists()) {
+        // Get the current array of services, or initialize as an empty array if not present
+        const currentServices = docData.data().Services || [];
+  
+        // Add the new service to the current array
+        const updatedServices = [...currentServices, newService];
+  
+        // Update the Firestore document with the new array of services
+        updateDoc(userRef, { Services: updatedServices })
+          .then(() => {
+            console.log("New service added successfully.");
+            // Update the local state with the new service
+            setServices(updatedServices);
+            setDisplayServices(updatedServices);
+          })
+          .catch((error) => {
+            console.error("Error adding new service:", error);
+          });
+      } else {
+        console.log("No such document!");
+      }
+    }).catch((error) => {
+      console.log("Error getting document:", error);
+    });
+  };
+
+  // Handlers for updating service fields
+const handleServiceChange = (event, index) => {
+  const newServices = [...services];
+  newServices[index].name = event.target.value;
+  setServices(newServices);
+};
+
+const handleDescriptionChange = (event, index) => {
+  const newServices = [...services];
+  newServices[index].description = event.target.value;
+  setServices(newServices);
+};
+
+
+const[Index, setIndex] = useState("");
+    
+
+    // const getData = async (userId) => {
+    //     if (!userId) {
+    //       console.log("User ID is not set.");
+    //       return;
+    //     }
+    
+    //     const docRef = doc(db, "UserInfo", userId);
+    //     const docData = await getDoc(docRef);
+    
+    //     setDisplayServices(docData.data().Services);
+    //   };
+
+
+
+  
+
+const addServicesInNewWay = (e) => {
+  e.preventDefault();
+
+
+  // Assuming 'userID' is the ID of the user whose services you want to update
+  const userRef = doc(collection(db, "UserInfo"), userID);
+
+  // Get the updated services array
+  const updatedServices = services.map((service, idx) => {
+    // If this is the service being edited, return the updated service object
+
+    if (idx === indexEdit) {
+      return {
+        id: service.id,
+        name: service.name,
+        description: service.description,
+        serviceURL: service.serviceURL
+      };
+    }
+    // Otherwise, return the original service object
+    return service;
+  });
+
+  // Prepare the data to be updated
+  const data = {
+    Services: updatedServices,
+  };
+
+  // Update the document in Firestore
+  updateDoc(userRef, data)
+    .then(() => {
+
+      setShowServiceModal(false); // Close the modal after successful update
+    })
+    .catch((error) => {
+      console.error("Error updating service:", error);
+    });
+
+    setShowModal(false);
+};
+
+
+  const[updateNameService, setUpdateNameService] = useState("");
+
+  const[updateDescService, setUpdateDescService] = useState("");
+
+  const[indexEdit, setIndexEdit] = useState("");
+
+   const openModal = (i) =>{
+        setIndexEdit(i);
+        setShowServiceModal(true);
+    }
+  
+    const updateMyService = async (index) => {
+      try {
+        // Get the document reference
+        const docRef = doc(collection(db, "UserInfo"), userID);
+    
+        // Get the document
+        const docData = await getDoc(docRef);
+    
+        // Get the current array
+        const currentArray = docData.data().Services;
+    
+        // Check if the index is within the array bounds
+        if (index >=  0 && index < currentArray.length) {
+          // Update the name and desc properties of the object at the specified index
+          // Keep the other properties of the object and the other elements of the array unchanged
+          currentArray[index].name = updateNameService;
+          currentArray[index].description = updateDescService;
+    
+          // Update the document with the modified array
+          await updateDoc(docRef, { Services: currentArray });
+    
+          // Update the local state with the modified array
+          setServices(currentArray);
+          setDisplayServices(currentArray);
+    
+          setShowServiceModal(false);
+        } else {
+          console.log('Index out of bounds');
+        }
+      } catch (error) {
+        console.error('Error updating object properties: ', error);
+      }
+    };
+
+  const [photoService, setUpdatePhotoService] = useState("");
+
+
+  const EditServiceImage = async (e, index) => {
+    e.preventDefault();
+  
+    const imgRef = ref(imageDb, `services/${userID}/service${index +  1}`);
+    const uploadTask = uploadBytesResumable(imgRef, photoService);
+  
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        // Progress handling (e.g., update a progress bar)
+      },
+      (error) => {
+        // Error handling
+        console.error(error);
+        // Alert the user about the error
+      },
+      async () => {
+        const downloadURL = await getDownloadURL(imgRef);
+  
+        // Update Firestore with download URL
+        const userRef = doc(collection(db, "UserInfo"), userID);
+  
+        const docData = await getDoc(userRef);
+  
+        // Get the current array
+        const currentArray = docData.data().Services;
+  
+        if (index >=  0 && index < currentArray.length) {
+          // Update the serviceURL property of the object at the specified index
+          // Keep the other properties of the object and the other elements of the array unchanged
+          currentArray[index].serviceURL = downloadURL;
+  
+          const data = { Services: currentArray };
+  
+          // Update the document with the modified array
+          await updateDoc(userRef, data);
+  
+          // Update the local state with the modified array
+          setServices(currentArray);
+          setDisplayServices(currentArray);
+  
+ 
+        } else {
+          console.log('Index out of bounds');
+        }
+  
+       
+        // Alert the user about successful upload and update
+      }
+    );
+  };
+  
+  const deleteMyService = async (index) => {
+    try {
+      // Get the document reference
+      const docRef = doc(collection(db, "UserInfo"), userID);
+  
+      // Get the document
+      const docData = await getDoc(docRef);
+  
+      // Get the current array
+      const currentArray = docData.data().Services;
+  
+      // Check if the index is within the array bounds
+      if (index >=  0 && index < currentArray.length) {
+        // Remove the service at the specified index
+        const updatedServices = currentArray.filter((_, idx) => idx !== index);
+  
+        // Update the document with the modified array
+        await updateDoc(docRef, { Services: updatedServices });
+  
+        // Update the local state with the modified array
+        setServices(updatedServices);
+        setDisplayServices(updatedServices);
+  
+        setShowServiceModal(false)
+      } else {
+        console.log('Index out of bounds');
+      }
+    } catch (error) {
+      console.error('Error deleting service: ', error);
+    }
+  };
+
 
   return (
     <ThemeProvider theme={getThemeColors(Theme_Selected)}>
@@ -2045,74 +2458,49 @@ const Dashboard = () => {
               </form>
 
               <h3 className=" font-bold text-xl">Services</h3>
-              <div className="mt-5" onClick={() => setShowModal(true)}>
+              <div className="mt-5" onClick={handleAddMore}>
                 <Button text="Add Service +" />
+                {/* <button onClick={handleAddMore} >btn</button> */}
               </div>
               <ServiceCardsContainer>
-                <Tilt
-                  className="Tilt"
-                  options={{
-                    max: 40,
-                    perspective: 1000,
-                    easing: "cubic-bezier(.03,.98,.52,.99)",
-                    scale: 1.05,
-                  }}
-                >
-                  {displayService1 && (
-                    <Servicecards onClick={() => setShowServiceModal(true)}>
-                      <Cardcontent>{displayService1}</Cardcontent>
-                    </Servicecards>
-                  )}
-                </Tilt>
 
-                <Tilt
-                  className="Tilt"
-                  options={{
-                    max: 40,
-                    perspective: 1000,
-                    easing: "cubic-bezier(.03,.98,.52,.99)",
-                    scale: 1.05,
-                  }}
-                >
-                  {displayService2 && (
-                    <Servicecards onClick={() => setShowServiceModal2(true)}>
-                      <Cardcontent>{displayService2}</Cardcontent>
-                    </Servicecards>
-                  )}
-                </Tilt>
+              {/* {services.map((service, index) => (
+                <div key={service.id}>
+                  <input
+                    type="text"
+                    placeholder={`Service Name ${service.id}`}
+                    value={service.name}
+                    onChange={(e) => handleServiceChange(e, index)}
+                  />
+                  <textarea
+                    placeholder={`Service Description ${service.id}`}
+                    value={service.description}
+                    onChange={(e) => handleDescriptionChange(e, index)}
+                  />
+                </div>
+              ))} */}
 
-                <Tilt
-                  className="Tilt"
-                  options={{
-                    max: 40,
-                    perspective: 1000,
-                    easing: "cubic-bezier(.03,.98,.52,.99)",
-                    scale: 1.05,
-                  }}
-                >
-                  {displayService3 && (
-                    <Servicecards onClick={() => setShowServiceModal3(true)}>
-                      <Cardcontent>{displayService3}</Cardcontent>
-                    </Servicecards>
-                  )}
-                </Tilt>
+                <ServiceCardsContainer>
+                    {displayServices && displayServices.map((service, index) => (
+                      <Tilt
+                        className="Tilt"
+                        options={{
+                          max:  40,
+                          perspective:  1000,
+                          easing: "cubic-bezier(.03,.98,.52,.99)",
+                          scale:  1.05,
+                        }}
+                      >
+                        <Servicecards key={index} onClick={() => openModal(index)}>
+                          <Cardcontent>{service.name ? service.name : "Click to Add" }</Cardcontent>
+                        </Servicecards>
+                      </Tilt>
+                    ))}
+                </ServiceCardsContainer>
+              
 
-                <Tilt
-                  className="Tilt"
-                  options={{
-                    max: 40,
-                    perspective: 1000,
-                    easing: "cubic-bezier(.03,.98,.52,.99)",
-                    scale: 1.05,
-                  }}
-                >
-                  {displayService4 && (
-                    <Servicecards onClick={() => setShowServiceModal4(true)}>
-                      <Cardcontent>{displayService4}</Cardcontent>
-                    </Servicecards>
-                  )}
-                </Tilt>
               </ServiceCardsContainer>
+
               <div
                 id="previewbutton"
                 className="mt-5 z-50 "
@@ -2130,250 +2518,9 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              {showModal ? (
-                <>
-                  <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none pt-10">
-                    <div
-                      id="divmodwid"
-                      className="border-0 rounded-lg shadow-lg relative w-2/5 my-6 mx-auto"
-                    >
-                      {/*content*/}
-                      <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                        {/*header*/}
-                        <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-                          <h3 className="text-3xl font-semibold">
-                            Add Service Details
-                          </h3>
-                          <button
-                            className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                            onClick={() => {
-                              setShowModal(false);
-
-                              // const newServiceCardData = {
-                              //   uploadedPicData:{text: 'text'} ,
-                              //   descriptionLeftData: {text: 'This is the description text'} ,
-                              // };
-
-                              // addServiceCard(newServiceCardData);
-                            }}
-                          >
-                            <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                              x
-                            </span>
-                          </button>
-                        </div>
-
-                        {/*body*/}
-                        <div className="relative p-6 flex flex-col h-full">
-                          <h1 className="text-xl font-semibold mb-4">Service 1</h1>
-                          <div className="bg-slate-100 p-4">
-
-                            <div className="relative z-0 w-full mb-5 group">
-                              <input
-                                maxLength="36"
-                                type="text"
-                                name="repeat_password"
-                                id="floating_repeat_password"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                placeholder=" "
-                                value={service1}
-                                onChange={(e) => {
-                                  setService1(e.target.value);
-                                }}
-                              />
-                              <label
-                                for="floating_repeat_password"
-                                className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                              >
-                                Service 1 - {displayService1}
-                              </label>
-                            </div> 
-                            <div className="relative z-0 w-full mb-5 group">
-                            <input
-                              maxLength="16"
-                              type="text"
-                              name="repeat_password"
-                              id="floating_repeat_password"
-                              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                              placeholder=" "
-                              value={service1Desc}
-                              onChange={(e) => {
-                                setService1Desc(e.target.value);
-                              }}
-                            />
-                            <label
-                              for="floating_repeat_password"
-                              className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                            >
-                              Description  - {displayService1Desc}
-                            </label>
-                            </div> 
-
-                          </div>
-                          
-                          <h1 className="text-xl font-semibold mb-4">Service 2</h1>
-                          <div className="bg-slate-100 p-4">
-                            <div className="relative z-0 w-full mb-5 group">
-                              <input
-                                maxLength="16"
-                                type="text"
-                                name="repeat_password"
-                                id="floating_repeat_password"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                placeholder=" "
-                                value={service2}
-                                onChange={(e) => {
-                                  setService2(e.target.value);
-                                }}
-                              />
-                              <label
-                                for="floating_repeat_password"
-                                className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                              >
-                                Service 2 - {displayService2}
-                              </label>
-                            </div>
-                            <div className="relative z-0 w-full mb-5 group">
-                              <input
-                                maxLength="16"
-                                type="text"
-                                name="repeat_password"
-                                id="floating_repeat_password"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                placeholder=" "
-                                value={service2Desc}
-                                onChange={(e) => {
-                                  setService2Desc(e.target.value);
-                                }}
-                              />
-                              <label
-                                for="floating_repeat_password"
-                                className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                              >
-                                Description - {displayService2Desc}
-                              </label>
-                            </div>
-                          </div>
-
-                          
-                          <h1 className="text-xl font-semibold mb-4">Service 3</h1>
-
-                          <div className="bg-slate-100 p-4">
-                            <div className="relative z-0 w-full mb-5 group">
-                              <input
-                                maxLength="16"
-                                type="text"
-                                name="repeat_password"
-                                id="floating_repeat_password"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                placeholder=" "
-                                value={service3}
-                                onChange={(e) => {
-                                  setService3(e.target.value);
-                                }}
-                              />
-                              <label
-                                for="floating_repeat_password"
-                                className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                              >
-                                Service 3 - {displayService3}
-                              </label>
-                            </div>
-
-                            <div className="relative z-0 w-full mb-5 group">
-                              <input
-                                maxLength="16"
-                                type="text"
-                                name="repeat_password"
-                                id="floating_repeat_password"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                placeholder=" "
-                                value={service3Desc}
-                                onChange={(e) => {
-                                  setService3Desc(e.target.value);
-                                }}
-                              />
-                              <label
-                                for="floating_repeat_password"
-                                className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                              >
-                                Description - {displayService3Desc}
-                              </label>
-                            </div>
-                          </div>
-
-                          <h1 className="text-xl font-semibold mb-4">Service 4</h1>
-
-                          <div className="bg-slate-100 p-4">
-                            <div className="relative z-0 w-full mb-5 group">
-                              <input
-                                maxLength="16"
-                                type="text"
-                                name="repeat_password"
-                                id="floating_repeat_password"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                placeholder=" "
-                                value={service4}
-                                onChange={(e) => {
-                                  setService4(e.target.value);
-                                }}
-                              />
-                              <label
-                                for="floating_repeat_password"
-                                className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                              >
-                                Service 4 - {displayService4}
-                              </label>
-                            </div>
-
-                            <div className="relative z-0 w-full mb-5 group">
-                              <input
-                                maxLength="16"
-                                type="text"
-                                name="repeat_password"
-                                id="floating_repeat_password"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                placeholder=" "
-                                value={service4Desc}
-                                onChange={(e) => {
-                                  setService4Desc(e.target.value);
-                                }}
-                              />
-                              <label
-                                for="floating_repeat_password"
-                                className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                              >
-                                Description - {displayService4Desc}
-                              </label>
-                            </div>
-                          </div>
+ 
 
 
-                        </div>
-
-                        {/*footer*/}
-                        <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                          <button
-                            className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                            type="button"
-                            onClick={() => setShowModal(false)}
-                          >
-                            Close
-                          </button>
-                          <button
-                            className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                            type="button"
-                            onClick={addServices}
-                          >
-                            Save Changes
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-                </>
-              ) : null}
               {showServiceModal ? (
                 <>
                   <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -2386,7 +2533,7 @@ const Dashboard = () => {
                         {/*header*/}
                         <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                           <h3 className="text-3xl font-semibold">
-                            Edit Service details
+                            Edit Service {indexEdit+1} details
                           </h3>
                           <button
                             className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -2403,48 +2550,48 @@ const Dashboard = () => {
                         {/*body*/}
                         <div className="relative p-6 flex flex-row h-full">
                           <div className="relative z-0 w-full mb-5 group">
-                            <input
-                              type="text"
-                              name="repeat_password"
-                              id="floating_repeat_password"
-                              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                              placeholder=" "
-                              value={service1}
-                              onChange={(e) => {
-                                setService1(e.target.value);
-                              }}
-                            />
-                            <label
-                              for="floating_repeat_password"
-                              className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                            >
-                              Name - {displayService1}{" "}
-                              <Edittext className="ml-1 mt-0.5" />
-                            </label>
+                          <input
+                                maxLength="16"
+                                required
+                                type="text"
+                                name="repeat_password"
+                                id="floating_repeat_password"
+                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                placeholder=" "
+                                value={updateNameService}
+                                onChange={(e) => {setUpdateNameService(e.target.value)}}
+                              />
+                    
+
+                                <label
+                                  for="floating_repeat_password"
+                                  className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                >
+                                  Service Name
+                                </label>
                           </div>
 
                         </div>
 
                         <div className="ml-6 mb-2">
                           <div className="relative z-0 w-full mb-5 group">
-                            <input
-                              type="text"
-                              name="repeat_password"
-                              id="floating_repeat_password"
-                              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                              placeholder=" "
-                              value={service1Desc}
-                              onChange={(e) => {
-                                setService1Desc(e.target.value);
-                              }}
-                            />
-                            <label
-                              for="floating_repeat_password"
-                              className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                            >
-                              Desc - {displayService1Desc}{" "}
-                              <Edittext className="ml-1 mt-0.5" />
-                            </label>
+                          <input
+                                  
+                                  type="text"
+                                  required
+                                  name="repeat_password"
+                                  id="floating_repeat_password"
+                                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                  placeholder=" "
+                                  value={updateDescService}
+                                    onChange={(e) => {setUpdateDescService(e.target.value)}}
+                                />
+                                <label
+                                  for="floating_repeat_password"
+                                  className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                >
+                                  Description
+                                </label>
                           </div>
                         </div>
 
@@ -2453,14 +2600,15 @@ const Dashboard = () => {
                           <input
                             type="file"
                             placeholder="Upload Your Profile Pic"
-                            onChange={(e) =>
-                              setUpdatePhotoService1(e.target.files[0])
-                            }
+                            onChange={(e) => setUpdatePhotoService(e.target.files[0])}
                           />
                           <button
                             className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
-                            onClick={uploadImageService1}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              EditServiceImage(e, indexEdit);
+                            }}
                           >
                             Add Image
                           </button>
@@ -2478,14 +2626,14 @@ const Dashboard = () => {
                           <button
                             className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
-                            onClick={DeleteService1}
+                            onClick={()=>{deleteMyService(indexEdit)}}
                           >
                             Delete
                           </button>
                           <button
                             className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
-                            onClick={EditService1}
+                            onClick={()=>{updateMyService(indexEdit)}}
                           >
                             Save Changes
                           </button>
@@ -2496,6 +2644,8 @@ const Dashboard = () => {
                   <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
                 </>
               ) : null}
+
+
 
               {showServiceModal2 ? (
                 <>
@@ -2539,10 +2689,8 @@ const Dashboard = () => {
                               id="floating_repeat_password"
                               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                               placeholder=" "
-                              value={service2}
-                              onChange={(e) => {
-                                setService2(e.target.value);
-                              }}
+                              value={services[Index].name}
+                              onChange={(e) => handleServiceChange(e, Index)}
                             />
                             <label
                               for="floating_repeat_password"
@@ -2563,10 +2711,8 @@ const Dashboard = () => {
                               id="floating_repeat_password"
                               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                               placeholder=" "
-                              value={service2Desc}
-                              onChange={(e) => {
-                                setService2Desc(e.target.value);
-                              }}
+                              value={services[Index].description}
+                              onChange={(e) => handleDescriptionChange(e, Index)}
                             />
                             <label
                               for="floating_repeat_password"
@@ -2615,7 +2761,7 @@ const Dashboard = () => {
                           <button
                             className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
-                            onClick={EditService2}
+                            onClick={addServicesInNewWay}
                           >
                             {/* () => setShowServiceModal2(false) */}
                             Save Changes
@@ -3026,7 +3172,7 @@ const Dashboard = () => {
           </LeftContainer>
           <MiddleMargin className="border-2 w-0 h-100vh "></MiddleMargin>
           <RightContainer>
-            <Phonecontainer>
+          <Phonecontainer>
               <Tilt
                 className="Tilt"
                 options={{
@@ -3036,12 +3182,24 @@ const Dashboard = () => {
                   scale: 1.05,
                 }}
               >
+
+
+
                 <Phoneborder>
+
+
+
+
                   <PhoneContentcontainer
                     style={{
                       background: `url(${theme_url}) center/cover no-repeat`,
                     }}
                   >
+
+
+
+
+
                     {displayPhoto && (
                       <div
                         id="imagediv"
@@ -3051,10 +3209,25 @@ const Dashboard = () => {
                       ></div>
                     )}
 
-                    {displayCname && <h1>{displayCname}</h1>}
-                    {displayFullName && <h2>{displayFullName}</h2>}
+
+                    
+
+                    <Manidetails>
+                    
+                     {displayCname && <h1>{displayCname}</h1>}
+                    
+                     {displayFullName && <h2>{displayFullName}</h2>}
 
                     {displayDesc && <h3>{displayDesc}</h3>}
+
+
+                    </Manidetails>
+
+
+
+
+
+
 
                     <Infocontainer>
                       {displayPhoneNo && (
@@ -3087,6 +3260,14 @@ const Dashboard = () => {
                       )}
                     </Infocontainer>
 
+
+
+
+
+
+
+
+
                     <Linkcontainer>
                       {displayInsta_Link && (
                         <a
@@ -3118,31 +3299,73 @@ const Dashboard = () => {
                       )}
                     </Linkcontainer>
 
+
+
+
                     <Servicescontainer>
                       <h1 className="mb-5">Services</h1>
-                      {displayService1 && (
-                        <CardcontainerP>
-                          {displayServicePhoto1 && (
-                            <Profileimg1>
-                            <img src={displayServicePhoto1} alt="not found" />
-                            </Profileimg1>
-                          )}
-                          
-                          
-                            {/* need to change  */}
-                            <span>
-                              {displayService1}
-                              <br />
 
-                              <span className=" text-sm">
-                                {displayService1Desc}
-                              </span>
-              
-                            </span>
+
+                      {displayServices && displayServices.map((service, index) => (
+                          <CardcontainerP key={index} >
+
+                          {displayServicePhoto1 && (
+                            <Profileimgcont>
+                              <Serviceimg>
+                                <StyledImage src={service.serviceURL} alt="not found" />
+                              </Serviceimg>
+                            
+                            </Profileimgcont>
+                          )}
+
+                          <Rightside>
+                        
+                              <span className=" text-2xl">{service.name}</span>
+
+                              <Serdesc>
+                              {service.description}
+                              </Serdesc>
+                            </Rightside>
+
+                          </CardcontainerP>
+                       ))} 
+
+                      {/* {displayService1 && (
+                        <CardcontainerP>
+
+                          {displayServicePhoto1 && (
+                            <Profileimgcont>
+                              <Serviceimg>
+                                <StyledImage src={displayServicePhoto1} alt="not found" />
+                              </Serviceimg>
+                            
+                            </Profileimgcont>
+                          )}
+
+                          <Rightside>
+                         
+                              <span className=" text-2xl">{displayService1}</span>
+
+                              <Serdesc>
+                              {displayService1Desc}
+                              </Serdesc>
+                            </Rightside>
 
                         </CardcontainerP>
-                      )}
+                      )} */}
 
+                      </Servicescontainer>
+
+
+
+
+
+
+
+
+
+
+{/* 
                       {displayService2 && (
                         <CardcontainerP>
                           <span>
@@ -3205,26 +3428,37 @@ const Dashboard = () => {
                           )}
 
                         </CardcontainerP>
-                      )}
-                    </Servicescontainer>
+                      )} */}
+                    {/* </Servicescontainer> */}
+
+
+
+
+
+
+
+
 
                     <Cardbottoncontainer>
-                      <div id="services">
-                        <img src={saveCardImg} alt="" />
+                      <div id="service1">
+                        {/* <img src={saveCardImg} alt="" /> */}
                         <div>Save Card</div>
                       </div>
 
-                      <div id="services">
-                        <img src={addContactImg} alt="" />
+                      <div id="service2">
+                        {/* <img src={addContactImg} alt="" /> */}
                         <div>Add Contact</div>
                       </div>
                     </Cardbottoncontainer>
+
+
+
 
                     <BottomText>tapON</BottomText>
                   </PhoneContentcontainer>
                 </Phoneborder>
               </Tilt>
-            </Phonecontainer>
+</Phonecontainer>
           </RightContainer>
         </Section>
       </>
