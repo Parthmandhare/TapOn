@@ -197,6 +197,7 @@ const Phoneborder = styled.div`
   
   @media (max-width: 64em) {
     margin-top: 0;
+    
 
 
 
@@ -233,11 +234,23 @@ const Phonecontainer = styled.div`
   height: fit-content;
   /* position: fixed; */
   /* width: fit-content; */
-  width: 25%;
+  width: 20%;
   min-height: 45em;
    @media (max-width: 64em){
     width: 100%;
-    height: 100%;
+    height: 50em;
+    min-height: 100%;
+    background-color: black;
+
+    @media (min-height: 40em){
+    width: 100%;
+    height: 58em;
+    min-height: 100%;
+    background-color: black;
+    
+
+  
+}
     
 
   
@@ -307,6 +320,7 @@ const PhoneContentcontainer = styled.div`
   
 
   @media (max-width: 64em) {
+    height: 100%;
     display: flex;
     padding: 2%;
     align-items: center;
@@ -405,11 +419,12 @@ const Infocontainer = styled.div`
     }
   }
   @media (max-width: 64em) {
+    font-size: 20px;
     & > div {
       display: flex;
       align-items: center;
       margin-bottom: 10px;
-
+      
       font-size: smaller;
 
       & img {
@@ -486,11 +501,16 @@ const Cardbottoncontainer = styled.div`
     }
   }
   @media (max-width: 64em) {
+
     /* background-color: #efefef; */
+    
     width: 90%;
-    padding: 2%;
+    /* padding: 2%; */
+    justify-content: center;
+    align-items: center;
     & > div#services {
-      padding: 2%;
+      
+      
       display: flex;
       align-items: center;
       /* font-size: 10px; */
@@ -499,6 +519,7 @@ const Cardbottoncontainer = styled.div`
       width: 8em;
       height: 3em;
       background-color: ${props => props.theme.backgroundcards};
+      /* background-color: aqua; */
     border: solid 1px ;
     border-color: ${props=>props.theme.bordercolor};
       border-radius: 10px;
@@ -752,8 +773,8 @@ const Cardcontent = styled.div`
 const Maincontainer=styled.div`
 display: flex;
 justify-content: center;
-width: 100%;
-height: 110%;
+width: screen;
+height: screen;
 min-height: 100vh;
 align-items: center;
 padding: 1%;

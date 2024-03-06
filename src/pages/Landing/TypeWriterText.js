@@ -110,7 +110,7 @@ const TypeWriterText = () => {
 
    
     </Title>
-     <SubTitle>Discover a new world of Webpages</SubTitle>
+     <SubTitle>Convert Your Boring Business Cards into Cool MiniPages</SubTitle>
      <ButtonContainer>
      <Link to="/auth/Login">
      <Button text="Explore" /></Link>

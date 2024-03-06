@@ -180,21 +180,16 @@ const About = () => {
         </Box>
         <Box>
             <Title>
-                Title
+            Power up Your Presence: MiniWeb Templates!
 
 
 
             </Title>
             <Subtitle>
-                subtitle
+            Choose from stunning, ready-to-use templates or design your own. It's your story, your brand, your way.
                 
 
             </Subtitle>
-            <Subtitlelight>
-                subtitle light
-
-            </Subtitlelight>
-            <Buttoncontainer> <Button text="Explore more" link="#" /></Buttoncontainer>
            
 
 

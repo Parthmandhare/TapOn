@@ -165,6 +165,7 @@ display: block;
 font-size: 2em;
 text-transform: capitalize;
 color: black;
+font-weight: 600;
 
 @media (max-width: 40em){
   font-size: 1.25em;
@@ -177,10 +178,10 @@ color: black;
 const Text=styled.span`
 
 display: block;
-font-size: 0.875em;
+font-size: 1.45em;
 text-transform: capitalize;
 color: black;
-font-weight: 400;
+font-weight: 500;
 margin: 0.5rem 0;
 
 @media (max-width: 40em){
@@ -260,11 +261,11 @@ const Roadmap = () => {
             <RoadMapItem addToRefs={addToRefs} title="Title1" subtext="this is subtext 1"/>
             <RoadMapItem addToRefs={addToRefs} title="Title1" subtext="this is subtext 1"/> */}
 
-            <RoadMapItem title="SELECT PIC" subtext="this is subtext 1"/>
-            <RoadMapItem title="FILL DETAILS" subtext="this is subtext 1"/>
-            <RoadMapItem title="ADD SERVICES" subtext="this is subtext 1"/>
-            <RoadMapItem title="SELECT THEMES" subtext="this is subtext 1"/>
-            <RoadMapItem title="Your Profile is ready to Share" subtext="this is subtext 1"/>
+            <RoadMapItem title="Register Yourself" subtext="Secure Your Spot"/>
+            <RoadMapItem title="Get Username" subtext=" Personalize Your Presence"/>
+            <RoadMapItem title="Select Theme" subtext="Define Your Style"/>
+            <RoadMapItem title="Personalize Your MiniPage " subtext=" Customize Your Services and More"/>
+            <RoadMapItem title="Your MiniSite  is ready to Share" subtext=" Launch Your Digital Presence!"/>
           </Items>
 
         </Container>

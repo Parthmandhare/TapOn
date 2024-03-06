@@ -7,12 +7,12 @@ import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDPUvM6OdWnd1BJolmnjIVoDJ0kD5tHh3A",
-  authDomain: "tap-on-26989.firebaseapp.com",
-  projectId: "tap-on-26989",
-  storageBucket: "tap-on-26989.appspot.com",
-  messagingSenderId: "307235100072",
-  appId: "1:307235100072:web:8dc5b1ad8095844364b99d"
+  apiKey: "AIzaSyDXta9nRLKxm61gs0gpRruHGiSQB_FGeAI",
+  authDomain: "tapon-260ea.firebaseapp.com",
+  projectId: "tapon-260ea",
+  storageBucket: "tapon-260ea.appspot.com",
+  messagingSenderId: "560217160799",
+  appId: "1:560217160799:web:499887537c9ae1d41f6fea"
 };
 
 // Initialize Firebase

@@ -110,30 +110,30 @@ const Faq = () => {
 
         <Container>
             <Box>
-                <Accordion title="What is yur name?">
-                    react
+                <Accordion title="Which Tech Stack Is Being Used In This Project?">
+                    React.js, Tailwind, Firebase
 
                 </Accordion>
-                <Accordion title="Whre do u liv?">
-                    in javascript
+                <Accordion title="Where It Is Hosted?">
+                    To the Firebase
 
                 </Accordion>
-                <Accordion title="do u know next?">
-                    yes he is my framework
+                <Accordion title="How Much Time Did It Take To Complete?">
+                    1-1.5 Months
 
                 </Accordion>
             </Box>
             <Box>
-            <Accordion title="What is yur name?">
-                    react
+            <Accordion title="What Are You Trying To Solve?">
+                    To Convert Boring Business Cards Into Cool MiniPages.
 
                 </Accordion>
-                <Accordion title="Whre do u liv?">
-                    in javascript
+                <Accordion title="How can I share my MiniWeb Page with others?">
+                    You can share through Link which has an unique ID of yours and your username.
 
                 </Accordion>
-                <Accordion title="do u know next?">
-                    yes he is my framework
+                <Accordion title="Can I customize the design of my MiniWeb Page?">
+                    Yes, there are many themplates which you can choose
 
                 </Accordion>
             </Box>
